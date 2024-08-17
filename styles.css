@@ -1,0 +1,160 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-image: url(assets/xp-desktop.webp);
+  background-size: cover;
+  font-family: Tahoma, Geneva, Verdana, sans-serif;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.desktop {
+  position: relative;
+  height: 100svh; /* Adjust for taskbar height */
+  padding: 10px;
+}
+
+.icon {
+  width: 70px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  position: absolute; /* Allows free movement */
+  transition: left 0.1s ease-out, top 0.1s ease-out;
+  padding: 10px; /* Added padding for easier touch targets */
+}
+
+.icon img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 5px;
+}
+
+.icon span {
+  font-size: 0.8em;
+  color: white;
+}
+
+.icon.selected {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+}
+
+.taskbar {
+  position: absolute;
+  bottom: 0;
+  background-color: #4A8AFA;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: .10rem;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.21), inset 0px -3px 6px -2px rgba(0, 0, 0, 0.962);
+}
+
+.taskbar button {
+  border: none;
+  border-radius: 1px;
+  background-color: #5994fa;
+  color: white;
+  height: 30px;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.21), inset 0px -3px 6px -2px rgba(0, 0, 0, 0.542);
+  margin-top: 4px;
+  margin-bottom: 5px;
+}
+
+.taskbar button img {
+  width: 20px;
+  padding-right: 2px;
+}
+
+.taskbar button:nth-child(1) {
+  background-color: #58AA53;
+  margin-right: 0.5rem;
+  font-size: 1.2em;
+  font-weight: bold;
+  font-style: italic
+}
+
+.taskbar-windows {
+ min-width: 10%;
+}
+
+
+/* Hover effect for depth */
+.taskbar button:hover, .popup-controls button:hover {
+  background-color: #5994fa62;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.21), initial 0px -3px 6px -2px rgba(0, 0, 0, 0.542);
+}
+
+/* Active/clicked effect */
+.taskbar button:active, .popup-controls button:active {
+  background-color: #1467f849;
+
+
+
+}
+
+/* Initial positions for each icon */
+#icon1 {
+  left: 20px;
+  top: 20px;
+}
+
+#icon2 {
+  left: 20px;
+  top: 100px;
+}
+
+#icon3 {
+  left: 20px;
+  top: 180px;
+}
+
+.popup {
+  position: absolute;
+  width: 400px;
+  height: 300px;
+  background-color: white;
+  border: 2px solid #c0c0c0;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  
+}
+
+.popup-header {
+  background-color: #3c7fb1;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+.popup-title {
+  padding-left: 10px;
+}
+
+.popup-controls button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0 5px;
+  font-size: 1em;
+}
+
+.popup-content {
+  padding: 10px;
+  flex: 1;
+}
+
+.hidden {
+  display: none;
+}

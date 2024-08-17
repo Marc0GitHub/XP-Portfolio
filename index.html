@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>XP</title>
+</head>
+<body>
+    <div class="desktop">
+        <div id="icon1" class="icon" draggable="true">
+            <img src="assets/bin-icon.png" alt="My Computer">
+            <span>Bin</span>
+        </div>
+        <div id="icon2" class="icon" draggable="true">
+            <img src="assets/internet-explorer-2-icon.png" alt="My Documents">
+            <span>Internet</span>
+        </div>
+        <div id="icon3" class="icon" draggable="true">
+            <img src="assets/folder-icon.png" alt="Recycle Bin">
+            <span>Folder</span>
+        </div>
+    </div>
+    <div class="popup hidden" id="popup-window">
+        <div class="popup-header">
+            <span class="popup-title">Window Title</span>
+            <div class="popup-controls">
+                <button class="popup-minimize">-</button>
+                <button class="popup-maximize"><svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><path d="M0 0v10h10V0H0zm1 1h8v8H1V1z"></path></svg></button>
+                <button class="popup-close">X</button>
+            </div>
+        </div>
+        <div class="popup-content">
+            <p>This is a sample popup content.</p>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <button><img src="assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png" alt="">Start</button>
+        <button class="taskbar-windows"></button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

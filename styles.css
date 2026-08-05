@@ -449,8 +449,8 @@ body {
 .img-stage {
   flex: 1;
   min-height: 0;
-  overflow: auto;
-  display: flex;
+  position: relative;
+  overflow: hidden;
   padding: 8px;
   box-sizing: border-box;
 }
@@ -464,20 +464,19 @@ body {
   user-select: none;
 }
 
+/* Image is pinned to the stage centre; JS controls a single pan/zoom/rotate
+   transform so zoom always scales from the middle of the image. */
 .img-stage img {
-  margin: auto;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  transition: transform 0.15s ease;
-  transform-origin: center center;
-}
-
-/* Actual Size mode: ignore the fit constraints and show natural pixels */
-.img-stage img.actual-size {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
   max-width: none;
   max-height: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  transition: transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform-origin: center center;
+  will-change: transform;
 }
 
 .hidden {
@@ -1444,4 +1443,242 @@ body {
 .props-dialog-ok:hover {
   background: #ffffff;
   border-color: #316ac5;
+}
+
+/* Snake game app window */
+.snake-app {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ece9d8;
+  box-sizing: border-box;
+}
+
+.snake-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: linear-gradient(to bottom, #f5f5f5, #d4d0c8);
+  border-bottom: 1px solid #999;
+  flex-shrink: 0;
+}
+
+.snake-btn {
+  min-width: 56px;
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  background: #ece9d8;
+  cursor: pointer;
+  font-size: 12px;
+  color: #111;
+  line-height: 1;
+}
+
+.snake-btn:hover {
+  background: #fff;
+  border-color: #316ac5;
+}
+
+.snake-btn:active {
+  background: #d4d0c8;
+}
+
+.snake-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.snake-btn:disabled:hover {
+  background: #ece9d8;
+  border-color: #999;
+}
+
+.snake-score {
+  margin-left: auto;
+  font-size: 12px;
+  color: #222;
+}
+
+.snake-best {
+  font-size: 12px;
+  color: #222;
+}
+
+.snake-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: #2b2b2b;
+  position: relative;
+  overflow: hidden;
+}
+
+.snake-canvas {
+  background: #0c2e0c;
+  border: 1px solid #555;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  image-rendering: pixelated;
+}
+
+.snake-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.snake-overlay.hidden {
+  display: none;
+}
+
+.snake-hint {
+  padding: 4px 8px;
+  font-size: 11px;
+  color: #444;
+  text-align: center;
+  background: #ece9d8;
+  border-top: 1px solid #999;
+  flex-shrink: 0;
+}
+
+/* Snake on-screen D-pad (touch controls) */
+.snake-dpad {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 40px);
+  grid-template-rows: repeat(2, 40px);
+  gap: 4px;
+  opacity: 0.9;
+}
+
+.snake-dpad-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  background: rgba(236, 233, 216, 0.92);
+  color: #111;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.snake-dpad-btn:active {
+  background: #b7cef2;
+}
+
+.snake-dpad-btn[data-dir="up"] { grid-column: 2; grid-row: 1; }
+.snake-dpad-btn[data-dir="left"] { grid-column: 1; grid-row: 2; }
+.snake-dpad-btn[data-dir="down"] { grid-column: 2; grid-row: 2; }
+.snake-dpad-btn[data-dir="right"] { grid-column: 3; grid-row: 2; }
+
+/* ===== Touch & mobile support ===== */
+
+/* Prevent double-tap zoom and the tap-highlight flash on touch devices */
+html,
+body {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Elements that manage their own gestures should not trigger scroll/zoom */
+.icon,
+.popup-header,
+.resize-handle,
+.img-stage,
+.snake-stage,
+.snake-dpad-btn {
+  touch-action: none;
+}
+
+@media (max-width: 720px) {
+  /* Let the icon grid scroll if it ever exceeds the screen */
+  .desktop {
+    overflow-y: auto;
+  }
+
+  .icon {
+    width: 78px;
+  }
+  .icon img {
+    width: 46px;
+    height: 46px;
+  }
+
+  /* Taskbar: taller touch targets */
+  .taskbar {
+    height: 40px;
+  }
+  .taskbar button,
+  .taskbar button:nth-child(1) {
+    height: 40px;
+  }
+  .taskbar-clock {
+    height: 40px;
+  }
+  .taskbar-item {
+    height: 28px;
+    max-width: 110px;
+  }
+  .taskbar-item span {
+    font-size: 12px;
+  }
+
+  /* Start menu fills most of the screen width */
+  .start-menu {
+    width: min(384px, calc(100vw - 8px));
+    bottom: 45px;
+  }
+  .start-menu-item {
+    padding: 6px 4px;
+  }
+
+  /* Windows: bigger touch targets */
+  .win-btn {
+    width: 26px;
+    height: 26px;
+  }
+  .resize-handle {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Context menus: roomier rows */
+  .context-menu-item {
+    padding: 7px 10px;
+  }
+
+  /* Snake canvas scales down to fit the window */
+  .snake-canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Dialogs fit narrow screens */
+  .error-dialog,
+  .props-dialog {
+    width: min(360px, calc(100vw - 12px));
+  }
 }

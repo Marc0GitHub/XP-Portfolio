@@ -168,6 +168,35 @@ const iconContent = {
           </div>
           <textarea class="np-textarea" spellcheck="false"></textarea>
         `
+    },
+    icon9: {
+        title: "Snake",
+        icon: "assets/snake-icon.png",
+        content: `
+          <div class="snake-app">
+            <div class="snake-toolbar">
+              <button class="snake-btn" data-action="start">Start</button>
+              <button class="snake-btn" data-action="pause" disabled>Pause</button>
+              <button class="snake-btn" data-action="restart">Restart</button>
+              <span class="snake-score">Score: 0</span>
+              <span class="snake-best">Best: 0</span>
+            </div>
+            <div class="snake-stage">
+              <canvas class="snake-canvas" width="400" height="400"></canvas>
+              <div class="snake-overlay hidden">
+                <div class="snake-msg"></div>
+                <button class="snake-btn" data-action="start">Play Again</button>
+              </div>
+              <div class="snake-dpad">
+                <button class="snake-dpad-btn" data-dir="up">&#9650;</button>
+                <button class="snake-dpad-btn" data-dir="left">&#9664;</button>
+                <button class="snake-dpad-btn" data-dir="down">&#9660;</button>
+                <button class="snake-dpad-btn" data-dir="right">&#9654;</button>
+              </div>
+            </div>
+            <div class="snake-hint">Arrow keys / WASD to steer &middot; P to pause</div>
+          </div>
+        `
     }
 };
 
@@ -213,12 +242,26 @@ const folderFiles = [
     }
 ];
 
+// Persistent contents of folders created from the right-click menu, keyed by
+// the folder's owner id ('dyn-N') so images dropped in survive close/reopen.
+const newFolderFiles = {};
+
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.icon').forEach(icon => {
+    document.querySelectorAll('.icon').forEach((icon, i) => {
         attachIconListeners(icon);
+        // Give the built-in icons a modified date (staggered so sorting works)
+        if (!icon.dataset.mtime) {
+            icon.dataset.mtime = String(Date.now() - (i + 1) * 3600000);
+        }
     });
     setupContextMenus();
     setupMarqueeSelection();
+    setupDesktopTouch();
+
+    // Preload image dimensions so Properties / Arrange by Size are accurate
+    document.querySelectorAll('.icon.image-file').forEach(icon => {
+        if (icon.dataset.image) getImageInfo(icon.dataset.image);
+    });
 
     document.body.addEventListener('click', (e) => {
         if (marqueeJustDragged) {
@@ -231,6 +274,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.body.addEventListener('touchend', (e) => {
+        if (desktopTouchJustDragged) {
+            desktopTouchJustDragged = false;
+            return; // don't clear the selection right after a touch marquee
+        }
         if (!e.target.closest('.icon')) {
             deselectAllIcons();
         }
@@ -239,12 +286,20 @@ document.addEventListener('DOMContentLoaded', () => {
     setupStartMenu();
     setupClock();
 
+    // Keep windows usable when the viewport changes (rotation / resize)
+    window.addEventListener('resize', () => {
+        Object.values(openWindows).forEach(w => {
+            if (w.style.display !== 'none') clampWindowToScreen(w);
+        });
+    });
+
     const notepadIcon = document.getElementById('icon5');
     if (notepadIcon) {
         openWindow(notepadIcon);
-        // Initial Notepad position: a bit more to the right
+        // Initial Notepad position: a bit more to the right (desktop only;
+        // on mobile the window is clamped to fit the screen)
         const notepadWin = openWindows['icon5'];
-        if (notepadWin) {
+        if (notepadWin && !isMobileLayout()) {
             const cascadeOffset = (windowCounter % 8) * 25;
             notepadWin.style.left = (190 + cascadeOffset) + 'px';
             notepadWin.style.top = (60 + cascadeOffset) + 'px';
@@ -257,11 +312,14 @@ let offsetX = 0;
 let offsetY = 0;
 let touchStartTime = 0;
 let lastTapTime = 0;
+let longPressFired = false;          // a long-press already opened a context menu
+let desktopTouchJustDragged = false; // suppress the body deselect after a touch marquee
 
 // Highlight icon on click or tap (Ctrl/Cmd+click toggles one icon)
 function highlightIcon(e) {
     const targetIcon = e.target.closest('.icon');
     if (!targetIcon) return;
+    if (iconDragJustEnded) { iconDragJustEnded = false; return; } // after a drag, keep the selection
     if (e.ctrlKey || e.metaKey) {
         targetIcon.classList.toggle('selected');
     } else {
@@ -344,8 +402,85 @@ function rectsIntersect(a, b) {
     return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
 }
 
+// Touch marquee + long-press context menu on the desktop background
+function setupDesktopTouch() {
+    const desktop = document.querySelector('.desktop');
+    const marquee = document.querySelector('.selection-marquee');
+    if (!desktop || !marquee) return;
+
+    let tActive = false;
+    let tMoved = false;
+    let tStartX = 0;
+    let tStartY = 0;
+    let lpTimer = null;
+
+    desktop.addEventListener('touchstart', (e) => {
+        if (e.target.closest('.icon')) return;
+        if (e.touches.length !== 1) return;
+        const t = e.touches[0];
+        tActive = true;
+        tMoved = false;
+        tStartX = t.clientX;
+        tStartY = t.clientY;
+        clearTimeout(lpTimer);
+        lpTimer = setTimeout(() => {
+            showContextMenu(t.clientX, t.clientY, getDesktopContextMenu());
+        }, 480);
+    }, { passive: false });
+
+    desktop.addEventListener('touchmove', (e) => {
+        if (!tActive) return;
+        const t = e.touches[0];
+        const dx = t.clientX - tStartX;
+        const dy = t.clientY - tStartY;
+        if (!tMoved && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
+            tMoved = true;
+            clearTimeout(lpTimer);
+            lpTimer = null;
+            deselectAllIcons();
+            e.preventDefault();
+        }
+        if (!tMoved) return;
+        e.preventDefault();
+        const dr = desktop.getBoundingClientRect();
+        marquee.style.display = 'block';
+        marquee.style.left = (Math.min(tStartX, t.clientX) - dr.left) + 'px';
+        marquee.style.top = (Math.min(tStartY, t.clientY) - dr.top) + 'px';
+        marquee.style.width = Math.abs(dx) + 'px';
+        marquee.style.height = Math.abs(dy) + 'px';
+        const mrect = {
+            left: Math.min(tStartX, t.clientX),
+            right: Math.max(tStartX, t.clientX),
+            top: Math.min(tStartY, t.clientY),
+            bottom: Math.max(tStartY, t.clientY)
+        };
+        document.querySelectorAll('.desktop .icon').forEach(icon => {
+            const r = icon.getBoundingClientRect();
+            icon.classList.toggle('selected', rectsIntersect(mrect, r));
+        });
+    }, { passive: false });
+
+    function endTouch() {
+        clearTimeout(lpTimer);
+        lpTimer = null;
+        if (tMoved) {
+            marquee.style.display = 'none';
+            desktopTouchJustDragged = true;
+        }
+        tActive = false;
+        tMoved = false;
+    }
+
+    desktop.addEventListener('touchend', endTouch);
+    desktop.addEventListener('touchcancel', endTouch);
+}
+
 // Mouse-based icon drag-and-drop
 let dragMoved = false;
+let dragStartClientX = 0;
+let dragStartClientY = 0;
+let dragGroup = []; // [{ icon, startLeft, startTop }] icons being dragged together
+let iconDragJustEnded = false; // suppress the click-selection right after a drag
 
 function iconMouseDown(e) {
     e.preventDefault();
@@ -353,23 +488,47 @@ function iconMouseDown(e) {
     offsetX = e.clientX - currentIcon.getBoundingClientRect().left;
     offsetY = e.clientY - currentIcon.getBoundingClientRect().top;
     dragMoved = false;
+    iconDragJustEnded = false;
+    dragStartClientX = e.clientX;
+    dragStartClientY = e.clientY;
+
+    // Pressing an unselected icon starts a fresh selection. Ctrl/Cmd+click is
+    // still handled by the click handler, so don't touch selection then.
+    if (!e.ctrlKey && !e.metaKey && !currentIcon.classList.contains('selected')) {
+        deselectAllIcons();
+        currentIcon.classList.add('selected');
+    }
+
+    // If this icon is part of a multi-selection, drag the whole selection
+    // together (like Windows XP). Otherwise just drag this one icon.
+    const selected = getSelectedIcons();
+    if (selected.length > 1 && selected.includes(currentIcon)) {
+        dragGroup = selected.map(icon => ({
+            icon,
+            startLeft: icon.offsetLeft,
+            startTop: icon.offsetTop
+        }));
+    } else {
+        dragGroup = [{ icon: currentIcon, startLeft: currentIcon.offsetLeft, startTop: currentIcon.offsetTop }];
+    }
 
     currentIcon.style.position = 'absolute';
     currentIcon.classList.add('dragging');
-
     document.addEventListener('mousemove', iconMouseMove);
     document.addEventListener('mouseup', iconMouseUp);
 }
 
 function iconMouseMove(e) {
     if (!currentIcon) return;
-    const x = e.clientX - offsetX;
-    const y = e.clientY - offsetY;
-    if (!dragMoved && (Math.abs(x - currentIcon.offsetLeft) > 5 || Math.abs(y - currentIcon.offsetTop) > 5)) {
+    const dx = e.clientX - dragStartClientX;
+    const dy = e.clientY - dragStartClientY;
+    if (!dragMoved && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
         dragMoved = true;
     }
-    currentIcon.style.left = `${x}px`;
-    currentIcon.style.top = `${y}px`;
+    dragGroup.forEach(({ icon, startLeft, startTop }) => {
+        icon.style.left = `${startLeft + dx}px`;
+        icon.style.top = `${startTop + dy}px`;
+    });
     updateFolderDropHighlight(e.clientX, e.clientY);
 }
 
@@ -382,27 +541,50 @@ function iconMouseUp(e) {
 
     const drop = dragMoved ? getDropTarget(e.clientX, e.clientY) : null;
     if (drop && drop.kind === 'folder' && currentIcon.classList.contains('image-file')) {
-        moveImageToFolder(currentIcon);
+        // Drop every image in the dragged group into the folder; non-image
+        // members snap back onto the grid and stay selected.
+        dragGroup.map(g => g.icon).filter(i => i.classList.contains('image-file'))
+            .forEach(icon => moveImageToFolder(icon, drop.el));
+        dragGroup.map(g => g.icon).filter(i => !i.classList.contains('image-file'))
+            .forEach(icon => {
+                icon.classList.remove('dragging');
+                icon.classList.add('selected');
+                const s = snapToGrid(parseFloat(icon.style.left) || icon.offsetLeft, parseFloat(icon.style.top) || icon.offsetTop);
+                icon.style.left = s.x + 'px';
+                icon.style.top = s.y + 'px';
+            });
         document.removeEventListener('mousemove', iconMouseMove);
         document.removeEventListener('mouseup', iconMouseUp);
+        dragGroup = [];
         currentIcon = null;
         return;
     }
-    if (drop && drop.kind === 'bin' && currentIcon.id !== 'icon1') {
-        moveIconToBin(currentIcon);
+    if (drop && drop.kind === 'bin' && isDeletable(currentIcon)) {
+        // The whole selection is moved to the Recycle Bin together
+        moveSelectionToBin(currentIcon);
         document.removeEventListener('mousemove', iconMouseMove);
         document.removeEventListener('mouseup', iconMouseUp);
+        dragGroup = [];
         currentIcon = null;
         return;
     }
 
+    // Snap the dragged anchor back to the grid and move the rest of the group
+    // by the same offset so the selection keeps its layout.
     const snapped = snapToGrid(x, y);
-    currentIcon.classList.remove('dragging');
-    currentIcon.style.left = `${snapped.x}px`;
-    currentIcon.style.top = `${snapped.y}px`;
-
+    const adjX = snapped.x - (parseFloat(currentIcon.style.left) || currentIcon.offsetLeft);
+    const adjY = snapped.y - (parseFloat(currentIcon.style.top) || currentIcon.offsetTop);
+    dragGroup.forEach(({ icon }) => {
+        const l = parseFloat(icon.style.left) || icon.offsetLeft;
+        const t = parseFloat(icon.style.top) || icon.offsetTop;
+        icon.style.left = `${l + adjX}px`;
+        icon.style.top = `${t + adjY}px`;
+        icon.classList.remove('dragging');
+    });
     document.removeEventListener('mousemove', iconMouseMove);
     document.removeEventListener('mouseup', iconMouseUp);
+    iconDragJustEnded = dragMoved;
+    dragGroup = [];
     currentIcon = null;
 }
 
@@ -437,12 +619,19 @@ function touchEnd(e) {
     const touchEndTime = Date.now();
     const touchDuration = touchEndTime - touchStartTime;
 
-    if (touchDuration < 200) {
-        if (touchEndTime - lastTapTime < 300) {
-            openWindow(currentIcon);
-        } else {
-            highlightIcon(e);
+    // A long-press already handled this gesture (context menu is showing)
+    if (longPressFired) {
+        longPressFired = false;
+        if (currentIcon) {
+            currentIcon.style.transform = '';
+            currentIcon = null;
         }
+        return;
+    }
+
+    // A quick tap without dragging opens the item (mobile-friendly)
+    if (!dragMoved && touchDuration < 300) {
+        if (currentIcon) openIconWindow(currentIcon);
         lastTapTime = touchEndTime;
     }
 
@@ -455,12 +644,12 @@ function touchEnd(e) {
 
     const drop = dragMoved ? getDropTarget(touch.clientX, touch.clientY) : null;
     if (drop && drop.kind === 'folder' && currentIcon.classList.contains('image-file')) {
-        moveImageToFolder(currentIcon);
+        moveImageToFolder(currentIcon, drop.el);
         currentIcon = null;
         return;
     }
-    if (drop && drop.kind === 'bin' && currentIcon.id !== 'icon1') {
-        moveIconToBin(currentIcon);
+    if (drop && drop.kind === 'bin' && isDeletable(currentIcon)) {
+        moveSelectionToBin(currentIcon);
         currentIcon = null;
         return;
     }
@@ -476,10 +665,15 @@ function touchEnd(e) {
 // Photo viewer window styled like Windows Picture and Fax Viewer.
 // Functional buttons: Previous, Next, Zoom (in/out/actual/best fit),
 // Rotate, and Save. The remaining toolbar buttons are display only.
+//
+// The image is pinned to the centre of the stage and panned/zoomed with a
+// single CSS transform, so zoom always scales around the middle of the image
+// (or the cursor for wheel zoom) instead of jumping to the corner.
 function setupImageViewer(win, collection, index) {
     const img = win.querySelector('.img-stage img');
     const label = win.querySelector('.img-zoom-label');
     const titleEl = win.querySelector('.popup-title');
+    const stage = win.querySelector('.img-stage');
 
     const images = Array.isArray(collection) && collection.length
         ? collection
@@ -487,40 +681,141 @@ function setupImageViewer(win, collection, index) {
     let current = typeof index === 'number' && index >= 0 ? index : 0;
 
     let fitMode = true;  // true = Best Fit, false = Actual Size
-    let zoom = 1;
+    let zoom = 1;        // user zoom multiplier (0.1 - 8)
     let rotation = 0;
+    let tx = 0;          // pan offset in screen px (image centre vs stage centre)
+    let ty = 0;
+    let loaded = false;
+    let lastScale = 1;
+
+    const MIN_ZOOM = 0.1;
+    const MAX_ZOOM = 8;
+    const TRANS_BTN = 'transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1)'; // smooth for toolbar zoom
+    const TRANS_WHEEL = 'transform 0.09s ease-out';                        // snappy but smooth for wheel
+
+    // Padding of the stage, so the fitted image keeps a small border inside it.
+    const stageStyle = getComputedStyle(stage);
+    const PAD_X = parseFloat(stageStyle.paddingLeft) + parseFloat(stageStyle.paddingRight);
+    const PAD_Y = parseFloat(stageStyle.paddingTop) + parseFloat(stageStyle.paddingBottom);
 
     function setTitle(name) {
         titleEl.textContent = `${name} - Windows Picture and Fax Viewer`;
     }
 
-    function apply() {
-        img.classList.toggle('actual-size', !fitMode);
-        if (fitMode) {
-            img.style.width = '';
-            img.style.height = '';
-        } else {
-            img.style.width = img.naturalWidth + 'px';
-            img.style.height = img.naturalHeight + 'px';
-        }
-        img.style.transform = `scale(${zoom}) rotate(${rotation}deg)`;
-        label.textContent = (fitMode ? 'Fit ' : '') + Math.round(zoom * 100) + '%';
-        if (typeof updatePanCursor === 'function') updatePanCursor();
+    // Content area of the stage (padding removed).
+    function availSize() {
+        return {
+            w: Math.max(1, stage.clientWidth - PAD_X),
+            h: Math.max(1, stage.clientHeight - PAD_Y)
+        };
     }
+
+    // Natural image size, swapping width/height once rotated 90/270.
+    function naturalSize() {
+        let w = img.naturalWidth;
+        let h = img.naturalHeight;
+        if (rotation % 180 !== 0) { const t = w; w = h; h = t; }
+        return { w, h };
+    }
+
+    function baseFitScale() {
+        const nat = naturalSize();
+        const av = availSize();
+        if (!nat.w || !nat.h) return 1;
+        return Math.min(av.w / nat.w, av.h / nat.h);
+    }
+
+    function currentScale() {
+        return fitMode ? baseFitScale() * zoom : zoom;
+    }
+
+    // Keep the image at least partially inside the stage, and centred again
+    // as soon as it is small enough to fully fit.
+    function clampPan() {
+        const av = availSize();
+        const s = currentScale();
+        const nat = naturalSize();
+        const effW = nat.w * s;
+        const effH = nat.h * s;
+        if (effW <= av.w) {
+            tx = 0;
+        } else {
+            const range = (av.w + effW) / 2;
+            tx = Math.min(Math.max(tx, -range), range);
+        }
+        if (effH <= av.h) {
+            ty = 0;
+        } else {
+            const range = (av.h + effH) / 2;
+            ty = Math.min(Math.max(ty, -range), range);
+        }
+    }
+
+    function render() {
+        const s = currentScale();
+        img.style.transform =
+            `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(${s}) rotate(${rotation}deg)`;
+    }
+
+    function updatePanCursor() {
+        const av = availSize();
+        const s = currentScale();
+        const nat = naturalSize();
+        const canP = nat.w * s > av.w + 1 || nat.h * s > av.h + 1;
+        stage.classList.toggle('pannable', canP);
+    }
+
+    function apply() {
+        if (!loaded) return;
+        clampPan();
+        const s = currentScale();
+        lastScale = s;
+        render();
+        label.textContent = (fitMode ? 'Fit ' : '') + Math.round(zoom * 100) + '%';
+        updatePanCursor();
+    }
+
+    // Change zoom while keeping a fixed screen anchor fixed. With no anchor
+    // the stage centre is used, so zoom-in/zoom-out grow the image from its
+    // middle (exactly what "zoom into the centre" should do).
+    function setZoom(newZoom, anchor) {
+        newZoom = Math.min(Math.max(newZoom, MIN_ZOOM), MAX_ZOOM);
+        if (newZoom === zoom) return;
+        const oldScale = currentScale();
+        zoom = newZoom;
+        const newScale = currentScale();
+        const rect = stage.getBoundingClientRect();
+        const ax = anchor ? anchor.x : rect.width / 2;
+        const ay = anchor ? anchor.y : rect.height / 2;
+        const k = newScale / oldScale;
+        tx = (ax - rect.width / 2) + k * (tx + rect.width / 2 - ax);
+        ty = (ay - rect.height / 2) + k * (ty + rect.height / 2 - ay);
+        apply();
+    }
+
+    function onImageLoaded() {
+        loaded = true;
+        fitMode = true;
+        zoom = 1;
+        rotation = 0;
+        tx = 0;
+        ty = 0;
+        // Appear instantly at fit size, then re-enable the animated zoom.
+        img.style.transition = 'none';
+        apply();
+        requestAnimationFrame(() => { img.style.transition = ''; });
+    }
+    img.addEventListener('load', onImageLoaded);
+    if (img.complete && img.naturalWidth) onImageLoaded();
 
     function loadImage(i) {
         current = (i + images.length) % images.length;
         const item = images[current];
-        img.onload = () => {
-            fitMode = true;
-            zoom = 1;
-            rotation = 0;
-            apply();
-        };
+        loaded = false;
+        label.textContent = 'Loading...';
         img.src = item.src;
         img.alt = item.name;
         setTitle(item.name);
-        label.textContent = 'Loading...';
     }
 
     function saveImage() {
@@ -536,12 +831,12 @@ function setupImageViewer(win, collection, index) {
     const actions = {
         'prev': () => loadImage(current - 1),
         'next': () => loadImage(current + 1),
-        'zoom-in': () => { zoom = Math.min(zoom * 1.25, 8); apply(); },
-        'zoom-out': () => { zoom = Math.max(zoom / 1.25, 0.1); apply(); },
-        'actual-size': () => { fitMode = false; zoom = 1; apply(); },
-        'best-fit': () => { fitMode = true; zoom = 1; apply(); },
-        'rotate-left': () => { rotation = (rotation - 90 + 360) % 360; apply(); },
-        'rotate-right': () => { rotation = (rotation + 90) % 360; apply(); },
+        'zoom-in': () => { img.style.transition = TRANS_BTN; setZoom(zoom * 1.25); },
+        'zoom-out': () => { img.style.transition = TRANS_BTN; setZoom(zoom / 1.25); },
+        'actual-size': () => { img.style.transition = TRANS_BTN; fitMode = false; zoom = 1; tx = 0; ty = 0; apply(); },
+        'best-fit': () => { img.style.transition = TRANS_BTN; fitMode = true; zoom = 1; tx = 0; ty = 0; apply(); },
+        'rotate-left': () => { img.style.transition = TRANS_BTN; rotation = (rotation - 90 + 360) % 360; apply(); },
+        'rotate-right': () => { img.style.transition = TRANS_BTN; rotation = (rotation + 90) % 360; apply(); },
         'save': () => saveImage()
     };
 
@@ -553,70 +848,140 @@ function setupImageViewer(win, collection, index) {
         });
     });
 
-    // Scroll to zoom (zoom toward the cursor when possible)
-    const stage = win.querySelector('.img-stage');
+    // Scroll to zoom toward the cursor (the point under the mouse stays put)
     stage.addEventListener('wheel', (e) => {
+        if (!loaded) return;
         e.preventDefault();
-        const oldZoom = zoom;
-        const factor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
-        zoom = Math.min(Math.max(zoom * factor, 0.1), 8);
-        if (zoom === oldZoom) return;
-
         const rect = stage.getBoundingClientRect();
-        const cx = e.clientX - rect.left;
-        const cy = e.clientY - rect.top;
-        const scaleFactor = zoom / oldZoom;
-
-        apply();
-
-        // Keep the point under the cursor roughly fixed while zooming
-        stage.scrollLeft = (stage.scrollLeft + cx) * scaleFactor - cx;
-        stage.scrollTop = (stage.scrollTop + cy) * scaleFactor - cy;
+        const factor = e.deltaY < 0 ? 1.1 : 1 / 1.1;
+        img.style.transition = TRANS_WHEEL;
+        setZoom(zoom * factor, { x: e.clientX - rect.left, y: e.clientY - rect.top });
     }, { passive: false });
-
-    // Show a "grab" cursor when there's content to pan (zoomed / actual size)
-    function updatePanCursor() {
-        const canPan = stage.scrollWidth > stage.clientWidth + 1 || stage.scrollHeight > stage.clientHeight + 1;
-        stage.classList.toggle('pannable', canPan);
-    }
-    stage.addEventListener('scroll', updatePanCursor);
-    window.addEventListener('resize', updatePanCursor);
-    // Re-check once the scale transition finishes (background tabs throttle
-    // transitions, so also fall back to a timeout as a safety net)
-    img.addEventListener('transitionend', updatePanCursor);
-    setTimeout(updatePanCursor, 200);
 
     // Drag with the mouse to pan around a zoomed image
     let panning = false;
     let panStartX = 0;
     let panStartY = 0;
-    let panStartLeft = 0;
-    let panStartTop = 0;
+    let panStartTx = 0;
+    let panStartTy = 0;
 
     stage.addEventListener('mousedown', (e) => {
-        const canPan = stage.scrollWidth > stage.clientWidth + 1 || stage.scrollHeight > stage.clientHeight + 1;
-        if (!canPan) return;
-        if (e.button !== 0) return; // left button only
+        if (!loaded || e.button !== 0) return; // left button only
+        const av = availSize();
+        const s = currentScale();
+        const nat = naturalSize();
+        if (nat.w * s <= av.w + 1 && nat.h * s <= av.h + 1) return;
         panning = true;
         panStartX = e.clientX;
         panStartY = e.clientY;
-        panStartLeft = stage.scrollLeft;
-        panStartTop = stage.scrollTop;
+        panStartTx = tx;
+        panStartTy = ty;
+        img.style.transition = 'none';
         stage.classList.add('panning');
         e.preventDefault();
     });
 
-    document.addEventListener('mousemove', (e) => {
+    function onDocMouseMove(e) {
         if (!panning) return;
-        stage.scrollLeft = panStartLeft - (e.clientX - panStartX);
-        stage.scrollTop = panStartTop - (e.clientY - panStartY);
-    });
+        tx = panStartTx + (e.clientX - panStartX);
+        ty = panStartTy + (e.clientY - panStartY);
+        clampPan();
+        render();
+    }
 
-    document.addEventListener('mouseup', () => {
+    function onDocMouseUp() {
         if (!panning) return;
         panning = false;
         stage.classList.remove('panning');
-    });
+        img.style.transition = TRANS_BTN;
+    }
+
+    document.addEventListener('mousemove', onDocMouseMove);
+    document.addEventListener('mouseup', onDocMouseUp);
+
+    // Touch: one-finger pan, two-finger pinch-zoom, double-tap to toggle zoom
+    let lastTouch = null;
+    let pinchDist = 0;
+    let pinchZoomStart = 1;
+    let lastTapT = 0;
+
+    function touchDist(a, b) {
+        return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+    }
+
+    stage.addEventListener('touchstart', (e) => {
+        if (!loaded) return;
+        img.style.transition = 'none';
+        if (e.touches.length === 1) {
+            const t = e.touches[0];
+            lastTouch = { x: t.clientX, y: t.clientY, tx, ty };
+            pinchDist = 0;
+        } else if (e.touches.length === 2) {
+            lastTouch = null;
+            pinchDist = touchDist(e.touches[0], e.touches[1]);
+            pinchZoomStart = zoom;
+        }
+    }, { passive: false });
+
+    stage.addEventListener('touchmove', (e) => {
+        if (!loaded) return;
+        e.preventDefault();
+        if (e.touches.length === 1 && lastTouch) {
+            tx = lastTouch.tx + (e.touches[0].clientX - lastTouch.x);
+            ty = lastTouch.ty + (e.touches[0].clientY - lastTouch.y);
+            clampPan();
+            render();
+        } else if (e.touches.length === 2 && pinchDist) {
+            const d = touchDist(e.touches[0], e.touches[1]);
+            const rect = stage.getBoundingClientRect();
+            const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+            const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+            setZoom(pinchZoomStart * (d / pinchDist), { x: mx, y: my });
+        }
+    }, { passive: false });
+
+    stage.addEventListener('touchend', (e) => {
+        if (!loaded) return;
+        if (e.changedTouches.length === 1 && e.touches.length === 0) {
+            const now = Date.now();
+            if (now - lastTapT < 300) {
+                // Double-tap: toggle between fit and ~2.5x about the tap point
+                const t = e.changedTouches[0];
+                const rect = stage.getBoundingClientRect();
+                img.style.transition = 'none';
+                setZoom(zoom > 1.5 ? 1 : 2.5, { x: t.clientX - rect.left, y: t.clientY - rect.top });
+                lastTapT = 0;
+            } else {
+                lastTapT = now;
+            }
+        }
+        lastTouch = null;
+        pinchDist = 0;
+        img.style.transition = TRANS_BTN;
+    }, { passive: false });
+
+    // Keep the fit / zoom correct when the window is resized or maximized.
+    function onStageResize() {
+        if (!loaded) return;
+        if (stage.clientWidth === 0 || stage.clientHeight === 0) return; // minimized / hidden
+        // Keep the image point currently under the stage centre fixed.
+        const px = lastScale ? tx / lastScale : 0;
+        const py = lastScale ? ty / lastScale : 0;
+        tx = px * currentScale();
+        ty = py * currentScale();
+        if (fitMode && zoom === 1) { tx = 0; ty = 0; }
+        apply();
+    }
+    let ro = null;
+    if (typeof ResizeObserver === 'function') {
+        ro = new ResizeObserver(onStageResize);
+        ro.observe(stage);
+    }
+    win._cleanup = () => {
+        document.removeEventListener('mousemove', onDocMouseMove);
+        document.removeEventListener('mouseup', onDocMouseUp);
+        if (ro) ro.disconnect();
+    };
 
     apply();
     updatePanCursor();
@@ -643,9 +1008,25 @@ function getFolderImageCollection(folderWin) {
         .map(f => ({ src: f.src, name: f.name }));
 }
 
-// Drag-and-drop helpers: move image files into the Folder window
-function getFolderWindow() {
-    return document.querySelector('.popup[data-owner="icon3"]');
+// Drag-and-drop helpers: move image files into any Folder window (the main
+// Folder or a folder created from the right-click menu).
+function isFolderOwner(ownerId) {
+    if (!ownerId) return false;
+    if (ownerId === 'icon3') return true;
+    const icon = document.getElementById(ownerId);
+    return !!icon && icon.classList.contains('folder-new');
+}
+
+// All open folder windows, top-most first.
+function getFolderWindows() {
+    return [...document.querySelectorAll('.popup')]
+        .filter(p => isFolderOwner(p.dataset.owner))
+        .sort((a, b) => (parseFloat(b.style.zIndex) || 0) - (parseFloat(a.style.zIndex) || 0));
+}
+
+// All folder icons on the desktop (main Folder + created folders).
+function getFolderIcons() {
+    return [document.getElementById('icon3'), ...[...document.querySelectorAll('.icon.folder-new')]].filter(Boolean);
 }
 
 function isOverElement(clientX, clientY, el) {
@@ -657,23 +1038,21 @@ function isOverElement(clientX, clientY, el) {
 function updateFolderDropHighlight(clientX, clientY) {
     const hovering = currentIcon && currentIcon.id !== 'icon1';
     const target = hovering ? getDropTarget(clientX, clientY) : null;
-    const folderWin = getFolderWindow();
-    const folderIcon = document.getElementById('icon3');
-    const binWin = getBinWindow();
-    const binIcon = document.getElementById('icon1');
     const isImage = currentIcon && currentIcon.classList.contains('image-file');
 
-    if (folderWin) folderWin.classList.toggle('drop-target', !!target && target.kind === 'folder' && isImage);
-    if (folderIcon) folderIcon.classList.toggle('drop-target-icon', !!target && target.kind === 'folder' && isImage);
-    if (binWin) binWin.classList.toggle('drop-target', !!target && target.kind === 'bin');
-    if (binIcon) binIcon.classList.toggle('drop-target-icon', !!target && target.kind === 'bin');
+    getFolderWindows().forEach(w => w.classList.toggle('drop-target', !!target && target.kind === 'folder' && isImage));
+    getFolderIcons().forEach(i => i.classList.toggle('drop-target-icon', !!target && target.kind === 'folder' && isImage));
+
+    const binWin = getBinWindow();
+    const binIcon = document.getElementById('icon1');
+    const binDroppable = currentIcon && isDeletable(currentIcon);
+    if (binWin) binWin.classList.toggle('drop-target', !!target && target.kind === 'bin' && binDroppable);
+    if (binIcon) binIcon.classList.toggle('drop-target-icon', !!target && target.kind === 'bin' && binDroppable);
 }
 
 function clearFolderDropHighlight() {
-    const folderWin = getFolderWindow();
-    if (folderWin) folderWin.classList.remove('drop-target');
-    const folderIcon = document.getElementById('icon3');
-    if (folderIcon) folderIcon.classList.remove('drop-target-icon');
+    getFolderWindows().forEach(w => w.classList.remove('drop-target'));
+    getFolderIcons().forEach(i => i.classList.remove('drop-target-icon'));
     const binWin = getBinWindow();
     if (binWin) binWin.classList.remove('drop-target');
     const binIcon = document.getElementById('icon1');
@@ -681,10 +1060,13 @@ function clearFolderDropHighlight() {
 }
 
 function getDropTarget(clientX, clientY) {
-    const folderWin = getFolderWindow();
-    if (folderWin && isOverElement(clientX, clientY, folderWin)) return { kind: 'folder', el: folderWin };
-    const folderIcon = document.getElementById('icon3');
-    if (folderIcon && isOverElement(clientX, clientY, folderIcon)) return { kind: 'folder', el: folderIcon };
+    // Open folder windows are checked top-most first, then the desktop icons.
+    for (const fw of getFolderWindows()) {
+        if (isOverElement(clientX, clientY, fw)) return { kind: 'folder', el: fw };
+    }
+    for (const fi of getFolderIcons()) {
+        if (isOverElement(clientX, clientY, fi)) return { kind: 'folder', el: fi };
+    }
     const binWin = getBinWindow();
     if (binWin && isOverElement(clientX, clientY, binWin)) return { kind: 'bin', el: binWin };
     const binIcon = document.getElementById('icon1');
@@ -692,15 +1074,18 @@ function getDropTarget(clientX, clientY) {
     return null;
 }
 
-function moveImageToFolder(icon) {
+function moveImageToFolder(icon, targetEl) {
     const src = icon.dataset.image;
     const name = icon.dataset.name || (icon.querySelector('span') ? icon.querySelector('span').textContent : 'Image');
 
-    let folderWin = getFolderWindow();
+    // Resolve the folder to drop into from the hovered target: an open folder
+    // window, or a folder icon on the desktop.
+    const ownerId = (targetEl && (targetEl.dataset.owner || targetEl.id)) || 'icon3';
+    let folderWin = targetEl && targetEl.classList.contains('popup') ? targetEl : null;
     if (!folderWin) {
-        // Folder isn't open yet - dropping onto the folder icon opens it first
-        openWindow(document.getElementById('icon3'));
-        folderWin = getFolderWindow();
+        // Folder isn't open yet - dropping onto its icon opens it first
+        openWindow(document.getElementById(ownerId));
+        folderWin = document.querySelector(`.popup[data-owner="${ownerId}"]`);
     }
     if (folderWin && typeof folderWin.addImageFile === 'function') {
         folderWin.addImageFile(src, name);
@@ -877,9 +1262,34 @@ function attachIconListeners(icon) {
     icon.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        highlightIcon(e);
+        // XP behavior: right-clicking an icon already in a multi-selection
+        // keeps the whole selection; otherwise select just this icon.
+        const selected = getSelectedIcons();
+        if (!(selected.length > 1 && selected.includes(icon))) {
+            deselectAllIcons();
+            icon.classList.add('selected');
+        }
         showContextMenu(e.clientX, e.clientY, getIconContextMenu(icon));
     });
+
+    // Long-press opens the context menu (mobile: there's no right-click)
+    icon.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        const t = e.touches[0];
+        clearTimeout(icon._lpTimer);
+        icon._lpTimer = setTimeout(() => {
+            longPressFired = true;
+            const sel = getSelectedIcons();
+            if (!(sel.length > 1 && sel.includes(icon))) {
+                deselectAllIcons();
+                icon.classList.add('selected');
+            }
+            showContextMenu(t.clientX, t.clientY, getIconContextMenu(icon));
+        }, 480);
+    }, { passive: false });
+    ['touchmove', 'touchend', 'touchcancel'].forEach(evt =>
+        icon.addEventListener(evt, () => { clearTimeout(icon._lpTimer); icon._lpTimer = null; }, { passive: false })
+    );
 }
 
 function openIconWindow(icon) {
@@ -896,6 +1306,7 @@ function createDesktopIcon({ iconSrc, label, className, dataset, dataOpens, x, y
     if (dataOpens) icon.dataset.opens = dataOpens;
     if (dataset) Object.assign(icon.dataset, dataset);
     icon.innerHTML = `<img src="${iconSrc}" alt="${label}"><span>${label}</span>`;
+    icon.dataset.mtime = String(Date.now());
     icon.style.position = 'absolute';
     const snapped = snapToGrid(
         x != null ? Math.max(0, x - 45) : 0,
@@ -920,14 +1331,14 @@ function uniqueDesktopName(base) {
 function getDesktopContextMenu() {
     return [
         { label: 'Arrange Icons By', submenu: [
-            { label: 'Name', action: () => {} },
-            { label: 'Size', action: () => {} },
-            { label: 'Type', action: () => {} },
-            { label: 'Modified', action: () => {} },
+            { label: 'Name', action: () => arrangeIconsBy('name') },
+            { label: 'Size', action: () => arrangeIconsBy('size') },
+            { label: 'Type', action: () => arrangeIconsBy('type') },
+            { label: 'Modified', action: () => arrangeIconsBy('modified') },
             { sep: true },
             { label: 'Align to Grid', action: () => alignIconsToGrid() }
         ]},
-        { label: 'Refresh', action: () => alignIconsToGrid() },
+        { label: 'Refresh', action: () => location.reload() },
         { sep: true },
         { label: 'Paste', disabled: true },
         { label: 'Paste Shortcut', disabled: true },
@@ -951,6 +1362,120 @@ function alignIconsToGrid() {
         icon.style.left = snapped.x + 'px';
         icon.style.top = snapped.y + 'px';
     });
+}
+
+// ---- Icon info (sizes, types, dates) used by Properties + Arrange Icons By ----
+function formatBytes(bytes) {
+    if (!bytes || bytes <= 0) return '0 bytes';
+    if (bytes >= 1048576) return (bytes / 1048576).toFixed(1) + ' MB';
+    if (bytes >= 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return bytes + ' bytes';
+}
+
+function formatDate(ts) {
+    if (!ts) return '\u2014';
+    const d = new Date(ts);
+    const pad = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+// Cache of image info (byte size / pixel dimensions) keyed by image source
+const imageInfoCache = {};
+function getImageInfo(src) {
+    if (!src) return { bytes: 0, w: 0, h: 0 };
+    if (imageInfoCache[src]) return imageInfoCache[src];
+    const info = { bytes: 0, w: 0, h: 0 };
+    imageInfoCache[src] = info;
+    if (src.startsWith('data:')) {
+        // Embedded (canvas) images: compute the actual byte size from the data
+        const comma = src.indexOf(',');
+        const base64 = comma >= 0 ? src.slice(comma + 1) : '';
+        const padding = (src.match(/=+$/) || [''])[0].length;
+        info.bytes = Math.floor(base64.length * 3 / 4) - padding;
+    } else {
+        // File images: load them once to read the real pixel dimensions
+        const im = new Image();
+        im.onload = () => { info.w = im.naturalWidth; info.h = im.naturalHeight; };
+        im.src = src;
+    }
+    return info;
+}
+
+// Descriptive type for an icon (used by Properties and Arrange by Type)
+function getIconType(icon) {
+    if (icon.classList.contains('image-file')) {
+        const src = icon.dataset.image || '';
+        if (/\.png$/i.test(src)) return 'PNG Image';
+        if (/\.jpe?g$/i.test(src)) return 'JPEG Image';
+        return 'Bitmap Image';
+    }
+    if (icon.classList.contains('folder-new') || icon.id === 'icon3' || icon.dataset.opens === 'icon3') return 'File Folder';
+    if (icon.classList.contains('text-file') || icon.id === 'icon5' || icon.dataset.opens === 'icon5') return 'Text Document';
+    if (icon.dataset.opens) return 'Shortcut';
+    return 'Application';
+}
+
+// Info used for both sorting and the Properties dialog
+function getIconInfo(icon) {
+    const name = icon.querySelector('span').textContent;
+    const type = getIconType(icon);
+    const mtime = parseInt(icon.dataset.mtime || '0', 10) || 0;
+    let sizeValue = 0;
+    let sizeLabel = '0 bytes';
+
+    if (icon.classList.contains('image-file')) {
+        const info = getImageInfo(icon.dataset.image);
+        if (info.bytes) {
+            sizeValue = info.bytes;
+            sizeLabel = formatBytes(info.bytes);
+        } else if (info.w && info.h) {
+            sizeValue = info.w * info.h; // pixel count is the sortable "size"
+            sizeLabel = `${info.w} \u00d7 ${info.h} pixels`;
+        } else {
+            sizeLabel = 'Loading\u2026';
+        }
+    } else if (icon.classList.contains('folder-new') || icon.id === 'icon3' || icon.dataset.opens === 'icon3') {
+        const list = icon.classList.contains('folder-new')
+            ? (newFolderFiles[icon.id] || [])
+            : folderFiles;
+        sizeValue = list.length;
+        sizeLabel = list.length + (list.length === 1 ? ' item' : ' items');
+    } else if (icon.classList.contains('text-file') || icon.id === 'icon5') {
+        sizeValue = 0;
+        sizeLabel = '0 bytes';
+    } else {
+        // Applications / shortcuts: nominal size
+        sizeValue = 1;
+        sizeLabel = '1 KB';
+    }
+
+    return { name, type, sizeValue, sizeLabel, mtime, modifiedLabel: formatDate(mtime) };
+}
+
+// Arrange desktop icons by a criteria (Name / Size / Type / Modified)
+function arrangeIconsBy(criteria) {
+    const icons = [...document.querySelectorAll('.desktop .icon')];
+    const keyed = icons.map(icon => {
+        const info = getIconInfo(icon);
+        let key;
+        if (criteria === 'name') key = info.name.toLowerCase();
+        else if (criteria === 'size') key = info.sizeValue;
+        else if (criteria === 'type') key = (info.type === 'File Folder' ? '0 ' : '1 ') + info.type.toLowerCase();
+        else if (criteria === 'modified') key = info.mtime;
+        return { icon, key };
+    });
+    keyed.sort((a, b) => {
+        if (typeof a.key === 'number' && typeof b.key === 'number') return a.key - b.key;
+        return String(a.key).localeCompare(String(b.key));
+    });
+    // Lay them out top-to-bottom in two columns, like Windows XP
+    const n = keyed.length;
+    const perCol = Math.max(1, Math.ceil(n / 2));
+    keyed.forEach((item, i) => {
+        item.icon.style.left = (Math.floor(i / perCol) * 90) + 'px';
+        item.icon.style.top = ((i % perCol) * 90) + 'px';
+    });
+    deselectAllIcons();
 }
 
 function newFolderOnDesktop() {
@@ -996,12 +1521,15 @@ function newBitmapOnDesktop() {
 function getIconContextMenu(icon) {
     const img = icon.querySelector('img');
     const iconSrc = img ? img.getAttribute('src') : 'assets/image-file-icon.png';
-    const system = ['icon1', 'icon2', 'icon3', 'icon4', 'icon5'].includes(icon.id);
+    // Menu actions apply to the whole selection, like Windows XP
+    const selected = getSelectedIcons();
+    const affected = selected.length ? selected : [icon];
+    const canMoveToBin = affected.some(isDeletable);
     return [
         { label: 'Open', icon: iconSrc, action: () => openIconWindow(icon) },
         { sep: true },
         { label: 'Create Shortcut', icon: iconSrc, action: () => createShortcut(icon) },
-        { label: 'Delete', icon: 'assets/bin-icon.png', disabled: system, action: () => deleteIcon(icon) },
+        { label: 'Move to Recycle Bin', icon: 'assets/bin-icon.png', disabled: !canMoveToBin, action: () => moveSelectionToBin() },
         { label: 'Rename', icon: 'assets/notepad-icon.png', action: () => renameIcon(icon) },
         { sep: true },
         { label: 'Properties', icon: 'assets/image-file-icon.png', action: () => showIconProperties(icon) }
@@ -1028,11 +1556,6 @@ function createShortcut(icon) {
     createDesktopIcon(opts);
 }
 
-function deleteIcon(icon) {
-    if (icon.id === 'icon1') return; // the Recycle Bin itself can't be deleted
-    moveIconToBin(icon);
-}
-
 /* ===== Recycle Bin ===== */
 const recycleBin = []; // persists for the session (survives closing/reopening the bin)
 
@@ -1050,9 +1573,19 @@ function escHtml(s) {
     return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
-// Move a desktop icon into the Recycle Bin (keeps all its info for Restore)
-function moveIconToBin(icon) {
-    if (icon.id === 'icon1') return;
+// Currently selected desktop icons (empty when nothing is selected).
+function getSelectedIcons() {
+    return [...document.querySelectorAll('.desktop .icon.selected')];
+}
+
+// System icons (My Computer, My Documents, Recycle Bin, Folder, Paint,
+// Notepad) can't be deleted or dragged to the Recycle Bin, like real XP.
+function isDeletable(icon) {
+    return !!icon && !['icon1', 'icon2', 'icon3', 'icon4', 'icon5', 'icon9'].includes(icon.id);
+}
+
+// Build the Recycle Bin entry for a desktop icon (keeps all info for Restore)
+function binEntryFor(icon) {
     const img = icon.querySelector('img');
     const entry = {
         type: icon.classList.contains('image-file') ? 'image-file'
@@ -1069,10 +1602,35 @@ function moveIconToBin(icon) {
     } else {
         entry.dataOpens = icon.dataset.opens || null;
     }
-    recycleBin.push(entry);
-    icon.remove();
+    return entry;
+}
+
+// Move one or more desktop icons into the Recycle Bin (keeps info for Restore).
+function moveIconsToBin(icons) {
+    const list = (Array.isArray(icons) ? icons : [icons]).filter(i => i && i.isConnected && isDeletable(i));
+    if (!list.length) return;
+    list.forEach(icon => {
+        if (icon.classList.contains('folder-new') && newFolderFiles[icon.id]) {
+            // Deleted folders take their contents with them
+            delete newFolderFiles[icon.id];
+        }
+        recycleBin.push(binEntryFor(icon));
+        icon.remove();
+    });
     deselectAllIcons();
     refreshBinWindows();
+}
+
+// Move a single desktop icon into the Recycle Bin.
+function moveIconToBin(icon) {
+    moveIconsToBin([icon]);
+}
+
+// Move the whole current selection (plus an optional anchor icon) to the bin.
+function moveSelectionToBin(anchor) {
+    const icons = getSelectedIcons();
+    if (anchor && !icons.includes(anchor)) icons.push(anchor);
+    moveIconsToBin(icons.length ? icons : [anchor]);
 }
 
 function restoreBinItem(index) {
@@ -1149,6 +1707,7 @@ function renameIcon(icon) {
         newSpan.textContent = newLabel;
         input.replaceWith(newSpan);
         if (save && icon.dataset.name) icon.dataset.name = newLabel;
+        if (save && newLabel !== oldLabel) icon.dataset.mtime = String(Date.now());
     };
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') { e.preventDefault(); commit(true); }
@@ -1159,19 +1718,14 @@ function renameIcon(icon) {
 
 // ---- Properties dialogs ----
 function showIconProperties(icon) {
-    const name = icon.querySelector('span').textContent;
     const img = icon.querySelector('img');
     const iconSrc = img ? img.getAttribute('src') : 'assets/image-file-icon.png';
-    let type = 'Shortcut';
-    if (icon.classList.contains('image-file')) type = 'Bitmap Image';
-    else if (icon.classList.contains('folder-new') || icon.dataset.opens === 'icon3' || icon.id === 'icon3') type = 'File Folder';
-    else if (icon.classList.contains('text-file') || icon.dataset.opens === 'icon5' || icon.id === 'icon5') type = 'Text Document';
-    else if (iconContent[icon.id]) type = 'Application';
-    const size = icon.classList.contains('image-file') ? '~12 KB' : '0 KB';
-    showPropertiesDialog(name, iconSrc, [
-        ['Type', type],
+    const info = getIconInfo(icon);
+    showPropertiesDialog(info.name, iconSrc, [
+        ['Type', info.type],
         ['Location', 'Desktop'],
-        ['Size', size]
+        ['Size', info.sizeLabel],
+        ['Modified', info.modifiedLabel]
     ]);
 }
 
@@ -1282,6 +1836,34 @@ function openWindow(icon) {
     createWindowElement(icon);
 }
 
+// True when we're on a phone-sized / narrow layout
+function isMobileLayout() {
+    return window.matchMedia('(max-width: 720px)').matches;
+}
+
+// Keep windows usable on small screens: clamp size/position to the viewport
+function clampWindowToScreen(win) {
+    if (!isMobileLayout()) return;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight - 40; // leave room for the taskbar
+    const r = win.getBoundingClientRect();
+    let w = parseFloat(win.style.width) || r.width;
+    let h = parseFloat(win.style.height) || r.height;
+    const minW = Math.min(parseInt(win.dataset.minW || '0', 10) || 0, vw - 8);
+    const minH = Math.min(parseInt(win.dataset.minH || '0', 10) || 0, vh - 4);
+    w = Math.max(minW, Math.min(w, vw - 8));
+    h = Math.max(minH, Math.min(h, vh - 4));
+    win.style.width = Math.round(w) + 'px';
+    win.style.height = Math.round(h) + 'px';
+    // Keep the whole window on screen when possible
+    const left = parseFloat(win.style.left) || r.left;
+    const top = parseFloat(win.style.top) || r.top;
+    const maxLeft = Math.max(4, vw - w - 4);
+    const maxTop = Math.max(4, vh - h + 4);
+    win.style.left = Math.round(Math.min(Math.max(left, 4), maxLeft)) + 'px';
+    win.style.top = Math.round(Math.min(Math.max(top, 4), maxTop)) + 'px';
+}
+
 function createWindowElement(icon) {
     let data = iconContent[icon.id];
 
@@ -1321,7 +1903,8 @@ function createWindowElement(icon) {
                 </div>`
         };
     } else if (!data && icon.classList.contains('folder-new')) {
-        // A folder created from the right-click menu: its own empty window
+        // A folder created from the right-click menu: works like the main
+        // Folder, with its own persistent file list (drag images in/out).
         const folderLabel = icon.querySelector('span').textContent || 'New Folder';
         data = {
             title: folderLabel,
@@ -1365,7 +1948,11 @@ function createWindowElement(icon) {
                       </div>
                     </div>
                     <div class="exp-files-area">
-                      <div class="exp-empty">This folder is empty.</div>
+                      <div class="exp-project-list"></div>
+                      <div class="exp-preview">
+                        <h3>Select a project</h3>
+                        <p>Choose a project from the list to see its summary and open it.</p>
+                      </div>
                     </div>
                   </div>
                   <div class="exp-statusbar">0 objects</div>
@@ -1461,10 +2048,18 @@ function createWindowElement(icon) {
         // New text documents open like Notepad
         win.style.width = '456px';
         win.style.height = '342px';
+    } else if (icon.id === 'icon9') {
+        // Snake game window
+        win.style.width = '460px';
+        win.style.height = '540px';
+        win.dataset.minW = '380';
+        win.dataset.minH = '440';
     } else {
         win.style.width = '400px';
         win.style.height = '300px';
     }
+
+    clampWindowToScreen(win);
 
     if (icon.id === 'icon1') {
         contentEl.classList.add('no-padding');
@@ -1478,6 +2073,9 @@ function createWindowElement(icon) {
         contentEl.classList.add('no-padding');
         setupNotepad(win, initialNotepad);
         initialNotepad = false;
+    } else if (icon.id === 'icon9') {
+        contentEl.classList.add('no-padding');
+        setupSnake(win);
     } else if (icon.id === 'icon3') {
         contentEl.classList.add('no-padding');
         setupFolder(win);
@@ -1499,6 +2097,9 @@ function createWindowElement(icon) {
     setupWindowControls(win);
     bringToFront(win);
     addTaskbarButton(win);
+    // Clamp again last: setup functions (e.g. the image viewer) may change the
+    // window size after the initial clamp, which could push it off-screen.
+    clampWindowToScreen(win);
     openWindows[icon.id] = win;
 }
 
@@ -1611,6 +2212,16 @@ function setupWindowControls(win) {
     let startX = 0;
     let startY = 0;
 
+    function moveWindow(x, y) {
+        // Keep the title bar reachable on small screens
+        if (isMobileLayout()) {
+            x = Math.max(-win.offsetWidth + 80, Math.min(x, window.innerWidth - 80));
+            y = Math.max(0, Math.min(y, window.innerHeight - 60));
+        }
+        win.style.left = x + 'px';
+        win.style.top = y + 'px';
+    }
+
     header.addEventListener('mousedown', (e) => {
         e.preventDefault();
         isDragging = true;
@@ -1623,8 +2234,7 @@ function setupWindowControls(win) {
 
     function onMove(e) {
         if (!isDragging) return;
-        win.style.left = (e.clientX - startX) + 'px';
-        win.style.top = (e.clientY - startY) + 'px';
+        moveWindow(e.clientX - startX, e.clientY - startY);
     }
 
     function onUp() {
@@ -1649,8 +2259,7 @@ function setupWindowControls(win) {
         e.preventDefault();
         if (!isDragging) return;
         const touch = e.touches[0];
-        win.style.left = (touch.clientX - startX) + 'px';
-        win.style.top = (touch.clientY - startY) + 'px';
+        moveWindow(touch.clientX - startX, touch.clientY - startY);
     }
 
     function onTouchEndHeader() {
@@ -1687,6 +2296,35 @@ function setupWindowControls(win) {
         isResizing = false;
         document.removeEventListener('mousemove', onResizeMove);
         document.removeEventListener('mouseup', onResizeUp);
+        win.dispatchEvent(new CustomEvent('windowResized'));
+    }
+
+    // Resizing by touch
+    handle.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        isResizing = true;
+        rw = win.offsetWidth;
+        rh = win.offsetHeight;
+        rx = e.touches[0].clientX;
+        ry = e.touches[0].clientY;
+        document.addEventListener('touchmove', onResizeTouchMove, { passive: false });
+        document.addEventListener('touchend', onResizeTouchUp);
+    }, { passive: false });
+
+    function onResizeTouchMove(e) {
+        e.preventDefault();
+        if (!isResizing) return;
+        const minW = parseInt(win.dataset.minW || '200', 10);
+        const minH = parseInt(win.dataset.minH || '150', 10);
+        win.style.width = Math.max(rw + (e.touches[0].clientX - rx), minW) + 'px';
+        win.style.height = Math.max(rh + (e.touches[0].clientY - ry), minH) + 'px';
+    }
+
+    function onResizeTouchUp() {
+        isResizing = false;
+        document.removeEventListener('touchmove', onResizeTouchMove);
+        document.removeEventListener('touchend', onResizeTouchUp);
         win.dispatchEvent(new CustomEvent('windowResized'));
     }
 }
@@ -1777,6 +2415,9 @@ function restoreWindow(win) {
 function closeWindow(win) {
     if (win.dataset.busy === '1') return;
     win.dataset.busy = '1';
+    if (typeof win._cleanup === 'function') {
+        try { win._cleanup(); } catch (e) { /* ignore */ }
+    }
     const anim = win.animate([
         { transform: 'scale(1)', opacity: 1, transformOrigin: '50% 100%' },
         { transform: 'scale(0.75)', opacity: 0 }
@@ -1789,12 +2430,14 @@ function closeWindow(win) {
     }, 160);
 }
 
-// Folder / Explorer app - shows projects and lets you drag image files in
-function setupFolder(win) {
+// Folder / Explorer app - shows projects and lets you drag image files in.
+// The main Folder uses the shared `folderFiles` list; folders created from the
+// right-click menu pass their own persistent list (`newFolderFiles[owner]`).
+function setupFolder(win, files) {
     const projectList = win.querySelector('.exp-project-list');
     const preview = win.querySelector('.exp-preview');
 
-    const files = folderFiles; // persistent - survives closing/reopening the Folder
+    if (!files) files = folderFiles; // persistent - survives closing/reopening the Folder
 
     let activeIndex = 0;
 
@@ -1878,11 +2521,17 @@ function setupFolder(win) {
     updatePreview();
 }
 
-// New folder created from the right-click menu: fills in the window title/address
+// New folder created from the right-click menu: behaves exactly like the main
+// Folder (drag images in/out), with its own persistent file list so dropped
+// images survive closing/reopening the window.
 function setupNewFolderWindow(win) {
     const title = win.querySelector('.popup-title').textContent;
     const addr = win.querySelector('.exp-address-name');
     if (addr) addr.textContent = '📁 ' + title;
+
+    const ownerId = win.dataset.owner;
+    if (!newFolderFiles[ownerId]) newFolderFiles[ownerId] = [];
+    setupFolder(win, newFolderFiles[ownerId]);
 }
 
 // New text document created from the right-click menu: an empty Notepad
@@ -2096,19 +2745,247 @@ function setupNotepad(win, typewriter, initialText) {
     }
 }
 
+// Snake game - a small playable app window.
+function setupSnake(win) {
+    const canvas = win.querySelector('.snake-canvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = win.querySelector('.snake-score');
+    const bestEl = win.querySelector('.snake-best');
+    const overlay = win.querySelector('.snake-overlay');
+    const msgEl = win.querySelector('.snake-msg');
+
+    const COLS = 20;
+    const ROWS = 20;
+    const CELL = canvas.width / COLS;
+    const BEST_KEY = 'xpSnakeBest';
+
+    let snake = [];
+    let dir = { x: 1, y: 0 };
+    let nextDir = { x: 1, y: 0 };
+    let food = null;
+    let score = 0;
+    let best = parseInt(localStorage.getItem(BEST_KEY) || '0', 10) || 0;
+    let running = false;
+    let paused = false;
+    let gameOver = false;
+    let timer = null;
+
+    bestEl.textContent = 'Best: ' + best;
+
+    function randomFood() {
+        const taken = new Set(snake.map(s => s.x + ',' + s.y));
+        const free = [];
+        for (let x = 0; x < COLS; x++) {
+            for (let y = 0; y < ROWS; y++) {
+                if (!taken.has(x + ',' + y)) free.push({ x, y });
+            }
+        }
+        return free.length ? free[Math.floor(Math.random() * free.length)] : null;
+    }
+
+    function reset() {
+        stopTimer();
+        snake = [{ x: 5, y: 10 }, { x: 4, y: 10 }, { x: 3, y: 10 }];
+        dir = { x: 1, y: 0 };
+        nextDir = { x: 1, y: 0 };
+        score = 0;
+        running = false;
+        paused = false;
+        gameOver = false;
+        food = randomFood();
+        scoreEl.textContent = 'Score: 0';
+        overlay.classList.add('hidden');
+        setPauseBtn();
+        draw();
+    }
+
+    // Start (or restart) the game. `initialDir` lets a keypress start the
+    // game already moving in the pressed direction.
+    function start(initialDir) {
+        if (gameOver) reset();
+        if (initialDir) { dir = { ...initialDir }; nextDir = { ...initialDir }; }
+        running = true;
+        paused = false;
+        stopTimer();
+        overlay.classList.add('hidden');
+        timer = setInterval(tick, 120);
+        setPauseBtn();
+        draw();
+    }
+
+    function pause() {
+        if (!running || gameOver) return;
+        paused = !paused;
+        if (paused) stopTimer();
+        else timer = setInterval(tick, 120);
+        setPauseBtn();
+    }
+
+    function stopTimer() {
+        if (timer) { clearInterval(timer); timer = null; }
+    }
+
+    function setPauseBtn() {
+        const btn = win.querySelector('.snake-btn[data-action="pause"]');
+        if (!btn) return;
+        btn.disabled = !running || gameOver;
+        btn.textContent = paused ? 'Resume' : 'Pause';
+    }
+
+    function tick() {
+        if (!running || paused || gameOver) return;
+        dir = nextDir;
+        const head = snake[0];
+        const nx = head.x + dir.x;
+        const ny = head.y + dir.y;
+
+        // Wall collision
+        if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) return endGame(false);
+
+        // Self collision (the tail cell is safe unless we're growing)
+        const willGrow = food && nx === food.x && ny === food.y;
+        const body = willGrow ? snake : snake.slice(0, -1);
+        if (body.some(s => s.x === nx && s.y === ny)) return endGame(false);
+
+        snake.unshift({ x: nx, y: ny });
+        if (willGrow) {
+            score++;
+            scoreEl.textContent = 'Score: ' + score;
+            if (score > best) {
+                best = score;
+                localStorage.setItem(BEST_KEY, String(best));
+                bestEl.textContent = 'Best: ' + best;
+            }
+            food = randomFood();
+            if (!food) return endGame(true); // cleared the whole board
+        } else {
+            snake.pop();
+        }
+        draw();
+    }
+
+    function endGame(won) {
+        running = false;
+        gameOver = true;
+        stopTimer();
+        draw();
+        msgEl.textContent = won ? 'You win!' : 'Game Over';
+        overlay.querySelector('.snake-btn').textContent = 'Play Again';
+        overlay.classList.remove('hidden');
+        setPauseBtn();
+    }
+
+    function draw() {
+        ctx.fillStyle = '#0c2e0c';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Subtle grid
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+        ctx.lineWidth = 1;
+        for (let i = 1; i < COLS; i++) {
+            ctx.beginPath(); ctx.moveTo(i * CELL, 0); ctx.lineTo(i * CELL, canvas.height); ctx.stroke();
+        }
+        for (let i = 1; i < ROWS; i++) {
+            ctx.beginPath(); ctx.moveTo(0, i * CELL); ctx.lineTo(canvas.width, i * CELL); ctx.stroke();
+        }
+
+        // Apple
+        if (food) {
+            const cx = food.x * CELL + CELL / 2;
+            const cy = food.y * CELL + CELL / 2;
+            ctx.fillStyle = '#e23b2e';
+            ctx.beginPath(); ctx.arc(cx, cy, CELL / 2 - 2, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#7dbf4a';
+            ctx.fillRect(cx - 2, cy - CELL / 2 - 3, 4, 5);
+        }
+
+        // Snake body (tail first so the head draws on top)
+        for (let i = snake.length - 1; i >= 0; i--) {
+            const s = snake[i];
+            const shade = Math.min(i * 2, 26);
+            ctx.fillStyle = i === 0 ? '#8bf077' : `rgb(${78 - shade}, ${178 - shade}, ${70})`;
+            ctx.fillRect(s.x * CELL + 1, s.y * CELL + 1, CELL - 2, CELL - 2);
+        }
+
+        // Eyes on the head
+        if (snake.length) {
+            const h = snake[0];
+            const ex = h.x * CELL;
+            const ey = h.y * CELL;
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(ex + CELL * 0.28, ey + CELL * 0.22, CELL * 0.2, CELL * 0.26);
+            ctx.fillRect(ex + CELL * 0.55, ey + CELL * 0.22, CELL * 0.2, CELL * 0.26);
+            ctx.fillStyle = '#111';
+            ctx.fillRect(ex + CELL * 0.34, ey + CELL * 0.28, CELL * 0.1, CELL * 0.14);
+            ctx.fillRect(ex + CELL * 0.6, ey + CELL * 0.28, CELL * 0.1, CELL * 0.14);
+        }
+    }
+
+    // Steer the snake (also starts the game when it isn't running)
+    function steer(d) {
+        if (!running || gameOver) { start(d); return; }
+        if (!(d.x === -dir.x && d.y === -dir.y)) nextDir = d;
+    }
+
+    function onKey(e) {
+        if (!win.classList.contains('active-window')) return;
+        const k = e.key.toLowerCase();
+        const dirs = {
+            arrowup: { x: 0, y: -1 }, w: { x: 0, y: -1 },
+            arrowdown: { x: 0, y: 1 }, s: { x: 0, y: 1 },
+            arrowleft: { x: -1, y: 0 }, a: { x: -1, y: 0 },
+            arrowright: { x: 1, y: 0 }, d: { x: 1, y: 0 }
+        };
+        if (dirs[k]) {
+            e.preventDefault();
+            steer(dirs[k]);
+        } else if (k === 'p') {
+            pause();
+        }
+    }
+    document.addEventListener('keydown', onKey);
+
+    win.querySelectorAll('.snake-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const action = btn.dataset.action;
+            if (action === 'start') start();
+            else if (action === 'pause') pause();
+            else if (action === 'restart') reset();
+        });
+    });
+
+    // On-screen D-pad for touch devices
+    const DPAD_DIRS = { up: { x: 0, y: -1 }, down: { x: 0, y: 1 }, left: { x: -1, y: 0 }, right: { x: 1, y: 0 } };
+    win.querySelectorAll('.snake-dpad-btn').forEach(btn => {
+        const d = DPAD_DIRS[btn.dataset.dir];
+        const press = (ev) => { ev.preventDefault(); steer(d); };
+        btn.addEventListener('touchstart', press, { passive: false });
+        btn.addEventListener('click', press);
+    });
+
+    reset();
+
+    // Stop the game loop and release keys when the window closes
+    win._cleanup = () => {
+        stopTimer();
+        document.removeEventListener('keydown', onKey);
+    };
+}
+
 // Start menu
 // Apps available on this desktop (opened from the Start menu)
 const startAppTargets = {
     internet: 'icon2',
     notepad: 'icon5',
     paint: 'icon4',
+    snake: 'icon9',
     mydocuments: 'icon3'
 };
 
 // Friendly names for the "Application not found" dialog
 const startAppNames = {
     internet: 'Internet Explorer', email: 'Outlook Express', minesweeper: 'Minesweeper',
-    notepad: 'Notepad', winamp: 'Winamp', paint: 'Paint',
+    notepad: 'Notepad', winamp: 'Winamp', paint: 'Paint', snake: 'Snake',
     mediaplayer: 'Windows Media Player', messenger: 'Windows Messenger', allprograms: 'All Programs',
     mydocuments: 'My Documents', myrecent: 'My Recent Documents', mypictures: 'My Pictures',
     mymusic: 'My Music', mycomputer: 'My Computer', controlpanel: 'Control Panel',

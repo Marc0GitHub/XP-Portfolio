@@ -62,29 +62,57 @@ const iconContent = {
               <img class="ie-logo" src="assets/internet-explorer-icon.png" alt="">
             </div>
             <div class="ie-toolbar">
-              <button class="ie-nav-btn" id="browserBack"><span class="ie-nav-icon">&#8592;</span><span>Back</span></button>
-              <button class="ie-nav-btn" id="browserForward"><span class="ie-nav-icon">&#8594;</span><span>Forward</span></button>
+              <button class="ie-nav-btn" id="browserBack" disabled><span class="ie-nav-icon">&#8592;</span><span>Back</span></button>
+              <button class="ie-nav-btn" id="browserForward" disabled><span class="ie-nav-icon">&#8594;</span><span>Forward</span></button>
               <button class="ie-nav-btn" id="browserRefresh"><span class="ie-nav-icon">&#8635;</span><span>Refresh</span></button>
               <button class="ie-nav-btn" id="browserHome"><span class="ie-nav-icon">&#8962;</span><span>Home</span></button>
+              <span class="ie-tool-sep"></span>
+              <button class="ie-nav-btn" id="browserSearch"><span class="ie-nav-icon">&#128269;</span><span>Search</span></button>
+              <button class="ie-nav-btn" id="browserFavorites"><span class="ie-nav-icon">&#9733;</span><span>Favorites</span></button>
             </div>
             <div class="ie-address-bar">
               <span class="ie-address-title">Address</span>
               <div class="ie-address-input-wrap">
-                <img src="assets/internet-explorer-icon.png" alt="">
-                <input type="text" id="browserUrl" value="https://en.wikipedia.org">
+                <img id="ieFavicon" src="assets/internet-explorer-icon.png" alt="">
+                <input type="text" id="browserUrl" value="https://en.wikipedia.org" placeholder="Type a URL or search the web…" autocomplete="off" spellcheck="false">
               </div>
               <button id="browserGo">Go</button>
             </div>
-            <iframe id="browserFrame" src="https://en.wikipedia.org"></iframe>
+            <div class="ie-progress" id="ieProgress"><div class="ie-progress-fill" id="ieProgressFill"></div></div>
+            <div class="ie-bookmarks-bar" id="ieBookmarksBar">
+              <span class="ie-bm-label">Links</span>
+              <a class="ie-bm-link" data-url="https://en.wikipedia.org" title="Wikipedia">Wikipedia</a>
+              <a class="ie-bm-link" data-url="https://en.wikipedia.org/wiki/Special:Search" title="Wikipedia Search">Search Wiki</a>
+              <a class="ie-bm-link" data-url="https://www.britannica.com" title="Britannica">Britannica</a>
+              <a class="ie-bm-link" data-url="https://news.ycombinator.com" title="Hacker News">Hacker News</a>
+              <a class="ie-bm-link" data-url="https://stackoverflow.com" title="Stack Overflow">Stack Overflow</a>
+            </div>
+            <div class="ie-content-area">
+              <iframe id="browserFrame" src="https://en.wikipedia.org" allow="fullscreen"></iframe>
+              <div class="ie-error-page" id="ieErrorPage" style="display:none">
+                <div class="ie-error-icon">&#9888;</div>
+                <h2 class="ie-error-title">This page can't be displayed</h2>
+                <p class="ie-error-msg" id="ieErrorMsg">The website may have blocked embedding or is unreachable.</p>
+                <div class="ie-error-actions">
+                  <button class="ie-error-btn" id="ieOpenInTab">&#8599; Open in New Tab</button>
+                  <button class="ie-error-btn ie-error-btn-secondary" id="ieRetryBtn">&#8635; Retry</button>
+                  <button class="ie-error-btn ie-error-btn-secondary" id="ieGoHomeBtn">&#8962; Go Home</button>
+                </div>
+                <div class="ie-error-url" id="ieErrorUrl"></div>
+              </div>
+            </div>
             <div class="ie-status-bar">
               <span id="ieStatusText">Done</span>
-              <span class="ie-zone">Internet</span>
+              <span class="ie-status-right">
+                <a class="ie-open-tab-link" id="ieOpenTabLink" title="Open current page in a new browser tab">&#8599; Open in New Tab</a>
+                <span class="ie-zone">Internet</span>
+              </span>
             </div>
           </div>
         `
     },
     icon3: {
-        title: "Folder",
+        title: "Projects",
         icon: "assets/folder-icon.png",
         content: `
           <div class="exp-chrome">
@@ -108,7 +136,7 @@ const iconContent = {
             </div>
             <div class="exp-address-bar">
               <span class="exp-address-label">Address</span>
-              <div class="exp-address-input">&#128193; My Documents\\Portfolio</div>
+              <div class="exp-address-input">&#128193; Projects</div>
             </div>
             <div class="exp-body">
               <div class="exp-sidebar">
@@ -178,6 +206,14 @@ const iconContent = {
               <button class="snake-btn" data-action="start">Start</button>
               <button class="snake-btn" data-action="pause" disabled>Pause</button>
               <button class="snake-btn" data-action="restart">Restart</button>
+              <label class="snake-diff-label">Difficulty
+                <select class="snake-diff" id="snakeDifficulty">
+                  <option value="easy">Easy</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="hard">Hard</option>
+                  <option value="extreme" disabled>Locked: Extreme</option>
+                </select>
+              </label>
               <span class="snake-score">Score: 0</span>
               <span class="snake-best">Best: 0</span>
             </div>
@@ -194,15 +230,350 @@ const iconContent = {
                 <button class="snake-dpad-btn" data-dir="right">&#9654;</button>
               </div>
             </div>
-            <div class="snake-hint">Arrow keys / WASD to steer &middot; P to pause</div>
+            <div class="snake-hint">Arrow keys / WASD to steer &middot; P to pause &middot; Win on Hard to unlock Extreme</div>
+          </div>
+        `
+    },
+    icon10: {
+        title: "Outlook Express",
+        icon: "assets/start-email.png",
+        content: `
+          <div class="mail-app">
+            <div class="oe-menubar">
+              <span class="oe-menu-item">File</span>
+              <span class="oe-menu-item">Edit</span>
+              <span class="oe-menu-item">View</span>
+              <span class="oe-menu-item">Tools</span>
+              <span class="oe-menu-item">Message</span>
+              <span class="oe-menu-item">Help</span>
+            </div>
+            <div class="oe-toolbar">
+              <button class="oe-tool" data-action="compose"><span class="oe-tool-ic">&#9993;</span>Create Mail</button>
+              <span class="oe-sep"></span>
+              <button class="oe-tool" data-action="reply"><span class="oe-tool-ic">&#8617;</span>Reply</button>
+              <button class="oe-tool" data-action="replyall"><span class="oe-tool-ic">&#8646;</span>Reply All</button>
+              <button class="oe-tool" data-action="forward"><span class="oe-tool-ic">&#8618;</span>Forward</button>
+              <span class="oe-sep"></span>
+              <button class="oe-tool" data-action="sendrecv"><span class="oe-tool-ic">&#8635;</span>Send/Recv</button>
+              <button class="oe-tool" data-action="addresses"><span class="oe-tool-ic">&#9787;</span>Addresses</button>
+              <button class="oe-tool" data-action="find"><span class="oe-tool-ic">&#9906;</span>Find</button>
+            </div>
+            <div class="oe-body">
+              <div class="oe-folders">
+                <div class="oe-folder oe-folder-root">Outlook Express</div>
+                <div class="oe-folder oe-folder-group">Local Folders</div>
+                <div class="oe-folder active" data-folder="inbox">Inbox</div>
+                <div class="oe-folder" data-folder="outbox">Outbox</div>
+                <div class="oe-folder" data-folder="sent">Sent Items</div>
+                <div class="oe-folder" data-folder="deleted">Deleted Items</div>
+                <div class="oe-folder" data-folder="drafts">Drafts</div>
+              </div>
+              <div class="oe-main">
+                <div class="oe-list-head">
+                  <span class="oe-col-from">From</span>
+                  <span class="oe-col-subject">Subject</span>
+                  <span class="oe-col-date">Received</span>
+                </div>
+                <div class="oe-msglist"></div>
+                <div class="oe-preview">
+                  <div class="oe-preview-head"></div>
+                  <div class="oe-preview-content"></div>
+                </div>
+              </div>
+            </div>
+            <div class="oe-statusbar"></div>
+          </div>
+        `
+    },
+    'mail-compose': {
+        title: "New Message",
+        icon: "assets/start-email.png",
+        content: `
+          <div class="mail-compose">
+            <div class="oe-menubar">
+              <span class="oe-menu-item">File</span>
+              <span class="oe-menu-item">Edit</span>
+              <span class="oe-menu-item">View</span>
+              <span class="oe-menu-item">Insert</span>
+              <span class="oe-menu-item">Format</span>
+              <span class="oe-menu-item">Tools</span>
+              <span class="oe-menu-item">Message</span>
+              <span class="oe-menu-item">Help</span>
+            </div>
+            <div class="oe-toolbar oe-comp-toolbar">
+              <button class="oe-tool oe-tool-send" data-action="send"><span class="oe-tool-ic">&#9993;</span>Send</button>
+              <span class="oe-sep"></span>
+              <button class="oe-tool" data-cmd="undo"><span class="oe-tool-ic">&#8630;</span>Undo</button>
+              <button class="oe-tool" data-cmd="redo"><span class="oe-tool-ic">&#8631;</span>Redo</button>
+              <span class="oe-sep"></span>
+              <button class="oe-tool" data-cmd="cut"><span class="oe-tool-ic">&#9986;</span>Cut</button>
+              <button class="oe-tool" data-cmd="copy"><span class="oe-tool-ic">&#10697;</span>Copy</button>
+              <button class="oe-tool" data-cmd="paste"><span class="oe-tool-ic">&#128203;</span>Paste</button>
+              <span class="oe-sep"></span>
+              <button class="oe-tool" data-cmd="spell"><span class="oe-tool-ic">&#10004;</span>Spell</button>
+              <button class="oe-tool" data-action="attach"><span class="oe-tool-ic">&#128206;</span>Attach</button>
+              <button class="oe-tool" data-action="sign"><span class="oe-tool-ic">&#9998;</span>Sign</button>
+            </div>
+            <div class="oe-fields">
+              <div class="oe-field"><label>From:</label><input class="oe-from" type="text" spellcheck="false" placeholder="your@email.com"></div>
+              <div class="oe-field"><label>To:</label><input class="oe-to" type="text" spellcheck="false"></div>
+              <div class="oe-field"><label>Cc:</label><input class="oe-cc" type="text" spellcheck="false"></div>
+              <div class="oe-field"><label>Subject:</label><input class="oe-subject" type="text" spellcheck="false"></div>
+            </div>
+            <div class="oe-formatbar">
+              <select class="oe-ffont" title="Font">
+                <option>Tahoma</option>
+                <option>Arial</option>
+                <option>Times New Roman</option>
+                <option>Courier New</option>
+                <option>Verdana</option>
+                <option>Georgia</option>
+                <option>Comic Sans MS</option>
+              </select>
+              <select class="oe-fsize" title="Font size">
+                <option value="1">8</option>
+                <option value="2">10</option>
+                <option value="3" selected>12</option>
+                <option value="4">14</option>
+                <option value="5">18</option>
+                <option value="6">24</option>
+                <option value="7">36</option>
+              </select>
+              <span class="oe-fsep"></span>
+              <button class="oe-fbtn" data-cmd="bold" title="Bold"><b>B</b></button>
+              <button class="oe-fbtn" data-cmd="italic" title="Italic"><i>I</i></button>
+              <button class="oe-fbtn" data-cmd="underline" title="Underline"><u>U</u></button>
+              <button class="oe-fbtn" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
+              <span class="oe-fsep"></span>
+              <label class="oe-fbtn oe-color-wrap" title="Font color"><span>A</span><input type="color" class="oe-color" value="#000000"></label>
+              <label class="oe-fbtn oe-color-wrap" title="Highlight"><span class="oe-hilite-span">A</span><input type="color" class="oe-hilite" value="#ffff00"></label>
+              <span class="oe-fsep"></span>
+              <button class="oe-fbtn" data-cmd="insertUnorderedList" title="Bulleted list"><span class="oe-li oe-li-b">&#8226;</span></button>
+              <button class="oe-fbtn" data-cmd="insertOrderedList" title="Numbered list"><span class="oe-li oe-li-n">1.</span></button>
+              <span class="oe-fsep"></span>
+              <button class="oe-fbtn" data-cmd="justifyLeft" title="Align left"><span class="oe-bar oe-bar-l"></span></button>
+              <button class="oe-fbtn" data-cmd="justifyCenter" title="Center"><span class="oe-bar oe-bar-c"></span></button>
+              <button class="oe-fbtn" data-cmd="justifyRight" title="Align right"><span class="oe-bar oe-bar-r"></span></button>
+              <span class="oe-fsep"></span>
+              <button class="oe-fbtn" data-cmd="createLink" title="Insert hyperlink"><span class="oe-link">&#128279;</span></button>
+              <button class="oe-fbtn" data-cmd="removeFormat" title="Remove formatting"><span class="oe-x">&#10005;</span></button>
+            </div>
+            <div class="oe-editor" contenteditable="true" spellcheck="false"></div>
+            <div class="oe-statusbar">Ready</div>
+          </div>
+        `
+    },
+    'mail-read': {
+        title: "Message",
+        icon: "assets/start-email.png",
+        content: `
+          <div class="mail-read">
+            <div class="oe-menubar">
+              <span class="oe-menu-item">File</span>
+              <span class="oe-menu-item">Edit</span>
+              <span class="oe-menu-item">View</span>
+              <span class="oe-menu-item">Tools</span>
+              <span class="oe-menu-item">Message</span>
+              <span class="oe-menu-item">Help</span>
+            </div>
+            <div class="oe-toolbar oe-read-toolbar">
+              <button class="oe-tool" data-action="reply"><span class="oe-tool-ic">&#8617;</span>Reply</button>
+              <button class="oe-tool" data-action="replyall"><span class="oe-tool-ic">&#8646;</span>Reply All</button>
+              <button class="oe-tool" data-action="forward"><span class="oe-tool-ic">&#8618;</span>Forward</button>
+              <span class="oe-sep"></span>
+              <button class="oe-tool" data-action="delete"><span class="oe-tool-ic">&#10005;</span>Delete</button>
+            </div>
+            <div class="oe-read-head"></div>
+            <div class="oe-read-body"></div>
+          </div>
+        `
+    },
+    // ── Command Prompt (cmd.exe) ──
+    cmd: {
+        title: "Command Prompt",
+        icon: null, // generated below
+        content: `
+          <div class="cmd-chrome">
+            <div class="cmd-output" id="cmdOutput"></div>
+            <div class="cmd-input-line">
+              <span class="cmd-prompt" id="cmdPrompt">C:\\&gt;</span>
+              <input type="text" class="cmd-input" id="cmdInput" spellcheck="false" autocomplete="off">
+            </div>
+          </div>
+        `
+    },
+    // ── Blog ──
+    blog: {
+        title: "Marco's Blog",
+        icon: null, // generated below
+        content: `
+          <div class="blog-chrome">
+            <div class="blog-toolbar">
+              <span class="blog-tool-title">Marco's Blog</span>
+            </div>
+            <div class="blog-body">
+              <div class="blog-sidebar" id="blogSidebar">
+                <div class="blog-post-list" id="blogPostList"></div>
+              </div>
+              <div class="blog-main" id="blogMain">
+                <div class="blog-welcome">
+                  <h2>Welcome to my blog</h2>
+                  <p>Select a post from the list to read it.</p>
+                </div>
+              </div>
+            </div>
+            <div class="blog-statusbar" id="blogStatusbar">0 posts</div>
+          </div>
+        `
+    },
+    // ── Minesweeper ──
+    minesweeper: {
+        title: "Minesweeper",
+        icon: 'assets/start-minesweeper.png',
+        content: `
+          <div class="ms-app">
+            <div class="ms-toolbar">
+              <span class="ms-counter" id="msMineCount">010</span>
+              <button class="ms-face" id="msFace">😊</button>
+              <span class="ms-timer" id="msTimer">000</span>
+            </div>
+            <div class="ms-board" id="msBoard"></div>
+            <div class="ms-statusbar">Left-click to reveal &middot; Right-click / long-press to flag</div>
           </div>
         `
     }
 };
+// Aliases so iconContent['icon11'] / iconContent['icon12'] / etc resolve
+iconContent.icon11 = iconContent.cmd;
+iconContent.icon12 = iconContent.blog;
+iconContent.icon13 = iconContent.minesweeper;
 
 const GRID_SIZE_X = 90;
 const GRID_SIZE_Y = 90;
 const WELCOME_NOTE_TEXT = "Hi, my name is Marco, welcome to my portfolio, feel free to navigate through the desktop to find what you need";
+
+// ---- Outlook Express mailbox ----
+// Module-level store so messages survive closing/reopening the mailbox window.
+const MAILBOX_EMAIL = 'marco.tancredi178@gmail.com';
+const MAIL_BODY_PLACEHOLDER = `
+    <p>Hi Marco,</p>
+    <p>I love this Windows XP portfolio you built! I would love to share a few ideas with you.</p>
+    <p><br></p>
+    <p>Start typing below &mdash; maybe more retro apps, some games, a guestbook, or anything that would make this desktop feel even more authentic.</p>
+    <p><br></p>
+    <p>Thanks,<br>Your visitor</p>
+`;
+
+let mailCounter = 1;
+const mailStore = {
+    folders: {
+        inbox: [
+            {
+                id: 1,
+                from: 'Marco Tancredi',
+                address: MAILBOX_EMAIL,
+                to: MAILBOX_EMAIL,
+                subject: 'Welcome to my mailbox!',
+                date: new Date().toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }),
+                body: `
+                    <p>Hi there!</p>
+                    <p>This is my little Windows&nbsp;XP mailbox. I built this whole desktop experience with plain HTML, CSS and JavaScript.</p>
+                    <p>Click <b>Create Mail</b> on the toolbar and send me your ideas &mdash; I read every message that lands here.</p>
+                    <p>Marco</p>`,
+                read: false
+            }
+        ],
+        outbox: [],
+        sent: [],
+        deleted: [],
+        drafts: []
+    }
+};
+
+function escHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+// ---- Real email delivery (EmailJS, free static-site email service) ----
+// The message is truly delivered to MAILBOX_EMAIL from the visitor's browser.
+// To activate it:
+//   1) Create a free account at https://www.emailjs.com
+//   2) Add an Email Service and an Email Template. In the template use these
+//      variable names: {{to_email}} {{from_email}} {{from_name}} {{reply_to}}
+//      {{subject}} {{message_html}} {{message}}
+//   3) Paste the Public Key, Service ID and Template ID below (they look like
+//      "abc123...", "service_xxxxxxx" and "template_xxxxxxx").
+// Until the keys are filled in, Send falls back to opening the visitor's own
+// email program with the message ready to go (a mailto: link).
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+const EMAILJS_SDK_URL = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+
+const emailjsConfigured = () =>
+    !EMAILJS_PUBLIC_KEY.startsWith('YOUR_') &&
+    !EMAILJS_SERVICE_ID.startsWith('YOUR_') &&
+    !EMAILJS_TEMPLATE_ID.startsWith('YOUR_');
+
+function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+}
+
+// Convert the rich-text editor HTML into plain text (used by the mailto
+// fallback, which cannot send HTML).
+function htmlToText(html) {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    div.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+    div.querySelectorAll('p, div').forEach(el => {
+        el.append(document.createTextNode('\n'));
+    });
+    const text = div.textContent
+        .replace(/\u00a0/g, ' ')
+        .replace(/[ \t]+\n/g, '\n')
+        .replace(/\n[ \t]+/g, '\n')   // strip leading indentation left by the HTML markup
+        .replace(/\n{3,}/g, '\n\n');
+    return text.trim();
+}
+
+function loadEmailJS() {
+    return new Promise((resolve, reject) => {
+        if (window.emailjs) { resolve(); return; }
+        const s = document.createElement('script');
+        s.src = EMAILJS_SDK_URL;
+        s.onload = () => resolve();
+        s.onerror = () => reject(new Error('EmailJS SDK could not be loaded.'));
+        document.head.appendChild(s);
+    });
+}
+
+// Send a message to Marco's mailbox. Returns a promise that resolves on
+// success and rejects on failure.
+async function sendMail({ fromEmail, fromName, toEmail, subject, bodyHtml, bodyText }) {
+    if (emailjsConfigured()) {
+        await loadEmailJS();
+        const emailjs = window.emailjs;
+        return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            to_email: toEmail,
+            from_email: fromEmail,
+            from_name: fromName || fromEmail,
+            reply_to: fromEmail,
+            subject: subject,
+            message_html: bodyHtml,
+            message: bodyText
+        }, { publicKey: EMAILJS_PUBLIC_KEY });
+    }
+    // Fallback: open the visitor's own email program with everything filled in
+    const href = 'mailto:' + toEmail +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(bodyText + '\n\n— Sent from ' + (fromName || fromEmail));
+    const a = document.createElement('a');
+    a.href = href;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    return { status: 'mailto-fallback' };
+}
 
 function snapToGrid(x, y) {
     const snappedX = Math.round(x / GRID_SIZE_X) * GRID_SIZE_X;
@@ -221,24 +592,113 @@ let initialNotepad = true; // the Notepad opened on site load gets the typewrite
 const folderFiles = [
     {
         kind: 'project',
-        name: 'XP Portfolio',
-        type: 'Website',
-        summary: 'A Windows XP-inspired portfolio that opens as a desktop experience.',
-        url: 'https://github.com/Marc0GitHub/XP-Portfolio'
+        name: 'XP-Portfolio',
+        type: 'JavaScript',
+        summary: 'The Windows XP-inspired portfolio you are browsing right now — a full desktop experience in the browser.',
+        url: 'https://github.com/Marc0GitHub/XP-Portfolio',
+        screenshot: 'assets/screenshots/XP-Portfolio.png'
     },
     {
         kind: 'project',
-        name: 'My GitHub Profile',
-        type: 'Profile',
-        summary: 'Browse my repositories and public work from this portfolio desktop.',
-        url: 'https://github.com/Marc0GitHub'
+        name: 'pizzeria-sito-2',
+        type: 'HTML',
+        summary: 'One of my first websites, made for a local pizzeria.',
+        url: 'https://github.com/Marc0GitHub/pizzeria-sito-2',
+        screenshot: 'assets/screenshots/pizzeria-sito-2.png'
     },
     {
         kind: 'project',
-        name: 'Project Three',
-        type: 'App',
-        summary: 'Replace this card with one of your own completed projects.',
-        url: 'https://github.com/Marc0GitHub'
+        name: 'Snake-game',
+        type: 'JavaScript',
+        summary: 'A simple, playable Snake game.',
+        url: 'https://github.com/Marc0GitHub/Snake-game',
+        screenshot: 'assets/screenshots/Snake-game.png'
+    },
+    {
+        kind: 'project',
+        name: 'Password-Generator',
+        type: 'CSS',
+        summary: 'A simple tool for generating passwords.',
+        url: 'https://github.com/Marc0GitHub/Password-Generator',
+        screenshot: 'assets/screenshots/Password-Generator.png'
+    },
+    {
+        kind: 'project',
+        name: 'Song-lyrics',
+        type: 'CSS',
+        summary: 'A demo of a Nirvana song with lyrics.',
+        url: 'https://github.com/Marc0GitHub/Song-lyrics'
+    },
+    {
+        kind: 'project',
+        name: 'Google-clone',
+        type: 'CSS',
+        summary: 'A clone of the Google search page.',
+        url: 'https://github.com/Marc0GitHub/Google-clone',
+        screenshot: 'assets/screenshots/Google-clone.png'
+    },
+    {
+        kind: 'project',
+        name: 'Images-Converter',
+        type: 'JavaScript',
+        summary: 'A simple image converter tool.',
+        url: 'https://github.com/Marc0GitHub/Images-Converter',
+        screenshot: 'assets/screenshots/Images-Converter.png'
+    },
+    {
+        kind: 'project',
+        name: 'Minimal-portfolio',
+        type: 'CSS',
+        summary: 'A minimal portfolio website.',
+        url: 'https://github.com/Marc0GitHub/Minimal-portfolio',
+        screenshot: 'assets/screenshots/Minimal-portfolio.png'
+    },
+    {
+        kind: 'project',
+        name: 'To-Do-App',
+        type: 'JavaScript',
+        summary: 'A simple to-do list app.',
+        url: 'https://github.com/Marc0GitHub/To-Do-App',
+        screenshot: 'assets/screenshots/To-Do-App.png'
+    },
+    {
+        kind: 'project',
+        name: 'PIzzeria-Bella-Italia-2024',
+        type: 'CSS',
+        summary: 'A pizzeria website project from 2024.',
+        url: 'https://github.com/Marc0GitHub/PIzzeria-Bella-Italia-2024',
+        screenshot: 'assets/screenshots/PIzzeria-Bella-Italia-2024.png'
+    },
+    {
+        kind: 'project',
+        name: 'Simpsons',
+        type: 'HTML',
+        summary: 'One of my first websites, all about The Simpsons.',
+        url: 'https://github.com/Marc0GitHub/Simpsons',
+        screenshot: 'assets/screenshots/Simpsons.png'
+    },
+    {
+        kind: 'project',
+        name: 'Pizzeria-Bella-Italia',
+        type: 'HTML',
+        summary: 'A website for Pizzeria Bella Italia.',
+        url: 'https://github.com/Marc0GitHub/Pizzeria-Bella-Italia',
+        screenshot: 'assets/screenshots/Pizzeria-Bella-Italia.png'
+    },
+    {
+        kind: 'project',
+        name: 'Marc0GitHub.github.io',
+        type: 'CSS',
+        summary: 'My personal GitHub Pages site.',
+        url: 'https://github.com/Marc0GitHub/Marc0GitHub.github.io'
+    },
+    {
+        kind: 'project',
+        name: 'silver-enigma',
+        type: 'CSS',
+        summary: 'An early experimental project.',
+        url: 'https://github.com/Marc0GitHub/silver-enigma',
+        screenshot: 'assets/screenshots/silver-enigma.png'
     }
 ];
 
@@ -247,6 +707,35 @@ const folderFiles = [
 const newFolderFiles = {};
 
 document.addEventListener('DOMContentLoaded', () => {
+    // XP boot splash animation
+    (function bootSplash() {
+        const splash = document.getElementById('bootSplash');
+        const fill = document.getElementById('bootProgressFill');
+        if (!splash || !fill) return;
+        // Quick XP-style loading bar animation
+        let w = 0;
+        const tick = () => {
+            w += Math.random() * 35 + 5;
+            if (w >= 100) {
+                w = 100;
+                fill.style.width = '100%';
+                setTimeout(() => {
+                    splash.style.opacity = '0';
+                    splash.style.transition = 'opacity 0.4s ease-out';
+                    setTimeout(() => splash.remove(), 450);
+                }, 180);
+                return;
+            }
+            fill.style.width = w + '%';
+            setTimeout(tick, 60 + Math.random() * 120);
+        };
+        fill.style.width = '0%';
+        setTimeout(tick, 100);
+    })();
+
+    // Apply the user's saved wallpaper (or the default XP image)
+    setWallpaper(getSavedWallpaper());
+
     document.querySelectorAll('.icon').forEach((icon, i) => {
         attachIconListeners(icon);
         // Give the built-in icons a modified date (staggered so sorting works)
@@ -284,6 +773,78 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 
     setupStartMenu();
+
+    // Generate the Command Prompt icon (black square with "C:\" in white)
+    (function generateCmdIcon() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 48;
+        canvas.height = 48;
+        const ctx = canvas.getContext('2d');
+        // Black background with subtle gradient
+        const bg = ctx.createLinearGradient(0, 0, 48, 48);
+        bg.addColorStop(0, '#1a1a1a');
+        bg.addColorStop(1, '#000000');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, 48, 48);
+        // Border
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(0.5, 0.5, 47, 47);
+        // "C:\" text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 14px "Courier New", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('C:\\', 24, 20);
+        // Blinking cursor underscore
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(33, 25, 8, 2);
+        const dataURL = canvas.toDataURL();
+
+        // Set on start menu icon
+        const startIcon = document.querySelector('.cmd-start-icon');
+        if (startIcon) startIcon.src = dataURL;
+
+        // Set in iconContent so window headers use it
+        iconContent.cmd.icon = dataURL;
+    })();
+
+    // Generate the Blog icon (blue square with pen)
+    (function generateBlogIcon() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 48;
+        canvas.height = 48;
+        const ctx = canvas.getContext('2d');
+        // Blue gradient background
+        const bg = ctx.createLinearGradient(0, 0, 48, 48);
+        bg.addColorStop(0, '#3a6fc5');
+        bg.addColorStop(1, '#1a4a8a');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, 48, 48);
+        ctx.strokeStyle = '#6aa0e0';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(0.5, 0.5, 47, 47);
+        // White document shape
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(10, 6, 28, 34);
+        // Lines on document
+        ctx.strokeStyle = '#3a6fc5';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(15, 14); ctx.lineTo(33, 14); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(15, 19); ctx.lineTo(33, 19); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(15, 24); ctx.lineTo(28, 24); ctx.stroke();
+        // Pen tip
+        ctx.fillStyle = '#ffcc00';
+        ctx.beginPath(); ctx.moveTo(37, 8); ctx.lineTo(42, 13); ctx.lineTo(39, 16); ctx.lineTo(34, 11); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = '#b89000';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+        const dataURL = canvas.toDataURL();
+
+        const startIcon = document.querySelector('.blog-start-icon');
+        if (startIcon) startIcon.src = dataURL;
+        iconContent.blog.icon = dataURL;
+    })();
     setupClock();
 
     // Keep windows usable when the viewport changes (rotation / resize)
@@ -1328,6 +1889,163 @@ function uniqueDesktopName(base) {
 }
 
 // ---- Desktop menu actions ----
+const WALLPAPER_KEY = 'xpWallpaper';
+const DEFAULT_WALLPAPER = 'assets/xp-desktop.webp';
+// Free, real photo wallpapers (Unsplash License) in assets/wallpapers/*.jpg
+const WALLPAPERS = [
+    { src: 'assets/wallpapers/bliss.jpg', label: 'Green Valley' },
+    { src: 'assets/wallpapers/green.jpg', label: 'Foggy Mountains' },
+    { src: 'assets/wallpapers/clouds.jpg', label: 'Golden Field' },
+    { src: 'assets/wallpapers/autumn.jpg', label: 'Sunset' },
+    { src: 'assets/wallpapers/twilight.jpg', label: 'Mountain Night' },
+    { src: 'assets/wallpapers/space.jpg', label: 'Starry Sky' },
+    { src: 'assets/wallpapers/desert.jpg', label: 'Desert' },
+    { src: 'assets/wallpapers/beach.jpg', label: 'Beach' },
+    { src: 'assets/wallpapers/mountains.jpg', label: 'Mountains' },
+    { src: 'assets/wallpapers/forest.jpg', label: 'Forest' }
+];
+// Free animated wallpapers (Mixkit License) - video loops
+const ANIMATED_WALLPAPERS = [
+    { src: 'assets/wallpapers/aurora-anim.mp4', poster: 'assets/wallpapers/twilight.jpg', label: 'Aurora' },
+    { src: 'assets/wallpapers/stars-anim.mp4', poster: 'assets/wallpapers/space.jpg', label: 'Starry Night' },
+    { src: 'assets/wallpapers/clouds-anim.mp4', poster: 'assets/wallpapers/clouds.jpg', label: 'Drifting Clouds' }
+];
+
+function getSavedWallpaper() {
+    try {
+        const saved = localStorage.getItem(WALLPAPER_KEY);
+        if (!saved) return DEFAULT_WALLPAPER;
+        // Accept known wallpapers AND custom images the user set
+        const known = [DEFAULT_WALLPAPER,
+            ...WALLPAPERS.map(w => w.src),
+            ...ANIMATED_WALLPAPERS.map(w => w.src)];
+        if (known.includes(saved)) return saved;
+        // Also accept any data-URL or file-URL (custom Set as Wallpaper)
+        if (/^(data:|file:|blob:)/.test(saved)) return saved;
+        if (saved.startsWith('assets/')) return saved; // any asset image
+        return DEFAULT_WALLPAPER;
+    } catch (e) { return DEFAULT_WALLPAPER; }
+}
+
+function isAnimatedWallpaper(src) {
+    return /\.mp4$/i.test(src);
+}
+
+function getWallpaperVideo() {
+    let video = document.getElementById('wallpaper-video');
+    if (!video) {
+        video = document.createElement('video');
+        video.id = 'wallpaper-video';
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100svh;object-fit:cover;z-index:0;pointer-events:none;display:none;';
+        document.body.insertBefore(video, document.body.firstChild);
+    }
+    return video;
+}
+
+function setWallpaper(src) {
+    const video = getWallpaperVideo();
+    if (isAnimatedWallpaper(src)) {
+        // Show the animated (video) wallpaper
+        document.body.style.backgroundImage = 'none';
+        const poster = (ANIMATED_WALLPAPERS.find(w => w.src === src) || {}).poster || '';
+        if (poster) video.poster = poster;
+        video.style.display = '';
+        if (video.src !== src) {
+            video.src = src;
+            video.load();
+        }
+        const p = video.play();
+        if (p) p.catch(() => { /* autoplay may need a gesture */ });
+    } else {
+        // Static image wallpaper
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+        video.style.display = 'none';
+        document.body.style.backgroundImage = `url(${src})`;
+    }
+    try { localStorage.setItem(WALLPAPER_KEY, src); } catch (e) { /* ignore */ }
+}
+
+function showWallpaperPicker() {
+    // Remove any existing picker
+    document.querySelectorAll('.wallpaper-dialog').forEach(d => d.remove());
+
+    const current = getSavedWallpaper();
+    const dlg = document.createElement('div');
+    dlg.className = 'wallpaper-dialog';
+    dlg.innerHTML = `
+        <div class="wallpaper-dialog-inner">
+            <div class="wp-head">
+                <span>Change Background</span>
+                <button class="win-btn win-btn-close wp-close">
+                    <svg viewBox="0 0 10 10"><path d="M1 0L0 1l4 4-4 4 1 1 4-4 4 4 1-1-4-4 4-4-1-1-4 4z"></path></svg>
+                </button>
+            </div>
+            <div class="wp-body">
+                <div class="wp-section-label">Animated Wallpapers</div>
+                <div class="wp-grid">
+                    ${ANIMATED_WALLPAPERS.map(w => `
+                        <div class="wp-item ${current === w.src ? 'wp-active' : ''}" data-src="${w.src}" data-anim="1">
+                            <div class="wp-thumb wp-thumb-anim" style="background-image:url(${w.poster})"><span class="wp-play">&#9658;</span></div>
+                            <span class="wp-label">${w.label}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="wp-section-label">Pictures</div>
+                <div class="wp-grid">
+                    <div class="wp-item ${current === DEFAULT_WALLPAPER ? 'wp-active' : ''}" data-src="${DEFAULT_WALLPAPER}">
+                        <div class="wp-thumb" style="background-image:url(${DEFAULT_WALLPAPER})"></div>
+                        <span class="wp-label">Default</span>
+                    </div>
+                    ${WALLPAPERS.map(w => `
+                        <div class="wp-item ${current === w.src ? 'wp-active' : ''}" data-src="${w.src}">
+                            <div class="wp-thumb" style="background-image:url(${w.src})"></div>
+                            <span class="wp-label">${w.label}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <div class="wp-footer">
+                <button class="wp-btn wp-close">Close</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(dlg);
+
+    const close = () => dlg.remove();
+    dlg.querySelectorAll('.wp-close').forEach(b => b.addEventListener('click', close));
+
+    // Click a wallpaper -> apply immediately and highlight
+    dlg.querySelectorAll('.wp-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const src = item.dataset.src;
+            setWallpaper(src);
+            dlg.querySelectorAll('.wp-item').forEach(i => i.classList.remove('wp-active'));
+            item.classList.add('wp-active');
+        });
+    });
+
+    // Center it
+    const r = dlg.getBoundingClientRect();
+    dlg.style.left = Math.max(0, (window.innerWidth - r.width) / 2) + 'px';
+    dlg.style.top = Math.max(0, (window.innerHeight - r.height) / 2) + 'px';
+
+    // Click outside to close
+    setTimeout(() => {
+        document.addEventListener('click', function handler(e) {
+            if (!e.target.closest('.wallpaper-dialog')) {
+                dlg.remove();
+                document.removeEventListener('click', handler);
+            }
+        });
+    }, 0);
+}
+
 function getDesktopContextMenu() {
     return [
         { label: 'Arrange Icons By', submenu: [
@@ -1348,6 +2066,8 @@ function getDesktopContextMenu() {
             { label: 'Text Document', icon: 'assets/notepad-icon.png', action: () => newTextFileOnDesktop() },
             { label: 'Bitmap Image', icon: 'assets/image-file-icon.png', action: () => newBitmapOnDesktop() }
         ]},
+        { sep: true },
+        { label: 'Change Background', icon: 'assets/xp-desktop.webp', action: () => showWallpaperPicker() },
         { sep: true },
         { label: 'Properties', action: () => showDesktopProperties() }
     ];
@@ -1525,15 +2245,23 @@ function getIconContextMenu(icon) {
     const selected = getSelectedIcons();
     const affected = selected.length ? selected : [icon];
     const canMoveToBin = affected.some(isDeletable);
-    return [
+    // Is this an image file (or a shortcut to one)? -> offer "Set as Wallpaper"
+    const imageSrc = icon.classList.contains('image-file') && icon.dataset.image ? icon.dataset.image : null;
+    const menu = [
         { label: 'Open', icon: iconSrc, action: () => openIconWindow(icon) },
         { sep: true },
         { label: 'Create Shortcut', icon: iconSrc, action: () => createShortcut(icon) },
         { label: 'Move to Recycle Bin', icon: 'assets/bin-icon.png', disabled: !canMoveToBin, action: () => moveSelectionToBin() },
-        { label: 'Rename', icon: 'assets/notepad-icon.png', action: () => renameIcon(icon) },
+        { label: 'Rename', icon: 'assets/notepad-icon.png', action: () => renameIcon(icon) }
+    ];
+    if (imageSrc) {
+        menu.push({ label: 'Set as Wallpaper', icon: iconSrc, action: () => setWallpaper(imageSrc) });
+    }
+    menu.push(
         { sep: true },
         { label: 'Properties', icon: 'assets/image-file-icon.png', action: () => showIconProperties(icon) }
-    ];
+    );
+    return menu;
 }
 
 function createShortcut(icon) {
@@ -1569,10 +2297,6 @@ function refreshBinWindows() {
     });
 }
 
-function escHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-}
-
 // Currently selected desktop icons (empty when nothing is selected).
 function getSelectedIcons() {
     return [...document.querySelectorAll('.desktop .icon.selected')];
@@ -1581,7 +2305,7 @@ function getSelectedIcons() {
 // System icons (My Computer, My Documents, Recycle Bin, Folder, Paint,
 // Notepad) can't be deleted or dragged to the Recycle Bin, like real XP.
 function isDeletable(icon) {
-    return !!icon && !['icon1', 'icon2', 'icon3', 'icon4', 'icon5', 'icon9'].includes(icon.id);
+    return !!icon && !['icon1', 'icon2', 'icon3', 'icon4', 'icon5', 'icon9', 'icon10', 'icon11'].includes(icon.id);
 }
 
 // Build the Recycle Bin entry for a desktop icon (keeps all info for Restore)
@@ -2054,6 +2778,46 @@ function createWindowElement(icon) {
         win.style.height = '540px';
         win.dataset.minW = '380';
         win.dataset.minH = '440';
+    } else if (icon.id === 'icon10') {
+        // Outlook Express mailbox opens large like the XP Explorer
+        const defW = Math.min(760, Math.max(560, window.innerWidth - 60));
+        const defH = Math.min(560, Math.max(420, window.innerHeight - 80));
+        win.style.width = defW + 'px';
+        win.style.height = defH + 'px';
+        win.dataset.minW = '520';
+        win.dataset.minH = '380';
+    } else if (icon.id === 'mail-compose') {
+        // New Message compose window
+        win.style.width = '640px';
+        win.style.height = '520px';
+        win.dataset.minW = '440';
+        win.dataset.minH = '380';
+    } else if (icon.id === 'mail-read') {
+        // Read-message window
+        win.style.width = '520px';
+        win.style.height = '420px';
+        win.dataset.minW = '380';
+        win.dataset.minH = '300';
+    } else if (icon.id === 'icon11') {
+        // Command Prompt
+        win.style.width = '620px';
+        win.style.height = '420px';
+        win.dataset.minW = '400';
+        win.dataset.minH = '260';
+    } else if (icon.id === 'icon12') {
+        // Blog
+        const defW = Math.min(780, Math.max(600, window.innerWidth - 40));
+        const defH = Math.min(560, Math.max(440, window.innerHeight - 80));
+        win.style.width = defW + 'px';
+        win.style.height = defH + 'px';
+        win.dataset.minW = '520';
+        win.dataset.minH = '380';
+    } else if (icon.id === 'icon13') {
+        // Minesweeper
+        win.style.width = '360px';
+        win.style.height = '440px';
+        win.dataset.minW = '320';
+        win.dataset.minH = '400';
     } else {
         win.style.width = '400px';
         win.style.height = '300px';
@@ -2076,6 +2840,24 @@ function createWindowElement(icon) {
     } else if (icon.id === 'icon9') {
         contentEl.classList.add('no-padding');
         setupSnake(win);
+    } else if (icon.id === 'icon10') {
+        contentEl.classList.add('no-padding');
+        setupMail(win);
+    } else if (icon.id === 'icon11') {
+        contentEl.classList.add('no-padding');
+        setupTerminal(win);
+    } else if (icon.id === 'icon12') {
+        contentEl.classList.add('no-padding');
+        setupBlog(win);
+    } else if (icon.id === 'icon13') {
+        contentEl.classList.add('no-padding');
+        setupMinesweeper(win);
+    } else if (icon.id === 'mail-compose') {
+        contentEl.classList.add('no-padding');
+        setupMailCompose(win, icon._mailPrefill || {});
+    } else if (icon.id === 'mail-read') {
+        contentEl.classList.add('no-padding');
+        setupMailRead(win, icon._mailMessage);
     } else if (icon.id === 'icon3') {
         contentEl.classList.add('no-padding');
         setupFolder(win);
@@ -2486,8 +3268,12 @@ function setupFolder(win, files) {
                 openImageFileWindow(file.src, file.name, getFolderImageCollection(win));
             });
         } else {
+            const screenshotHtml = file.screenshot
+                ? `<div class="exp-project-shot"><img src="${file.screenshot}" alt="${file.name}" loading="lazy"></div>`
+                : '';
             preview.innerHTML = `
                 <h3>${file.name}</h3>
+                ${screenshotHtml}
                 <p>${file.summary}</p>
                 <div class="exp-preview-actions">
                     <button class="exp-open-btn">Open project</button>
@@ -2591,9 +3377,36 @@ function setupBin(win) {
     render();
 }
 
-// Note: GitHub can't be embedded in an iframe (CSP frame-ancestors 'none'),
-// so the homepage stays on Wikipedia, which allows embedding.
+// Note: Most modern websites block iframe embedding via X-Frame-Options / CSP.
+// The browser tries the iframe first; if it fails (detected via timeout), it shows
+// a fallback page with an "Open in New Tab" button.
+// Sites known to allow iframe embedding: Wikipedia, DuckDuckGo Lite, Hacker News,
+// Stack Overflow, Britannica, and many older/static sites.
+
 const HOME_URL = 'https://en.wikipedia.org';
+const SEARCH_ENGINE = 'https://en.wikipedia.org/wiki/Special:Search?search=';
+
+// Detect if input looks like a URL (domain-like) or a search query
+function looksLikeURL(text) {
+    const t = text.trim();
+    // Already a full URL
+    if (/^https?:\/\//i.test(t)) return true;
+    // Looks like a domain: example.com, sub.example.co.uk, localhost, 192.168.1.1
+    if (/^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(\/|$)/.test(t)) return true;
+    // IP address
+    if (/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?(\/|$)/.test(t)) return true;
+    // localhost
+    if (/^localhost(:\d+)?(\/|$)/.test(t)) return true;
+    return false;
+}
+
+function normalizeURL(text) {
+    let url = text.trim();
+    if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
+    }
+    return url;
+}
 
 function setupBrowser(win) {
     const urlInput = win.querySelector('#browserUrl');
@@ -2603,16 +3416,171 @@ function setupBrowser(win) {
     const forwardButton = win.querySelector('#browserForward');
     const refreshButton = win.querySelector('#browserRefresh');
     const homeButton = win.querySelector('#browserHome');
+    const searchButton = win.querySelector('#browserSearch');
+    const favoritesButton = win.querySelector('#browserFavorites');
     const statusText = win.querySelector('#ieStatusText');
+    const progressBar = win.querySelector('#ieProgress');
+    const progressFill = win.querySelector('#ieProgressFill');
+    const errorPage = win.querySelector('#ieErrorPage');
+    const errorMsg = win.querySelector('#ieErrorMsg');
+    const errorUrl = win.querySelector('#ieErrorUrl');
+    const faviconImg = win.querySelector('#ieFavicon');
+    const bookmarksBar = win.querySelector('#ieBookmarksBar');
 
     let browserHistory = [HOME_URL];
     let browserHistoryIndex = 0;
+    let currentURL = HOME_URL;
+    let loadTimer = null;
+    let isLoading = false;
 
+    // ── Button state helpers ──
+    function updateNavButtons() {
+        backButton.disabled = browserHistoryIndex <= 0;
+        forwardButton.disabled = browserHistoryIndex >= browserHistory.length - 1;
+    }
+
+    // ── Progress bar ──
+    function startLoading() {
+        isLoading = true;
+        progressBar.classList.add('ie-progress-active');
+        progressFill.style.transition = 'none';
+        progressFill.style.width = '0%';
+        // Force reflow
+        progressFill.offsetHeight;
+        // Animate to 80% quickly (the last 20% comes when load finishes)
+        progressFill.style.transition = 'width 1.5s cubic-bezier(0.1, 0.6, 0.3, 1)';
+        progressFill.style.width = '75%';
+    }
+
+    function finishLoading(success) {
+        isLoading = false;
+        if (success) {
+            progressFill.style.transition = 'width 0.3s ease-out';
+            progressFill.style.width = '100%';
+            setTimeout(() => {
+                progressBar.classList.remove('ie-progress-active');
+                progressFill.style.width = '0%';
+            }, 350);
+        } else {
+            progressBar.classList.remove('ie-progress-active');
+            progressFill.style.width = '0%';
+        }
+    }
+
+    // ── Favicon update ──
+    function updateFavicon(url) {
+        try {
+            const u = new URL(url);
+            faviconImg.src = u.origin + '/favicon.ico';
+            faviconImg.onerror = () => {
+                faviconImg.src = 'assets/internet-explorer-icon.png';
+            };
+        } catch {
+            faviconImg.src = 'assets/internet-explorer-icon.png';
+        }
+    }
+
+    // ── Error page ──
+    function showErrorPage(url, reason) {
+        frame.style.display = 'none';
+        errorPage.style.display = 'flex';
+        errorUrl.textContent = url;
+        errorMsg.textContent = reason || "This website may have blocked embedding or is unreachable. Many modern sites don't allow being shown inside another page.";
+        // Store for retry
+        errorPage.dataset.failedUrl = url;
+    }
+
+    function hideErrorPage() {
+        frame.style.display = '';
+        errorPage.style.display = 'none';
+    }
+
+    // ── Core navigation ──
+    function navigateBrowser(rawUrl, addToHistory) {
+        let url;
+
+        // Decide: search or URL?
+        if (looksLikeURL(rawUrl)) {
+            url = normalizeURL(rawUrl);
+        } else {
+            // Search query
+            url = SEARCH_ENGINE + encodeURIComponent(rawUrl.trim());
+        }
+
+        // If already on this URL, just refresh
+        if (url === currentURL && frame.style.display !== 'none') {
+            frame.src = frame.src;
+            return;
+        }
+
+        hideErrorPage();
+        currentURL = url;
+        urlInput.value = url;
+        updateFavicon(url);
+        statusText.textContent = 'Opening ' + url + '…';
+        startLoading();
+
+        // Clear any previous load timer
+        if (loadTimer) clearTimeout(loadTimer);
+
+        // Record navigation start time for potential diagnostics
+        win._navStartTime = performance.now();
+
+        // Set a fallback timeout for pages that truly hang (15 seconds)
+        loadTimer = setTimeout(() => {
+            if (isLoading) {
+                finishLoading(false);
+                showErrorPage(url, "The page took too long to respond. It may be unreachable or very slow. Try opening it in a new tab instead.");
+                statusText.textContent = 'Page could not be displayed';
+            }
+        }, 15000);
+
+        // Navigate
+        frame.src = url;
+
+        if (addToHistory) {
+            // Trim forward history
+            browserHistory = browserHistory.slice(0, browserHistoryIndex + 1);
+            browserHistory.push(url);
+            browserHistoryIndex = browserHistory.length - 1;
+        }
+
+        updateNavButtons();
+    }
+
+    // ── Iframe load handler ──
+    frame.addEventListener('load', () => {
+        if (loadTimer) clearTimeout(loadTimer);
+        loadTimer = null;
+
+        // Normal load — give a small delay for the iframe to settle
+        setTimeout(() => {
+            finishLoading(true);
+            statusText.textContent = 'Done';
+            // Update URL bar in case the iframe navigated (cross-origin = we can't detect, but try)
+            try {
+                const frameURL = frame.contentWindow.location.href;
+                if (frameURL && frameURL !== 'about:blank' && !frameURL.startsWith('chrome-error:')) {
+                    currentURL = frameURL;
+                    urlInput.value = frameURL;
+                    updateFavicon(frameURL);
+                }
+            } catch (e) {
+                // Cross-origin — can't read, keep the URL we set
+            }
+            updateNavButtons();
+        }, 150);
+    });
+
+    // ── Button handlers ──
     goButton.addEventListener('click', () => navigateBrowser(urlInput.value, true));
 
     urlInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') navigateBrowser(urlInput.value, true);
     });
+
+    // Focus the URL bar selects all text (like real browsers)
+    urlInput.addEventListener('focus', () => urlInput.select());
 
     backButton.addEventListener('click', () => {
         if (browserHistoryIndex > 0) {
@@ -2629,36 +3597,102 @@ function setupBrowser(win) {
     });
 
     refreshButton.addEventListener('click', () => {
-        frame.src = frame.src;
+        if (frame.style.display === 'none') {
+            // Retry the failed URL
+            const failedUrl = errorPage.dataset.failedUrl || currentURL;
+            navigateBrowser(failedUrl, false);
+        } else {
+            startLoading();
+            frame.src = frame.src;
+        }
     });
 
     homeButton.addEventListener('click', () => navigateBrowser(HOME_URL, true));
 
-    function navigateBrowser(rawUrl, addToHistory) {
-        let url = rawUrl.trim();
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-            url = 'https://' + url;
+    searchButton.addEventListener('click', () => {
+        urlInput.focus();
+        urlInput.select();
+        statusText.textContent = 'Type a search query or URL and press Enter';
+    });
+
+    favoritesButton.addEventListener('click', () => {
+        bookmarksBar.classList.toggle('ie-bookmarks-visible');
+    });
+
+    // ── Bookmarks bar links ──
+    bookmarksBar.querySelectorAll('.ie-bm-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const bookmarkURL = link.dataset.url;
+            if (bookmarkURL) navigateBrowser(bookmarkURL, true);
+        });
+    });
+
+    // ── Error page buttons ──
+    const openInTabBtn = win.querySelector('#ieOpenInTab');
+    const retryBtn = win.querySelector('#ieRetryBtn');
+    const goHomeBtn = win.querySelector('#ieGoHomeBtn');
+
+    openInTabBtn.addEventListener('click', () => {
+        const failedUrl = errorPage.dataset.failedUrl || currentURL;
+        window.open(failedUrl, '_blank', 'noopener');
+        statusText.textContent = 'Opened in new tab';
+    });
+
+    retryBtn.addEventListener('click', () => {
+        const failedUrl = errorPage.dataset.failedUrl || currentURL;
+        navigateBrowser(failedUrl, false);
+    });
+
+    goHomeBtn.addEventListener('click', () => navigateBrowser(HOME_URL, true));
+
+    // ── Status bar "Open in New Tab" link ──
+    const openTabLink = win.querySelector('#ieOpenTabLink');
+    openTabLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open(currentURL, '_blank', 'noopener');
+        statusText.textContent = 'Opened in new tab';
+    });
+
+    // ── Keyboard shortcuts ──
+    function handleBrowserKeys(e) {
+        // Only when this window is active
+        if (!win.classList.contains('active-window')) return;
+        // Don't intercept when typing in the URL bar
+        if (document.activeElement === urlInput) return;
+
+        if (e.key === 'F5' || (e.key === 'r' && (e.ctrlKey || e.metaKey))) {
+            e.preventDefault();
+            refreshButton.click();
         }
-
-        statusText.textContent = 'Opening page ' + url + '...';
-        frame.src = url;
-        urlInput.value = url;
-
-        if (addToHistory) {
-            browserHistory = browserHistory.slice(0, browserHistoryIndex + 1);
-            browserHistory.push(url);
-            browserHistoryIndex++;
+        if ((e.altKey || e.metaKey) && e.key === 'ArrowLeft') {
+            e.preventDefault();
+            if (browserHistoryIndex > 0) backButton.click();
         }
-
-        const loadTimeout = setTimeout(() => {
-            statusText.textContent = "This page can't be displayed in a window";
-        }, 3000);
-
-        frame.addEventListener('load', () => {
-            clearTimeout(loadTimeout);
-            statusText.textContent = 'Done';
-        }, { once: true });
+        if ((e.altKey || e.metaKey) && e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (browserHistoryIndex < browserHistory.length - 1) forwardButton.click();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+            e.preventDefault();
+            urlInput.focus();
+            urlInput.select();
+        }
     }
+
+    document.addEventListener('keydown', handleBrowserKeys);
+
+    // ── Cleanup ──
+    const prevCleanup = win._cleanup;
+    win._cleanup = () => {
+        if (loadTimer) clearTimeout(loadTimer);
+        document.removeEventListener('keydown', handleBrowserKeys);
+        if (prevCleanup) prevCleanup();
+    };
+
+    // ── Initial state ──
+    updateNavButtons();
+    updateFavicon(HOME_URL);
 }
 
 // Paint app now loads the full classic Windows Paint (all tools & menus)
@@ -2706,10 +3740,12 @@ function setupNotepad(win, typewriter, initialText) {
         });
     });
 
-    document.addEventListener('click', () => {
+    const closeDropdowns = () => {
         win.querySelectorAll('.np-dropdown').forEach(d => d.classList.add('hidden'));
         win.querySelectorAll('.np-menu-item').forEach(m => m.classList.remove('active'));
-    });
+    };
+
+    document.addEventListener('click', closeDropdowns);
 
     const editDropdown = win.querySelector('.np-dropdown[data-dropdown="edit"]');
     if (editDropdown) {
@@ -2743,6 +3779,13 @@ function setupNotepad(win, typewriter, initialText) {
             });
         });
     }
+
+    // Clean up the global listener when the window closes
+    const prevCleanup = win._cleanup;
+    win._cleanup = () => {
+        document.removeEventListener('click', closeDropdowns);
+        if (prevCleanup) prevCleanup();
+    };
 }
 
 // Snake game - a small playable app window.
@@ -2753,22 +3796,44 @@ function setupSnake(win) {
     const bestEl = win.querySelector('.snake-best');
     const overlay = win.querySelector('.snake-overlay');
     const msgEl = win.querySelector('.snake-msg');
+    const diffSelect = win.querySelector('.snake-diff');
 
     const COLS = 20;
     const ROWS = 20;
     const CELL = canvas.width / COLS;
     const BEST_KEY = 'xpSnakeBest';
+    const UNLOCK_KEY = 'xpSnakeHardDone';
+
+    // Difficulty = snake speed (ms per tick). Lower = faster.
+    const SPEEDS = { easy: 180, medium: 120, hard: 80, extreme: 55 };
+    const DIFF_LABELS = { easy: 'Easy', medium: 'Medium', hard: 'Hard', extreme: 'Extreme' };
 
     let snake = [];
     let dir = { x: 1, y: 0 };
     let nextDir = { x: 1, y: 0 };
     let food = null;
     let score = 0;
+    let appleCount = 0; // apples eaten this round (every 10th spawns a big apple)
     let best = parseInt(localStorage.getItem(BEST_KEY) || '0', 10) || 0;
     let running = false;
     let paused = false;
     let gameOver = false;
     let timer = null;
+    let difficulty = 'medium';
+
+    function isHardDone() {
+        return localStorage.getItem(UNLOCK_KEY) === '1';
+    }
+    function getSpeed() { return SPEEDS[difficulty]; }
+
+    // Enable/refresh the Extreme option based on the Hard unlock flag
+    function refreshDifficultyOptions() {
+        const extremeOpt = diffSelect.querySelector('option[value="extreme"]');
+        if (extremeOpt) {
+            extremeOpt.disabled = !isHardDone();
+            extremeOpt.textContent = isHardDone() ? 'Extreme' : 'Locked: Extreme';
+        }
+    }
 
     bestEl.textContent = 'Best: ' + best;
 
@@ -2780,7 +3845,11 @@ function setupSnake(win) {
                 if (!taken.has(x + ',' + y)) free.push({ x, y });
             }
         }
-        return free.length ? free[Math.floor(Math.random() * free.length)] : null;
+        if (!free.length) return null;
+        const cell = free[Math.floor(Math.random() * free.length)];
+        // Every 10th apple is a big golden apple worth +3
+        // (the 10th, 20th, 30th... apple the player eats)
+        return { x: cell.x, y: cell.y, big: (appleCount + 1) % 10 === 0 };
     }
 
     function reset() {
@@ -2789,6 +3858,7 @@ function setupSnake(win) {
         dir = { x: 1, y: 0 };
         nextDir = { x: 1, y: 0 };
         score = 0;
+        appleCount = 0;
         running = false;
         paused = false;
         gameOver = false;
@@ -2808,7 +3878,7 @@ function setupSnake(win) {
         paused = false;
         stopTimer();
         overlay.classList.add('hidden');
-        timer = setInterval(tick, 120);
+        timer = setInterval(tick, getSpeed());
         setPauseBtn();
         draw();
     }
@@ -2817,7 +3887,7 @@ function setupSnake(win) {
         if (!running || gameOver) return;
         paused = !paused;
         if (paused) stopTimer();
-        else timer = setInterval(tick, 120);
+        else timer = setInterval(tick, getSpeed());
         setPauseBtn();
     }
 
@@ -2849,7 +3919,9 @@ function setupSnake(win) {
 
         snake.unshift({ x: nx, y: ny });
         if (willGrow) {
-            score++;
+            const gained = food.big ? 3 : 1;
+            score += gained;
+            appleCount++;
             scoreEl.textContent = 'Score: ' + score;
             if (score > best) {
                 best = score;
@@ -2869,7 +3941,14 @@ function setupSnake(win) {
         gameOver = true;
         stopTimer();
         draw();
-        msgEl.textContent = won ? 'You win!' : 'Game Over';
+        if (won && difficulty === 'hard' && !isHardDone()) {
+            // Completing Hard mode unlocks Extreme
+            localStorage.setItem(UNLOCK_KEY, '1');
+            refreshDifficultyOptions();
+            msgEl.textContent = 'You win! Max length reached! Hard complete — Extreme unlocked! 🔓';
+        } else {
+            msgEl.textContent = won ? 'You win! Max length reached!' : 'Game Over';
+        }
         overlay.querySelector('.snake-btn').textContent = 'Play Again';
         overlay.classList.remove('hidden');
         setPauseBtn();
@@ -2893,10 +3972,31 @@ function setupSnake(win) {
         if (food) {
             const cx = food.x * CELL + CELL / 2;
             const cy = food.y * CELL + CELL / 2;
-            ctx.fillStyle = '#e23b2e';
-            ctx.beginPath(); ctx.arc(cx, cy, CELL / 2 - 2, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#7dbf4a';
-            ctx.fillRect(cx - 2, cy - CELL / 2 - 3, 4, 5);
+            if (food.big) {
+                // Big golden apple worth +3
+                const r = CELL * 0.6;
+                ctx.fillStyle = 'rgba(255, 200, 60, 0.3)';
+                ctx.beginPath(); ctx.arc(cx, cy, r + 4, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ffb020';
+                ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#e08c00';
+                ctx.beginPath(); ctx.arc(cx + r * 0.25, cy - r * 0.25, r * 0.35, 0, Math.PI * 2); ctx.fill();
+                // Leaf
+                ctx.fillStyle = '#7dbf4a';
+                ctx.fillRect(cx - 3, cy - r - 4, 6, 7);
+                // +3 badge
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 9px Tahoma, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('+3', cx, cy + 1);
+            } else {
+                // Normal red apple worth +1
+                ctx.fillStyle = '#e23b2e';
+                ctx.beginPath(); ctx.arc(cx, cy, CELL / 2 - 2, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#7dbf4a';
+                ctx.fillRect(cx - 2, cy - CELL / 2 - 3, 4, 5);
+            }
         }
 
         // Snake body (tail first so the head draws on top)
@@ -2927,23 +4027,52 @@ function setupSnake(win) {
         if (!(d.x === -dir.x && d.y === -dir.y)) nextDir = d;
     }
 
+    // Keyboard -> direction mapping (arrows + WASD)
+    const KEY_DIRS = {
+        arrowup: 'up', w: 'up',
+        arrowdown: 'down', s: 'down',
+        arrowleft: 'left', a: 'left',
+        arrowright: 'right', d: 'right'
+    };
+    const heldKeys = new Set(); // keys currently held down
+
+    function getDpadBtn(dir) {
+        return win.querySelector(`.snake-dpad-btn[data-dir="${dir}"]`);
+    }
+
+    // Highlight / un-highlight a D-pad button
+    function highlightDir(dir, on) {
+        const btn = getDpadBtn(dir);
+        if (btn) btn.classList.toggle('pressed', on);
+    }
+
     function onKey(e) {
         if (!win.classList.contains('active-window')) return;
         const k = e.key.toLowerCase();
-        const dirs = {
-            arrowup: { x: 0, y: -1 }, w: { x: 0, y: -1 },
-            arrowdown: { x: 0, y: 1 }, s: { x: 0, y: 1 },
-            arrowleft: { x: -1, y: 0 }, a: { x: -1, y: 0 },
-            arrowright: { x: 1, y: 0 }, d: { x: 1, y: 0 }
-        };
-        if (dirs[k]) {
+        if (KEY_DIRS[k]) {
             e.preventDefault();
-            steer(dirs[k]);
+            heldKeys.add(k);
+            highlightDir(KEY_DIRS[k], true);
+            const dir = KEY_DIRS[k];
+            steer({ up: { x: 0, y: -1 }, down: { x: 0, y: 1 }, left: { x: -1, y: 0 }, right: { x: 1, y: 0 } }[dir]);
         } else if (k === 'p') {
             pause();
         }
     }
+
+    function onKeyUp(e) {
+        if (!win.classList.contains('active-window')) return;
+        const k = e.key.toLowerCase();
+        if (KEY_DIRS[k]) {
+            heldKeys.delete(k);
+            const dir = KEY_DIRS[k];
+            // Only un-highlight if no other held key points in the same direction
+            const stillHeld = [...heldKeys].some(kk => KEY_DIRS[kk] === dir);
+            if (!stillHeld) highlightDir(dir, false);
+        }
+    }
     document.addEventListener('keydown', onKey);
+    document.addEventListener('keyup', onKeyUp);
 
     win.querySelectorAll('.snake-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -2954,40 +4083,1160 @@ function setupSnake(win) {
         });
     });
 
-    // On-screen D-pad for touch devices
+    // Difficulty selector: change snake speed (resets the board)
+    diffSelect.addEventListener('change', () => {
+        difficulty = diffSelect.value;
+        reset();
+    });
+
+    // On-screen D-pad for touch devices (with real-time press highlight)
     const DPAD_DIRS = { up: { x: 0, y: -1 }, down: { x: 0, y: 1 }, left: { x: -1, y: 0 }, right: { x: 1, y: 0 } };
     win.querySelectorAll('.snake-dpad-btn').forEach(btn => {
         const d = DPAD_DIRS[btn.dataset.dir];
-        const press = (ev) => { ev.preventDefault(); steer(d); };
-        btn.addEventListener('touchstart', press, { passive: false });
-        btn.addEventListener('click', press);
+        const steerBtn = (ev) => { ev.preventDefault(); steer(d); };
+        const hlOn = () => btn.classList.add('pressed');
+        const hlOff = () => btn.classList.remove('pressed');
+        // Touch: highlight while the finger is down
+        btn.addEventListener('touchstart', (e) => { hlOn(); steerBtn(e); }, { passive: false });
+        btn.addEventListener('touchend', hlOff);
+        btn.addEventListener('touchcancel', hlOff);
+        // Mouse: highlight while the button is held
+        btn.addEventListener('mousedown', hlOn);
+        btn.addEventListener('mouseup', hlOff);
+        btn.addEventListener('mouseleave', hlOff);
+        btn.addEventListener('click', steerBtn);
     });
 
+    // Initialize difficulty state (persist the chosen difficulty per session)
+    difficulty = diffSelect.value || 'medium';
+    refreshDifficultyOptions();
     reset();
 
     // Stop the game loop and release keys when the window closes
     win._cleanup = () => {
         stopTimer();
         document.removeEventListener('keydown', onKey);
+        document.removeEventListener('keyup', onKeyUp);
+        // Clear any stuck D-pad highlight
+        ['up', 'down', 'left', 'right'].forEach(dir => highlightDir(dir, false));
     };
+}
+
+// ---- Outlook Express mailbox ----
+function openMailCompose(prefill = {}) {
+    const fakeIcon = document.createElement('div');
+    fakeIcon.className = 'icon';
+    fakeIcon.id = 'mail-compose';
+    fakeIcon._mailPrefill = prefill;
+    openWindow(fakeIcon);
+}
+
+function openMailRead(message) {
+    const fakeIcon = document.createElement('div');
+    fakeIcon.className = 'icon';
+    fakeIcon.id = 'mail-read';
+    fakeIcon._mailMessage = message;
+    openWindow(fakeIcon);
+}
+
+// Small XP-style informational dialog (reuses the properties-dialog chrome)
+function showInfoDialog(title, iconSrc, messageHtml) {
+    document.querySelectorAll('.props-dialog').forEach(d => d.remove());
+    const dlg = document.createElement('div');
+    dlg.className = 'props-dialog';
+    dlg.innerHTML = `
+        <div class="popup-header">
+            <img class="popup-icon" src="${iconSrc}" alt="" draggable="false">
+            <span class="popup-title">${title}</span>
+            <div class="popup-controls">
+                <button class="win-btn win-btn-close info-close">
+                    <svg viewBox="0 0 10 10"><path d="M1 0L0 1l4 4-4 4 1 1 4-4 4 4 1-1-4-4 4-4-1-1-4 4z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="props-dialog-body">
+            <img src="${iconSrc}" alt="">
+            <div>
+                <p style="font-size:11px;color:#000;margin:0;line-height:1.5;">${messageHtml}</p>
+            </div>
+        </div>
+        <div class="props-dialog-buttons">
+            <button class="props-dialog-ok info-ok">OK</button>
+        </div>
+    `;
+    document.body.appendChild(dlg);
+    const rect = dlg.getBoundingClientRect();
+    dlg.style.left = Math.max(0, (window.innerWidth - rect.width) / 2) + 'px';
+    dlg.style.top = Math.max(0, (window.innerHeight - rect.height) / 2) + 'px';
+    const close = () => dlg.remove();
+    dlg.querySelector('.info-close').addEventListener('click', close);
+    dlg.querySelector('.info-ok').addEventListener('click', close);
+}
+
+// ── Command Prompt (cmd.exe) ──
+function setupTerminal(win) {
+    const outputEl = win.querySelector('#cmdOutput');
+    const inputEl = win.querySelector('#cmdInput');
+    const promptEl = win.querySelector('#cmdPrompt');
+
+    let cwd = 'C:\\Users\\Marco';
+    let cmdHistory = [];
+    let historyIdx = -1;
+
+    // Available commands
+    const commands = {
+        help: {
+            desc: 'Shows this help list.',
+            fn: () => {
+                const list = Object.entries(commands)
+                    .map(([name, c]) => `  <span class="cmd-cmd">${name.padEnd(12)}</span> ${c.desc}`)
+                    .join('\n');
+                return `Available commands:\n${list}\n\nType a command followed by /? for usage info.`;
+            }
+        },
+        dir: {
+            desc: 'Lists files and folders in the current directory.',
+            fn: () => {
+                const now = new Date();
+                const pad = n => String(n).padStart(2, '0');
+                const h = now.getHours(), m = now.getMinutes();
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                const h12 = h % 12 || 12;
+                const timeStr = `${pad(h12)}:${pad(m)} ${ampm}`;
+                const dateStr = `${pad(now.getMonth()+1)}/${pad(now.getDate())}/${now.getFullYear()}`;
+                return ` Volume in drive C has no label.\n Volume Serial Number is 7C2A-1F8E\n\n Directory of ${cwd}\n\n`
+                    + `${dateStr}  ${timeStr}    <span class="cmd-dir">.</span>\n`
+                    + `${dateStr}  ${timeStr}    <span class="cmd-dir">..</span>\n`
+                    + `${dateStr}  ${timeStr}    <span class="cmd-dir">Desktop</span>\n`
+                    + `${dateStr}  ${timeStr}    <span class="cmd-dir">Documents</span>\n`
+                    + `${dateStr}  ${timeStr}    <span class="cmd-dir">Downloads</span>\n`
+                    + `${dateStr}  ${timeStr}    <span class="cmd-dir">Pictures</span>\n`
+                    + `${dateStr}  ${timeStr}             2,048 readme.txt\n`
+                    + `${dateStr}  ${timeStr}               512 config.sys\n`
+                    + `               8 File(s)              2,560 bytes\n`
+                    + `               5 Dir(s)  127,482,953,728 bytes free`;
+            }
+        },
+        cls: {
+            desc: 'Clears the screen.',
+            fn: () => { outputEl.innerHTML = ''; return ''; }
+        },
+        echo: {
+            desc: 'Displays a message.',
+            fn: (args) => args || 'ECHO is on.'
+        },
+        date: {
+            desc: 'Displays or sets the date.',
+            fn: () => {
+                const d = new Date();
+                return `The current date is: ${d.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' })}`;
+            }
+        },
+        time: {
+            desc: 'Displays or sets the time.',
+            fn: () => {
+                const d = new Date();
+                return `The current time is: ${d.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true })}`;
+            }
+        },
+        ver: {
+            desc: 'Displays the Windows version.',
+            fn: () => `\nMicrosoft Windows XP [Version 5.1.2600]\n`
+        },
+        whoami: {
+            desc: 'Displays the current user name.',
+            fn: () => `marco-pc\\Marco`
+        },
+        cd: {
+            desc: 'Changes the current directory.',
+            fn: (args) => {
+                if (!args || args === '..') {
+                    const parts = cwd.split('\\');
+                    if (parts.length > 1) {
+                        parts.pop();
+                        cwd = parts.join('\\');
+                    }
+                    return '';
+                }
+                cwd = cwd + '\\' + args;
+                return '';
+            }
+        },
+        title: {
+            desc: 'Sets the window title.',
+            fn: (args) => {
+                if (args) {
+                    const titleEl = win.querySelector('.popup-title');
+                    if (titleEl) titleEl.textContent = args;
+                }
+                return '';
+            }
+        },
+        color: {
+            desc: 'Sets the console colors. Usage: color [bg][fg] (e.g. color 0a)',
+            fn: (args) => {
+                const colors = {
+                    '0': '#000000', '1': '#000080', '2': '#008000', '3': '#008080',
+                    '4': '#800000', '5': '#800080', '6': '#808000', '7': '#c0c0c0',
+                    '8': '#808080', '9': '#0000ff', 'a': '#00ff00', 'b': '#00ffff',
+                    'c': '#ff0000', 'd': '#ff00ff', 'e': '#ffff00', 'f': '#ffffff'
+                };
+                if (!args || args.length < 2) return 'Usage: color [bg][fg]\n  0=Black  1=Blue  2=Green  3=Aqua  4=Red  5=Purple  6=Yellow  7=White\n  8=Gray  9=Lt Blue  A=Lt Green  B=Lt Aqua  C=Lt Red  D=Lt Purple  E=Lt Yellow  F=Bright White';
+                const bg = colors[args[0].toLowerCase()];
+                const fg = colors[args[1].toLowerCase()];
+                if (!bg || !fg) return 'Invalid color code.';
+                outputEl.style.backgroundColor = bg;
+                outputEl.style.color = fg;
+                return '';
+            }
+        },
+        ping: {
+            desc: 'Pings a host. Usage: ping [host]',
+            fn: (args) => {
+                if (!args) return 'Usage: ping [host]';
+                const host = args.split(' ')[0];
+                const times = [12, 14, 11, 13];
+                let out = `\nPinging ${host} [192.168.1.${Math.floor(Math.random()*254)+1}] with 32 bytes of data:\n\n`;
+                for (let i = 0; i < 4; i++) {
+                    out += `Reply from 192.168.1.1: bytes=32 time=${times[i]}ms TTL=128\n`;
+                }
+                out += `\nPing statistics for 192.168.1.1:\n    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),\n`;
+                out += `Approximate round trip times in milli-seconds:\n    Minimum = 11ms, Maximum = 14ms, Average = 12ms\n`;
+                return out;
+            }
+        },
+        ipconfig: {
+            desc: 'Displays network configuration.',
+            fn: () => `\nWindows IP Configuration\n\nEthernet adapter Local Area Connection:\n\n   Connection-specific DNS Suffix  . : home\n   IP Address. . . . . . . . . . . . : 192.168.1.42\n   Subnet Mask . . . . . . . . . . . : 255.255.255.0\n   Default Gateway . . . . . . . . . : 192.168.1.1\n`
+        },
+        tree: {
+            desc: 'Displays the directory structure.',
+            fn: () => `Folder PATH listing for volume SYSTEM\nVolume serial number is 7C2A-1F8E\n${cwd.toUpperCase()}\n├───Desktop\n│   ├───Projects\n│   └───Shortcuts\n├───Documents\n│   ├───Notes\n│   └───Resume\n├───Downloads\n├───Music\n└───Pictures\n    ├───Screenshots\n    └───Wallpapers\n`
+        },
+        mem: {
+            desc: 'Displays memory usage.',
+            fn: () => `\n    655360 bytes total conventional memory\n    655360 bytes available to MS-DOS\n    598336 largest executable program size\n\n   1048576 bytes total contiguous extended memory\n         0 bytes available contiguous extended memory\n    941056 bytes available XMS memory\n           MS-DOS resident in High Memory Area\n`
+        },
+        netstat: {
+            desc: 'Displays active network connections.',
+            fn: () => `\nActive Connections\n\n  Proto  Local Address          Foreign Address        State\n  TCP    192.168.1.42:2869     151.101.1.69:https     ESTABLISHED\n  TCP    192.168.1.42:49321    140.82.114.4:https     ESTABLISHED\n  TCP    192.168.1.42:52017    13.107.42.14:https     TIME_WAIT\n`
+        },
+        exit: {
+            desc: 'Closes the Command Prompt.',
+            fn: () => { closeWindow(win); return ''; }
+        }
+    };
+
+    function print(text) {
+        if (!text) return;
+        const line = document.createElement('div');
+        line.className = 'cmd-line';
+        line.innerHTML = text.replace(/\n/g, '<br>').replace(/  /g, '&nbsp;&nbsp;');
+        outputEl.appendChild(line);
+        outputEl.scrollTop = outputEl.scrollHeight;
+    }
+
+    function printPrompt() {
+        const line = document.createElement('div');
+        line.className = 'cmd-line';
+        line.innerHTML = `<span class="cmd-prompt-echo">${escHtml(cwd)}&gt;</span>`;
+        outputEl.appendChild(line);
+        outputEl.scrollTop = outputEl.scrollHeight;
+    }
+
+    function execute(cmdLine) {
+        const trimmed = cmdLine.trim();
+        if (!trimmed) { printPrompt(); return; }
+
+        const parts = trimmed.match(/(?:[^\s"]+|"[^"]*")+/g) || [trimmed];
+        const cmdName = parts[0].toLowerCase();
+        const args = parts.slice(1).join(' ').replace(/^"|"$/g, '');
+
+        const cmd = commands[cmdName];
+        if (cmd) {
+            const result = cmd.fn(args);
+            if (result) print(result);
+        } else {
+            print(`'${escHtml(cmdName)}' is not recognized as an internal or external command,\noperable program or batch file.`);
+        }
+        if (cmdName !== 'cls') printPrompt();
+    }
+
+    function updatePrompt() {
+        promptEl.textContent = cwd + '>';
+    }
+
+    // Initial welcome message
+    print('Microsoft Windows XP [Version 5.1.2600]');
+    print('(C) Copyright 1985-2001 Microsoft Corp.');
+    print('');
+    updatePrompt();
+    printPrompt();
+
+    // Handle input
+    inputEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const cmdText = inputEl.value;
+            // Echo the command
+            const echoLine = document.createElement('div');
+            echoLine.className = 'cmd-line';
+            echoLine.innerHTML = `<span class="cmd-prompt-echo">${escHtml(cwd)}&gt;</span> ${escHtml(cmdText)}`;
+            outputEl.appendChild(echoLine);
+
+            inputEl.value = '';
+            cmdHistory.push(cmdText);
+            historyIdx = cmdHistory.length;
+            execute(cmdText);
+            updatePrompt();
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (historyIdx > 0) {
+                historyIdx--;
+                inputEl.value = cmdHistory[historyIdx];
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIdx < cmdHistory.length - 1) {
+                historyIdx++;
+                inputEl.value = cmdHistory[historyIdx];
+            } else {
+                historyIdx = cmdHistory.length;
+                inputEl.value = '';
+            }
+        } else if (e.key === 'Tab') {
+            e.preventDefault();
+            const val = inputEl.value.toLowerCase();
+            const matches = Object.keys(commands).filter(c => c.startsWith(val));
+            if (matches.length === 1) {
+                inputEl.value = matches[0];
+            } else if (matches.length > 1) {
+                print(matches.join('  '));
+                printPrompt();
+            }
+        }
+    });
+
+    // Keep input focused
+    inputEl.addEventListener('blur', () => {
+        setTimeout(() => {
+            if (document.contains(inputEl) && win.classList.contains('active-window')) {
+                inputEl.focus();
+            }
+        }, 50);
+    });
+
+    // Click anywhere in the output area to focus input
+    outputEl.addEventListener('click', () => inputEl.focus());
+
+    // Focus input when window becomes active
+    const observer = new MutationObserver(() => {
+        if (win.classList.contains('active-window')) {
+            inputEl.focus();
+        }
+    });
+    observer.observe(win, { attributes: true, attributeFilter: ['class'] });
+
+    // Initial focus
+    setTimeout(() => inputEl.focus(), 100);
+
+    // Cleanup
+    const prevCleanup = win._cleanup;
+    win._cleanup = () => {
+        observer.disconnect();
+        if (prevCleanup) prevCleanup();
+    };
+}
+
+// ── Minesweeper ──
+function setupMinesweeper(win) {
+    const ROWS = 9, COLS = 9, MINES = 10;
+    const CELL = 32;
+    const boardEl = win.querySelector('#msBoard');
+    const mineCountEl = win.querySelector('#msMineCount');
+    const timerEl = win.querySelector('#msTimer');
+    const faceEl = win.querySelector('#msFace');
+
+    let grid = [];        // 2D array of { mine, revealed, flagged, adjacent }
+    let firstClick = true;
+    let alive = true;
+    let flagCount = 0;
+    let revealedCount = 0;
+    let timerSec = 0;
+    let timerInterval = null;
+
+    function initGrid() {
+        grid = [];
+        for (let r = 0; r < ROWS; r++) {
+            grid[r] = [];
+            for (let c = 0; c < COLS; c++) {
+                grid[r][c] = { mine: false, revealed: false, flagged: false, adjacent: 0 };
+            }
+        }
+        firstClick = true;
+        alive = true;
+        flagCount = 0;
+        revealedCount = 0;
+        timerSec = 0;
+        stopTimer();
+        updateDisplay();
+        faceEl.textContent = '\uD83D\uDE0A';
+        boardEl.classList.remove('ms-gameover');
+    }
+
+    function plantMines(safeR, safeC) {
+        const safe = new Set([safeR + ',' + safeC]);
+        // Also protect the 8 neighbours of the first click
+        for (let dr = -1; dr <= 1; dr++) {
+            for (let dc = -1; dc <= 1; dc++) {
+                safe.add((safeR + dr) + ',' + (safeC + dc));
+            }
+        }
+        let planted = 0;
+        while (planted < MINES) {
+            const r = Math.floor(Math.random() * ROWS);
+            const c = Math.floor(Math.random() * COLS);
+            const key = r + ',' + c;
+            if (!safe.has(key) && !grid[r][c].mine) {
+                grid[r][c].mine = true;
+                planted++;
+            }
+        }
+        // Compute adjacent mine counts
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c].mine) continue;
+                let count = 0;
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        const nr = r + dr, nc = c + dc;
+                        if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr][nc].mine) count++;
+                    }
+                }
+                grid[r][c].adjacent = count;
+            }
+        }
+    }
+
+    function reveal(r, c) {
+        if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return;
+        const cell = grid[r][c];
+        if (cell.revealed || cell.flagged || !alive) return;
+        cell.revealed = true;
+        revealedCount++;
+        if (cell.mine) { endGame(false); return; }
+        if (cell.adjacent === 0) {
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr || dc) reveal(r + dr, c + dc);
+                }
+            }
+        }
+        if (revealedCount === ROWS * COLS - MINES) endGame(true);
+    }
+
+    function endGame(won) {
+        alive = false;
+        stopTimer();
+        faceEl.textContent = won ? '\uD83D\uDE0E' : '\uD83D\uDE35';
+        boardEl.classList.toggle('ms-gameover', !won);
+        // Reveal all mines
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c].mine) grid[r][c].revealed = true;
+            }
+        }
+        render();
+    }
+
+    function toggleFlag(r, c) {
+        if (!alive || grid[r][c].revealed) return;
+        grid[r][c].flagged = !grid[r][c].flagged;
+        flagCount += grid[r][c].flagged ? 1 : -1;
+        updateDisplay();
+        render();
+    }
+
+    function chord(r, c) {
+        if (!alive || !grid[r][c].revealed || grid[r][c].adjacent === 0) return;
+        let flags = 0;
+        for (let dr = -1; dr <= 1; dr++) {
+            for (let dc = -1; dc <= 1; dc++) {
+                const nr = r + dr, nc = c + dc;
+                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr][nc].flagged) flags++;
+            }
+        }
+        if (flags === grid[r][c].adjacent) {
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr || dc) reveal(r + dr, c + dc);
+                }
+            }
+        }
+    }
+
+    function startTimer() {
+        if (timerInterval) return;
+        timerInterval = setInterval(() => {
+            timerSec++;
+            updateDisplay();
+        }, 1000);
+    }
+    function stopTimer() { clearInterval(timerInterval); timerInterval = null; }
+    function updateDisplay() {
+        mineCountEl.textContent = String(Math.max(0, MINES - flagCount)).padStart(3, '0');
+        timerEl.textContent = String(Math.min(999, timerSec)).padStart(3, '0');
+    }
+
+    function render() {
+        boardEl.style.gridTemplateColumns = `repeat(${COLS}, ${CELL}px)`;
+        boardEl.style.gridTemplateRows = `repeat(${ROWS}, ${CELL}px)`;
+        let html = '';
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                const cell = grid[r][c];
+                let cls = 'ms-cell';
+                let content = '';
+                if (cell.revealed) {
+                    cls += ' ms-revealed';
+                    if (cell.mine) {
+                        cls += ' ms-mine';
+                        content = '\uD83D\uDCA3';
+                    } else if (cell.adjacent > 0) {
+                        cls += ' ms-n' + cell.adjacent;
+                        content = cell.adjacent;
+                    }
+                } else if (cell.flagged) {
+                    cls += ' ms-flagged';
+                    content = '\uD83D\uDEA9';
+                }
+                html += `<div class="${cls}" data-r="${r}" data-c="${c}">${content}</div>`;
+            }
+        }
+        boardEl.innerHTML = html;
+    }
+
+    boardEl.addEventListener('click', (e) => {
+        const cellEl = e.target.closest('.ms-cell');
+        if (!cellEl || !alive) return;
+        const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
+        if (grid[r][c].flagged) return;
+        if (firstClick) {
+            plantMines(r, c);
+            startTimer();
+            firstClick = false;
+        }
+        if (grid[r][c].revealed && grid[r][c].adjacent > 0) { chord(r, c); }
+        else { reveal(r, c); }
+        render();
+    });
+
+    boardEl.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        const cellEl = e.target.closest('.ms-cell');
+        if (!cellEl || !alive) return;
+        const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
+        toggleFlag(r, c);
+    });
+
+    // Long-press to flag on touch
+    let lpTimer = null;
+    boardEl.addEventListener('touchstart', (e) => {
+        const cellEl = e.target.closest('.ms-cell');
+        if (!cellEl || !alive) return;
+        lpTimer = setTimeout(() => {
+            lpTimer = null;
+            const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
+            toggleFlag(r, c);
+        }, 400);
+    }, { passive: true });
+    boardEl.addEventListener('touchend', () => { clearTimeout(lpTimer); lpTimer = null; });
+    boardEl.addEventListener('touchmove', () => { clearTimeout(lpTimer); lpTimer = null; });
+
+    faceEl.addEventListener('click', () => initGrid());
+
+    // Cleanup
+    const prevCleanup = win._cleanup;
+    win._cleanup = () => {
+        stopTimer();
+        if (prevCleanup) prevCleanup();
+    };
+
+    initGrid();
+    render();
+}
+
+// ── Blog ──
+// Blog posts live directly in the code: edit this array to publish a post.
+// Every visitor sees exactly these posts (dates shown as-is).
+// To add a post: copy one of the entries, change the id/title/content/date.
+const BLOG_POSTS = [
+    {
+        id: 'welcome',
+        title: 'Welcome to My Blog!',
+        content: "Hey there! 👋\n\nWelcome to my corner of the internet. This is my personal blog where I'll be sharing thoughts, projects, and whatever else I find interesting.\n\nStay tuned for more posts — I'll be updating this regularly.\n\n— Marco",
+        date: '2026-08-06'
+    },
+    {
+        id: 'ai-and-addiction',
+        title: 'AI and Addiction',
+        content: "I've been thinking a lot lately about AI and addiction.\n\nIt's strange how something designed to help can also be so easy to get hooked on. The endless feed, the instant answers, the feeling that there's always one more thing to ask or one more scroll to make.\n\nI don't think AI itself is the problem — it's how easily it fits into the habits we already have. The same dopamine loop as social media, just smarter about keeping our attention.\n\nI want to write more about this soon. For now, I think the important thing is being honest with ourselves about how much time we spend with it, and asking whether it's serving us or we're serving it.\n\n— Marco",
+        date: '2026-08-07'
+    }
+];
+
+// Legacy key used by the old admin editor: any posts you created there are
+// still in localStorage and get merged in below so nothing is lost.
+const BLOG_STORAGE_KEY = 'xpBlogPosts';
+
+function loadBlogPosts() {
+    const codePosts = [...BLOG_POSTS];
+    // Merge in posts saved by the old admin editor so previously published
+    // posts keep showing up. Code-defined posts win on id conflicts.
+    try {
+        const raw = localStorage.getItem(BLOG_STORAGE_KEY);
+        if (raw) {
+            const stored = JSON.parse(raw);
+            if (Array.isArray(stored)) {
+                const codeIds = new Set(codePosts.map(p => p.id));
+                const codeTitles = new Set(codePosts.map(p => p.title));
+                for (const p of stored) {
+                    // Skip posts that duplicate a code post (same id or same title,
+                    // e.g. the old "Welcome to My Blog!" seed)
+                    if (p && p.id && !codeIds.has(p.id) && !codeTitles.has(p.title)) {
+                        codePosts.push(p);
+                        codeIds.add(p.id);
+                        codeTitles.add(p.title);
+                    }
+                }
+            }
+        }
+    } catch (e) { /* corrupted or inaccessible — ignore */ }
+    return codePosts;
+}
+
+const BLOG_LIKES_KEY = 'xpBlogLikes';
+const BLOG_LIKED_KEY = 'xpBlogLikedPosts';
+
+function loadLikes() {
+    try {
+        const raw = localStorage.getItem(BLOG_LIKES_KEY);
+        return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+}
+
+function saveLikes(likes) {
+    try {
+        localStorage.setItem(BLOG_LIKES_KEY, JSON.stringify(likes));
+    } catch (e) { /* silently fail */ }
+}
+
+function loadLikedPosts() {
+    try {
+        const raw = localStorage.getItem(BLOG_LIKED_KEY);
+        return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+}
+
+function saveLikedPosts(liked) {
+    try {
+        localStorage.setItem(BLOG_LIKED_KEY, JSON.stringify(liked));
+    } catch (e) { /* silently fail */ }
+}
+
+function formatBlogDate(isoString) {
+    const d = new Date(isoString);
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+function setupBlog(win) {
+    const postList = win.querySelector('#blogPostList');
+    const mainArea = win.querySelector('#blogMain');
+    const statusBar = win.querySelector('#blogStatusbar');
+
+    const posts = loadBlogPosts();
+    let likes = loadLikes();
+    let likedPosts = loadLikedPosts();
+    let selectedPostId = null;
+
+    function refresh() {
+        renderPostList();
+        updateStatus();
+    }
+
+    function renderPostList() {
+        const sorted = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+        const likeCounts = loadLikes();
+        postList.innerHTML = sorted.map(p => {
+            const count = likeCounts[p.id] || 0;
+            return `
+            <div class="blog-post-item" data-id="${escHtml(p.id)}">
+                <span class="blog-post-item-title">${escHtml(p.title)}</span>
+                <span class="blog-post-item-meta">
+                    <span class="blog-post-item-date">${formatBlogDate(p.date)}</span>
+                    <span class="blog-post-item-likes">${count > 0 ? '❤️ ' + count : ''}</span>
+                </span>
+            </div>`;
+        }).join('') || '<div class="blog-empty">No posts yet.</div>';
+
+        postList.querySelectorAll('.blog-post-item').forEach(item => {
+            item.addEventListener('click', () => showPost(item.dataset.id));
+        });
+    }
+
+    function showPost(id) {
+        const post = posts.find(p => p.id === id);
+        if (!post) return;
+        selectedPostId = id;
+
+        postList.querySelectorAll('.blog-post-item').forEach(i => i.classList.remove('active'));
+        const activeItem = postList.querySelector(`[data-id="${id}"]`);
+        if (activeItem) activeItem.classList.add('active');
+
+        likes = loadLikes();
+        likedPosts = loadLikedPosts();
+        const likeCount = likes[id] || 0;
+        const hasLiked = likedPosts.includes(id);
+
+        mainArea.innerHTML = `
+            <div class="blog-post-view">
+                <div class="blog-post-header">
+                    <h2 class="blog-post-title">${escHtml(post.title)}</h2>
+                    <span class="blog-post-date">${formatBlogDate(post.date)}</span>
+                </div>
+                <div class="blog-post-content">${escHtmlWithBreaks(post.content)}</div>
+                <div class="blog-post-footer">
+                    <div class="blog-like-area">
+                        <button class="blog-like-btn ${hasLiked ? 'blog-liked' : ''}" data-action="like" data-id="${escHtml(id)}">
+                            ${hasLiked ? '❤️' : '🤍'} <span class="blog-like-count">${likeCount}</span> Like${likeCount !== 1 ? 's' : ''}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Like button
+        mainArea.querySelector('[data-action="like"]')?.addEventListener('click', () => toggleLike(id));
+    }
+
+    function toggleLike(id) {
+        likedPosts = loadLikedPosts();
+        likes = loadLikes();
+
+        if (likedPosts.includes(id)) {
+            // Unlike
+            likedPosts = likedPosts.filter(pid => pid !== id);
+            likes[id] = Math.max(0, (likes[id] || 1) - 1);
+        } else {
+            // Like
+            likedPosts.push(id);
+            likes[id] = (likes[id] || 0) + 1;
+        }
+
+        saveLikes(likes);
+        saveLikedPosts(likedPosts);
+        showPost(id);
+        renderPostList();
+    }
+
+    function updateStatus() {
+        statusBar.textContent = `${posts.length} post${posts.length === 1 ? '' : 's'}`;
+    }
+
+    function escHtmlWithBreaks(text) {
+        return escHtml(text).replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>').replace(/<p><\/p>/g, '');
+    }
+
+    // Initial render
+    refresh();
+    if (posts.length > 0) {
+        const sorted = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+        showPost(sorted[0].id);
+    }
+}
+
+function quoteMessage(m) {
+    return `<p><br></p><hr><p><b>-----Original Message-----</b><br>
+        <b>From:</b> ${escHtml(m.from)}<br>
+        <b>To:</b> ${escHtml(m.to)}<br>
+        <b>Subject:</b> ${escHtml(m.subject)}<br>
+        <b>Received:</b> ${escHtml(m.date)}</p>
+        ${m.body}`;
+}
+
+// The main mailbox window: folder tree + message list + preview pane
+function setupMail(win) {
+    const folderEls = win.querySelectorAll('.oe-folder[data-folder]');
+    const msgList = win.querySelector('.oe-msglist');
+    const previewHead = win.querySelector('.oe-preview-head');
+    const previewContent = win.querySelector('.oe-preview-content');
+    const statusbar = win.querySelector('.oe-statusbar');
+    const FOLDER_LABELS = { inbox: 'Inbox', outbox: 'Outbox', sent: 'Sent Items', deleted: 'Deleted Items', drafts: 'Drafts' };
+
+    let activeFolder = 'inbox';
+    let selectedId = null;
+
+    function renderFolders() {
+        folderEls.forEach(f => {
+            const name = f.dataset.folder;
+            const unread = mailStore.folders[name].filter(m => !m.read).length;
+            const badge = f.querySelector('.oe-unread-badge');
+            if (badge) badge.remove();
+            if (unread > 0 && name === 'inbox') {
+                const b = document.createElement('span');
+                b.className = 'oe-unread-badge';
+                b.textContent = unread;
+                f.appendChild(b);
+            }
+            f.classList.toggle('active', name === activeFolder);
+        });
+    }
+
+    function renderList() {
+        const msgs = mailStore.folders[activeFolder];
+        statusbar.textContent = `${msgs.length} message${msgs.length === 1 ? '' : 's'} in ${FOLDER_LABELS[activeFolder]}`;
+        if (!msgs.length) {
+            msgList.innerHTML = `<div class="oe-empty">There are no messages in ${FOLDER_LABELS[activeFolder]}.</div>`;
+            previewHead.innerHTML = '';
+            previewContent.innerHTML = '';
+            return;
+        }
+        msgList.innerHTML = msgs.map(m => `
+            <div class="oe-msg-row${m.read ? '' : ' unread'}${m.id === selectedId ? ' active' : ''}" data-id="${m.id}">
+                <span class="oe-col-from">${m.read ? '' : '<b class="oe-unread-dot">&#8226;</b>'}${escHtml(m.from)}</span>
+                <span class="oe-col-subject">${escHtml(m.subject)}</span>
+                <span class="oe-col-date">${escHtml(m.date)}</span>
+            </div>`).join('');
+
+        msgList.querySelectorAll('.oe-msg-row').forEach(row => {
+            row.addEventListener('click', () => {
+                const m = mailStore.folders[activeFolder].find(x => x.id === +row.dataset.id);
+                if (!m) return;
+                m.read = true;
+                selectedId = m.id;
+                renderList();
+                renderFolders();
+                showPreview(m);
+            });
+            row.addEventListener('dblclick', () => {
+                const m = mailStore.folders[activeFolder].find(x => x.id === +row.dataset.id);
+                if (m) openMailRead(m);
+            });
+        });
+    }
+
+    function showPreview(m) {
+        previewHead.innerHTML = `
+            <div><b>From:</b> ${escHtml(m.from)} &lt;${escHtml(m.address || m.to)}&gt;</div>
+            <div><b>To:</b> ${escHtml(m.to)}</div>
+            <div><b>Subject:</b> ${escHtml(m.subject)}</div>
+            <div><b>Received:</b> ${escHtml(m.date)}</div>`;
+        previewContent.innerHTML = m.body;
+    }
+
+    function getSelected() {
+        return mailStore.folders[activeFolder].find(m => m.id === selectedId) || null;
+    }
+
+    function refresh(folder) {
+        if (folder) activeFolder = folder;
+        if (!mailStore.folders[activeFolder].some(m => m.id === selectedId)) selectedId = null;
+        renderFolders();
+        renderList();
+        const m = getSelected();
+        if (m) showPreview(m);
+    }
+
+    // Folder navigation
+    folderEls.forEach(f => {
+        f.addEventListener('click', () => {
+            activeFolder = f.dataset.folder;
+            selectedId = null;
+            renderFolders();
+            renderList();
+        });
+    });
+
+    // Toolbar
+    win.querySelector('.oe-tool[data-action="compose"]').addEventListener('click', () => openMailCompose());
+
+    win.querySelector('.oe-tool[data-action="reply"]').addEventListener('click', () => {
+        const m = getSelected();
+        if (!m) { statusbar.textContent = 'Select a message to reply to.'; return; }
+        openMailCompose({ to: m.address || m.from, subject: 'Re: ' + m.subject, body: quoteMessage(m) });
+    });
+
+    win.querySelector('.oe-tool[data-action="replyall"]').addEventListener('click', () => {
+        const m = getSelected();
+        if (!m) { statusbar.textContent = 'Select a message to reply to.'; return; }
+        openMailCompose({ to: m.address || m.from, subject: 'Re: ' + m.subject, body: quoteMessage(m) });
+    });
+
+    win.querySelector('.oe-tool[data-action="forward"]').addEventListener('click', () => {
+        const m = getSelected();
+        if (!m) { statusbar.textContent = 'Select a message to forward.'; return; }
+        openMailCompose({ to: '', subject: 'Fw: ' + m.subject, body: quoteMessage(m) });
+    });
+
+    win.querySelector('.oe-tool[data-action="sendrecv"]').addEventListener('click', () => {
+        if (mailStore.folders.outbox.length) {
+            mailStore.folders.sent.push(...mailStore.folders.outbox.splice(0, mailStore.folders.outbox.length));
+            refresh();
+            statusbar.textContent = 'Outgoing messages sent.';
+        } else {
+            showInfoDialog('Outlook Express', 'assets/start-email.png', 'No new messages are available.');
+        }
+    });
+
+    win.querySelector('.oe-tool[data-action="addresses"]').addEventListener('click', () => {
+        showInfoDialog('Address Book', 'assets/start-email.png',
+            `Marco Tancredi<br><b>${escHtml(MAILBOX_EMAIL)}</b>`);
+    });
+
+    win.querySelector('.oe-tool[data-action="find"]').addEventListener('click', () => {
+        const q = prompt('Find a message:', '');
+        if (!q) return;
+        let found = null;
+        Object.keys(mailStore.folders).forEach(name => {
+            const m = mailStore.folders[name].find(x =>
+                (x.subject || '').toLowerCase().includes(q.toLowerCase()) ||
+                (x.from || '').toLowerCase().includes(q.toLowerCase()));
+            if (m && !found) { found = m; activeFolder = name; selectedId = m.id; }
+        });
+        if (found) {
+            refresh();
+            statusbar.textContent = `Found: ${found.subject}`;
+        } else {
+            statusbar.textContent = `No messages found matching "${q}".`;
+        }
+    });
+
+    win._refreshFolder = refresh;
+    win._cleanup = () => { /* no global listeners to remove */ };
+    refresh('inbox');
+}
+
+// The New Message compose window - rich text editing via the classic
+// document.execCommand API (bold/italic/underline, sizes, colors, lists...)
+function setupMailCompose(win, prefill = {}) {
+    const fromInput = win.querySelector('.oe-from');
+    const toInput = win.querySelector('.oe-to');
+    const ccInput = win.querySelector('.oe-cc');
+    const subjectInput = win.querySelector('.oe-subject');
+    const editor = win.querySelector('.oe-editor');
+    const statusbar = win.querySelector('.oe-statusbar');
+
+    // Recipient defaults to Marco's mailbox (visitors share their ideas here).
+    // From is the visitor's own email so Marco can reply to them.
+    toInput.value = prefill.to != null ? prefill.to : MAILBOX_EMAIL;
+    if (prefill.cc) ccInput.value = prefill.cc;
+    subjectInput.value = prefill.subject || '';
+    if (!prefill.subject) subjectInput.placeholder = 'Share your ideas with me...';
+    editor.innerHTML = prefill.body != null ? prefill.body : MAIL_BODY_PLACEHOLDER;
+
+    function exec(cmd, val) {
+        editor.focus();
+        document.execCommand(cmd, false, val);
+        editor.focus();
+    }
+
+    // Formatting toolbar buttons
+    win.querySelectorAll('.oe-fbtn[data-cmd]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            exec(btn.dataset.cmd);
+        });
+    });
+
+    const fontSelect = win.querySelector('.oe-ffont');
+    fontSelect.addEventListener('change', () => exec('fontName', fontSelect.value));
+
+    const sizeSelect = win.querySelector('.oe-fsize');
+    sizeSelect.addEventListener('change', () => exec('fontSize', sizeSelect.value));
+
+    const colorInput = win.querySelector('.oe-color');
+    colorInput.addEventListener('input', () => exec('foreColor', colorInput.value));
+    colorInput.addEventListener('change', () => exec('foreColor', colorInput.value));
+
+    const hiliteInput = win.querySelector('.oe-hilite');
+    hiliteInput.addEventListener('input', () => exec('hiliteColor', hiliteInput.value));
+    hiliteInput.addEventListener('change', () => exec('hiliteColor', hiliteInput.value));
+
+    win.querySelector('.oe-fbtn[data-cmd="createLink"]').addEventListener('click', () => {
+        const url = prompt('Enter the hyperlink URL:', 'https://');
+        if (url) exec('createLink', url);
+    });
+
+    // Bold / italic / underline keyboard shortcuts inside the editor
+    const onKey = (e) => {
+        if (!(e.metaKey || e.ctrlKey)) return;
+        const k = e.key.toLowerCase();
+        if (k === 'b') { e.preventDefault(); exec('bold'); }
+        else if (k === 'i') { e.preventDefault(); exec('italic'); }
+        else if (k === 'u') { e.preventDefault(); exec('underline'); }
+    };
+    editor.addEventListener('keydown', onKey);
+
+    // Compose toolbar: undo/redo/cut/copy/paste/spell
+    win.querySelectorAll('.oe-tool[data-cmd]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cmd = btn.dataset.cmd;
+            if (cmd === 'spell') { statusbar.textContent = 'Spell check complete.'; return; }
+            if (cmd === 'cut' || cmd === 'copy' || cmd === 'paste') { exec(cmd); return; }
+            exec(cmd);
+        });
+    });
+
+    win.querySelector('.oe-tool[data-action="attach"]').addEventListener('click', () => {
+        statusbar.textContent = 'Attachments are not supported in this demo.';
+    });
+    win.querySelector('.oe-tool[data-action="sign"]').addEventListener('click', () => {
+        statusbar.textContent = 'Digital signatures are not supported in this demo.';
+    });
+
+    // Send: deliver the email for real, file it in Sent Items, then close
+    win.querySelector('.oe-tool[data-action="send"]').addEventListener('click', async () => {
+        const from = fromInput.value.trim();
+        const to = toInput.value.trim();
+        const subject = subjectInput.value.trim() || '(no subject)';
+        const bodyHtml = editor.innerHTML.trim() || '<p><i>(empty message)</i></p>';
+        const bodyText = htmlToText(bodyHtml) || '(empty message)';
+
+        if (!to) {
+            statusbar.textContent = 'Please enter a recipient in the To field.';
+            toInput.focus();
+            return;
+        }
+        if (!from) {
+            statusbar.textContent = 'Please enter your email address in the From field so I can reply.';
+            fromInput.focus();
+            return;
+        }
+        if (!isValidEmail(from)) {
+            statusbar.textContent = 'That From address does not look valid — please check it.';
+            fromInput.focus();
+            return;
+        }
+
+        // File the message into Sent Items (survives closing/reopening)
+        const msg = {
+            id: ++mailCounter,
+            from: from,
+            address: from,
+            to: to,
+            subject: subject,
+            date: new Date().toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }),
+            body: bodyHtml,
+            read: true
+        };
+        mailStore.folders.sent.push(msg);
+
+        const mailbox = openWindows['icon10'];
+        if (mailbox && typeof mailbox._refreshFolder === 'function') {
+            mailbox._refreshFolder('sent');
+        }
+
+        // Actually send it
+        const sendBtn = win.querySelector('.oe-tool[data-action="send"]');
+        sendBtn.disabled = true;
+        statusbar.textContent = 'Sending message...';
+        try {
+            const result = await sendMail({
+                fromEmail: from,
+                fromName: from.split('@')[0],
+                toEmail: to,
+                subject: subject,
+                bodyHtml: bodyHtml,
+                bodyText: bodyText
+            });
+            if (result && result.status === 'mailto-fallback') {
+                showInfoDialog('Outlook Express', 'assets/start-email.png',
+                    `Your email program has opened with the message ready to send to <b>${escHtml(to)}</b>.<br><br>` +
+                    `Just press Send there. (Real delivery from the browser needs EmailJS keys &mdash; see the code.)`);
+            } else {
+                showInfoDialog('Outlook Express', 'assets/start-email.png',
+                    `Your message has been sent to <b>${escHtml(to)}</b> from <b>${escHtml(from)}</b>.<br><br>` +
+                    `Thanks for sharing your ideas! Marco will get back to you at your address.`);
+            }
+            closeWindow(win);
+        } catch (err) {
+            sendBtn.disabled = false;
+            statusbar.textContent = 'Could not send the message.';
+            showInfoDialog('Outlook Express', 'assets/start-email.png',
+                `The message could not be delivered.<br><br>` +
+                `Please try again, or write to me directly at <b>${escHtml(MAILBOX_EMAIL)}</b>.`);
+        }
+    });
+
+    win._cleanup = () => {
+        editor.removeEventListener('keydown', onKey);
+    };
+}
+
+// A read-only window for double-clicked messages
+function setupMailRead(win, message) {
+    if (!message) { closeWindow(win); return; }
+    const head = win.querySelector('.oe-read-head');
+    const body = win.querySelector('.oe-read-body');
+
+    // Title the window with the subject (before the taskbar button is added)
+    const titleEl = win.querySelector('.popup-title');
+    if (titleEl) titleEl.textContent = message.subject;
+
+    head.innerHTML = `
+        <div><b>From:</b> ${escHtml(message.from)} &lt;${escHtml(message.address || message.to)}&gt;</div>
+        <div><b>To:</b> ${escHtml(message.to)}</div>
+        <div><b>Subject:</b> ${escHtml(message.subject)}</div>
+        <div><b>Received:</b> ${escHtml(message.date)}</div>`;
+    body.innerHTML = message.body;
+
+    win.querySelector('.oe-tool[data-action="reply"]').addEventListener('click', () => {
+        openMailCompose({ to: message.address || message.from, subject: 'Re: ' + message.subject, body: quoteMessage(message) });
+    });
+    win.querySelector('.oe-tool[data-action="replyall"]').addEventListener('click', () => {
+        openMailCompose({ to: message.address || message.from, subject: 'Re: ' + message.subject, body: quoteMessage(message) });
+    });
+    win.querySelector('.oe-tool[data-action="forward"]').addEventListener('click', () => {
+        openMailCompose({ to: '', subject: 'Fw: ' + message.subject, body: quoteMessage(message) });
+    });
+    win.querySelector('.oe-tool[data-action="delete"]').addEventListener('click', () => {
+        Object.keys(mailStore.folders).forEach(name => {
+            const idx = mailStore.folders[name].findIndex(m => m.id === message.id);
+            if (idx !== -1) {
+                const [removed] = mailStore.folders[name].splice(idx, 1);
+                removed.read = true;
+                mailStore.folders.deleted.push(removed);
+            }
+        });
+        const mailbox = openWindows['icon10'];
+        if (mailbox && typeof mailbox._refreshFolder === 'function') mailbox._refreshFolder();
+        closeWindow(win);
+    });
+
+    win._cleanup = () => { /* nothing to release */ };
 }
 
 // Start menu
 // Apps available on this desktop (opened from the Start menu)
 const startAppTargets = {
     internet: 'icon2',
+    email: 'icon10',
     notepad: 'icon5',
     paint: 'icon4',
     snake: 'icon9',
+    cmd: 'icon11',
+    blog: 'icon12',
+    minesweeper: 'icon13',
     mydocuments: 'icon3'
 };
 
 // Friendly names for the "Application not found" dialog
 const startAppNames = {
     internet: 'Internet Explorer', email: 'Outlook Express', minesweeper: 'Minesweeper',
-    notepad: 'Notepad', winamp: 'Winamp', paint: 'Paint', snake: 'Snake',
+    notepad: 'Notepad', winamp: 'Winamp', paint: 'Paint', snake: 'Snake', cmd: 'Command Prompt', blog: "Marco's Blog",
     mediaplayer: 'Windows Media Player', messenger: 'Windows Messenger', allprograms: 'All Programs',
-    mydocuments: 'My Documents', myrecent: 'My Recent Documents', mypictures: 'My Pictures',
+    mydocuments: 'Projects', myrecent: 'My Recent Documents', mypictures: 'My Pictures',
     mymusic: 'My Music', mycomputer: 'My Computer', controlpanel: 'Control Panel',
     setaccess: 'Set Program Access and Defaults', connectto: 'Connect To', printers: 'Printers and Faxes',
     help: 'Help and Support', search: 'Search', run: 'Run'
@@ -3015,12 +5264,50 @@ function setupStartMenu() {
             startMenu.classList.add('hidden');
             const targetId = startAppTargets[app];
             if (targetId) {
-                openWindow(document.getElementById(targetId));
+                let icon = document.getElementById(targetId);
+                // If the desktop icon was removed, create a virtual one on the fly
+                if (!icon) {
+                    icon = document.createElement('div');
+                    icon.className = 'icon';
+                    icon.id = targetId;
+                }
+                openWindow(icon);
             } else {
                 showAppNotFound(startAppNames[app] || app);
             }
         });
     });
+
+    // Log Off / Shutdown handlers
+    const logoffBtn = document.querySelector('.start-logoff');
+    const shutdownBtn = document.querySelector('.start-shutdown');
+    if (logoffBtn) {
+        logoffBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            startMenu.classList.add('hidden');
+            location.reload();
+        });
+    }
+    if (shutdownBtn) {
+        shutdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            startMenu.classList.add('hidden');
+            // Show shutdown overlay
+            let overlay = document.getElementById('shutdown-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'shutdown-overlay';
+                overlay.style.cssText = 'position:fixed;inset:0;background:#000;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;cursor:default;';
+                overlay.innerHTML = '<img src="assets/xp-loading-screen.png" alt="" style="width:128px;opacity:0.6;">' +
+                    '<span style="color:#fff;font-family:Tahoma,sans-serif;font-size:13px;">It is now safe to turn off your computer.</span>' +
+                    '<span style="color:#aaa;font-family:Tahoma,sans-serif;font-size:10px;">(Click anywhere to wake up)</span>';
+                document.body.appendChild(overlay);
+                overlay.addEventListener('click', () => overlay.remove());
+            } else {
+                overlay.remove();
+            }
+        });
+    }
 }
 
 // "Application not found" error dialog + error sound (like the reference)
@@ -3107,4 +5394,145 @@ function setupClock() {
 
     updateClock();
     setInterval(updateClock, 1000);
+
+    // ---- Mini calendar that pops up above the clock (XP Date & Time style) ----
+    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const calendar = document.getElementById('calendar-popup');
+    if (!calendar) return;
+
+    calendar.innerHTML = `
+        <div class="calendar-header">
+            <button class="cal-nav" data-dir="-1" title="Previous month">&#9664;</button>
+            <span class="cal-month-year"></span>
+            <button class="cal-nav" data-dir="1" title="Next month">&#9654;</button>
+        </div>
+        <div class="cal-weekdays">
+            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span>
+            <span>Th</span><span>Fr</span><span>Sa</span>
+        </div>
+        <div class="cal-days"></div>
+        <div class="cal-footer">
+            <span class="cal-today-label"></span>
+            <button class="cal-today-btn" type="button">Today</button>
+        </div>
+    `;
+
+    const monthYearEl = calendar.querySelector('.cal-month-year');
+    const daysGrid = calendar.querySelector('.cal-days');
+    const todayLabelEl = calendar.querySelector('.cal-today-label');
+    const todayBtn = calendar.querySelector('.cal-today-btn');
+
+    // The month/year currently shown in the calendar (month is 0-based)
+    let view = { year: new Date().getFullYear(), month: new Date().getMonth() };
+
+    function todayParts() {
+        const t = new Date();
+        return { y: t.getFullYear(), m: t.getMonth(), d: t.getDate() };
+    }
+
+    function renderCalendar() {
+        const { year, month } = view;
+        const tod = todayParts();
+        const first = new Date(year, month, 1);
+        const startOffset = first.getDay();              // 0 = Sunday
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const prevMonthDays = new Date(year, month, 0).getDate();
+        const isCurrent = year === tod.y && month === tod.m;
+
+        monthYearEl.textContent = `${MONTHS[month]} ${year}`;
+        todayLabelEl.textContent = tod.d + ' ' + MONTHS[tod.m] + ' ' + tod.y;
+
+        daysGrid.innerHTML = '';
+
+        // Leading days from the previous month (dimmed)
+        for (let i = startOffset - 1; i >= 0; i--) {
+            const cell = document.createElement('div');
+            cell.className = 'cal-day other-month';
+            cell.textContent = prevMonthDays - i;
+            cell.dataset.year = month === 0 ? year - 1 : year;
+            cell.dataset.month = month === 0 ? 11 : month - 1;
+            daysGrid.appendChild(cell);
+        }
+
+        // Days of the displayed month (today is highlighted in blue)
+        for (let d = 1; d <= daysInMonth; d++) {
+            const cell = document.createElement('div');
+            cell.className = 'cal-day' + (isCurrent && d === tod.d ? ' today' : '');
+            cell.textContent = d;
+            cell.dataset.year = year;
+            cell.dataset.month = month;
+            daysGrid.appendChild(cell);
+        }
+
+        // Trailing days from the next month, padded to a full 6-week grid (dimmed)
+        const filled = daysGrid.children.length;
+        for (let i = 1; filled + i <= 42; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'cal-day other-month';
+            cell.textContent = i;
+            cell.dataset.year = month === 11 ? year + 1 : year;
+            cell.dataset.month = month === 11 ? 0 : month + 1;
+            daysGrid.appendChild(cell);
+        }
+    }
+
+    function openCalendar() {
+        // Always start on today's real date when opened
+        const tod = todayParts();
+        view = { year: tod.y, month: tod.m };
+        renderCalendar();
+        calendar.classList.remove('hidden');
+    }
+
+    function closeCalendar() {
+        calendar.classList.add('hidden');
+    }
+
+    clockEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (calendar.classList.contains('hidden')) openCalendar();
+        else closeCalendar();
+    });
+
+    calendar.querySelectorAll('.cal-nav').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let { year, month } = view;
+            month += parseInt(btn.dataset.dir, 10);
+            if (month < 0) { month = 11; year--; }
+            if (month > 11) { month = 0; year++; }
+            view = { year, month };
+            renderCalendar();
+        });
+    });
+
+    // Clicking a day jumps the view to that month (previous/next-month days too)
+    daysGrid.addEventListener('click', (e) => {
+        const cell = e.target.closest('.cal-day');
+        if (!cell || cell.dataset.month === undefined) return;
+        e.stopPropagation();
+        view = { year: +cell.dataset.year, month: +cell.dataset.month };
+        renderCalendar();
+    });
+
+    todayBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const tod = todayParts();
+        view = { year: tod.y, month: tod.m };
+        renderCalendar();
+    });
+
+    // Clicking anywhere outside the clock or calendar closes it
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.calendar-popup') && !e.target.closest('#taskbar-clock')) {
+            closeCalendar();
+        }
+    });
+
+    // Escape also closes it
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeCalendar();
+    });
 }

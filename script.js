@@ -5,12 +5,58 @@ const iconContent = {
         content: `
           <div class="exp-chrome">
             <div class="exp-menubar">
-              <span class="exp-menu-item">File</span>
-              <span class="exp-menu-item">Edit</span>
-              <span class="exp-menu-item">View</span>
-              <span class="exp-menu-item">Favorites</span>
-              <span class="exp-menu-item">Tools</span>
-              <span class="exp-menu-item">Help</span>
+              <span class="exp-menu-item" data-menu="file">File</span>
+              <span class="exp-menu-item" data-menu="edit">Edit</span>
+              <span class="exp-menu-item" data-menu="view">View</span>
+              <span class="exp-menu-item" data-menu="favorites">Favorites</span>
+              <span class="exp-menu-item" data-menu="tools">Tools</span>
+              <span class="exp-menu-item" data-menu="help">Help</span>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="file">
+              <div class="exp-dropdown-item" data-action="empty">Empty Recycle Bin</div>
+              <div class="exp-dropdown-item" data-action="properties">Properties</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="edit">
+              <div class="exp-dropdown-item" data-action="undo">Undo</div>
+              <div class="exp-dropdown-item" data-action="redo">Redo</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="cut">Cut</div>
+              <div class="exp-dropdown-item" data-action="copy">Copy</div>
+              <div class="exp-dropdown-item" data-action="paste">Paste</div>
+              <div class="exp-dropdown-item" data-action="delete">Delete</div>
+              <div class="exp-dropdown-item" data-action="rename">Rename</div>
+              <div class="exp-dropdown-item" data-action="selectall">Select All</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="view">
+              <div class="exp-dropdown-item" data-action="details">Details</div>
+              <div class="exp-dropdown-item" data-action="list">List</div>
+              <div class="exp-dropdown-item" data-action="tiles">Tiles</div>
+              <div class="exp-dropdown-item" data-action="thumbnails">Thumbnails</div>
+              <div class="exp-dropdown-item" data-action="arrangelineup">Arrange Icons →</div>
+              <div class="exp-dropdown-hidden" data-dropdown="arrangelineup_submenu">
+                <div class="exp-dropdown-item" data-action="arrangelineupbyname">by Name</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbysize">by Size</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbytype">by Type</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbymodified">by Modified</div>
+              </div>
+              <div class="exp-dropdown-item" data-action="aligntogrid">Align to Grid</div>
+              <div class="exp-dropdown-item" data-action="autoadjust">Auto Arrange</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="favorites">
+              <div class="exp-dropdown-item" data-action="addtofavorites">Add to Favorites...</div>
+              <div class="exp-dropdown-item" data-action="organizefavorites">Organize Favorites...</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="tools">
+              <div class="exp-dropdown-item" data-action="mapnetworkdrive">Map Network Drive...</div>
+              <div class="exp-dropdown-item" data-action="disconnectnetworkdrive">Disconnect Network Drive</div>
+              <div class="exp-dropdown-item" data-action="toolsoptions">Tools Options...</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="help">
+              <div class="exp-dropdown-item" data-action="helpcontents">Help Contents</div>
+              <div class="exp-dropdown-item" data-action="helpsearch">Help Search</div>
+              <div class="exp-dropdown-item" data-action="helptutorial">Help Tutorial</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="about">About Windows Explorer</div>
             </div>
             <div class="exp-toolbar">
               <button class="exp-tool-btn">&#8592; Back</button>
@@ -53,13 +99,54 @@ const iconContent = {
         content: `
           <div class="ie-chrome">
             <div class="ie-menubar">
-              <span class="ie-menu-item">File</span>
-              <span class="ie-menu-item">Edit</span>
-              <span class="ie-menu-item">View</span>
-              <span class="ie-menu-item">Favorites</span>
-              <span class="ie-menu-item">Tools</span>
-              <span class="ie-menu-item">Help</span>
+              <span class="ie-menu-item" data-menu="file">File</span>
+              <span class="ie-menu-item" data-menu="edit">Edit</span>
+              <span class="ie-menu-item" data-menu="view">View</span>
+              <span class="ie-menu-item" data-menu="favorites">Favorites</span>
+              <span class="ie-menu-item" data-menu="tools">Tools</span>
+              <span class="ie-menu-item" data-menu="help">Help</span>
               <img class="ie-logo" src="assets/internet-explorer-icon.png" alt="">
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="file">
+              <div class="ie-dropdown-item" data-action="new">New</div>
+              <div class="ie-dropdown-item" data-action="open">Open...</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="save">Save As...</div>
+              <div class="ie-dropdown-item" data-action="saveas">Save As...</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="print">Print...</div>
+              <div class="ie-dropdown-item" data-action="printpreview">Print Preview</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="properties">Properties</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="edit">
+              <div class="ie-dropdown-item" data-action="cut">Cut</div>
+              <div class="ie-dropdown-item" data-action="copy">Copy</div>
+              <div class="ie-dropdown-item" data-action="paste">Paste</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="selectall">Select All</div>
+              <div class="ie-dropdown-item" data-action="find">Find (on this page)...</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="view">
+              <div class="ie-dropdown-item" data-action="toolbar">Toolbars</div>
+              <div class="ie-dropdown-item" data-action="explorerbar">Explorer Bars</div>
+              <div class="ie-dropdown-item" data-action="statusbar">Status Bar</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="favorites">
+              <div class="ie-dropdown-item" data-action="addtofavorites">Add to Favorites...</div>
+              <div class="ie-dropdown-item" data-action="organizefavorites">Organize Favorites...</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-description="Links" data-action="links">Links</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="tools">
+              <div class="ie-dropdown-item" data-action="internetoptions">Internet Options...</div>
+              <div class="ie-dropdown-item" data-action="windowsupdate">Windows Update</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="help">
+              <div class="ie-dropdown-item" data-action="helpcontents">Help Contents</div>
+              <div class="ie-dropdown-item" data-action="helptutorial">Help Tutorial</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="about">About Internet Explorer</div>
             </div>
             <div class="ie-toolbar">
               <button class="ie-nav-btn" id="browserBack"><span class="ie-nav-icon">&#8592;</span><span>Back</span></button>
@@ -89,12 +176,65 @@ const iconContent = {
         content: `
           <div class="exp-chrome">
             <div class="exp-menubar">
-              <span class="exp-menu-item">File</span>
-              <span class="exp-menu-item">Edit</span>
-              <span class="exp-menu-item">View</span>
-              <span class="exp-menu-item">Favorites</span>
-              <span class="exp-menu-item">Tools</span>
-              <span class="exp-menu-item">Help</span>
+              <span class="exp-menu-item" data-menu="file">File</span>
+              <span class="exp-menu-item" data-menu="edit">Edit</span>
+              <span class="exp-menu-item" data-menu="view">View</span>
+              <span class="exp-menu-item" data-menu="favorites">Favorites</span>
+              <span class="exp-menu-item" data-menu="tools">Tools</span>
+              <span class="exp-menu-item" data-menu="help">Help</span>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="file">
+              <div class="exp-dropdown-item" data-action="new">New</div>
+              <div class="exp-dropdown-item" data-action="open">Open...</div>
+              <div class="exp-dropdown-item" data-action="save">Save</div>
+              <div class="exp-dropdown-item" data-action="saveas">Save As...</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="print">Print...</div>
+              <div class="exp-dropdown-item" data-action="properties">Properties</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="close">Close</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="edit">
+              <div class="exp-dropdown-item" data-action="undo">Undo</div>
+              <div class="exp-dropdown-item" data-action="redo">Redo</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="cut">Cut</div>
+              <div class="exp-dropdown-item" data-action="copy">Copy</div>
+              <div class="exp-dropdown-item" data-action="paste">Paste</div>
+              <div class="exp-dropdown-item" data-action="delete">Delete</div>
+              <div class="exp-dropdown-item" data-action="rename">Rename</div>
+              <div class="exp-dropdown-item" data-action="selectall">Select All</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="view">
+              <div class="exp-dropdown-item" data-action="details">Details</div>
+              <div class="exp-dropdown-item" data-action="list">List</div>
+              <div class="exp-dropdown-item" data-action="tiles">Tiles</div>
+              <div class="exp-dropdown-item" data-action="thumbnails">Thumbnails</div>
+              <div class="exp-dropdown-item" data-action="arrangelineup">Arrange Icons →</div>
+              <div class="exp-dropdown-hidden" data-dropdown="arrangelineup_submenu">
+                <div class="exp-dropdown-item" data-action="arrangelineupbyname">by Name</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbysize">by Size</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbytype">by Type</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbymodified">by Modified</div>
+              </div>
+              <div class="exp-dropdown-item" data-action="aligntogrid">Align to Grid</div>
+              <div class="exp-dropdown-item" data-action="autoadjust">Auto Arrange</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="favorites">
+              <div class="exp-dropdown-item" data-action="addtofavorites">Add to Favorites...</div>
+              <div class="exp-dropdown-item" data-action="organizefavorites">Organize Favorites...</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="tools">
+              <div class="exp-dropdown-item" data-action="mapnetworkdrive">Map Network Drive...</div>
+              <div class="exp-dropdown-item" data-action="disconnectnetworkdrive">Disconnect Network Drive</div>
+              <div class="exp-dropdown-item" data-action="toolsoptions">Tools Options...</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="help">
+              <div class="exp-dropdown-item" data-action="helpcontents">Help Contents</div>
+              <div class="exp-dropdown-item" data-action="helpsearch">Help Search</div>
+              <div class="exp-dropdown-item" data-action="helptutorial">Help Tutorial</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="about">About Windows Explorer</div>
             </div>
             <div class="exp-toolbar">
               <button class="exp-tool-btn">&#8592; Back</button>
@@ -141,6 +281,50 @@ const iconContent = {
         title: "Untitled - Paint",
         icon: "assets/paint-icon.png",
         content: `
+          <div class="paint-menubar">
+            <span class="paint-menu-item" data-menu="file">File</span>
+            <span class="paint-menu-item" data-menu="edit">Edit</span>
+            <span class="paint-menu-item" data-menu="image">Image</span>
+            <span class="paint-menu-item" data-menu="colors">Colors</span>
+            <span class="paint-menu-item" data-menu="help">Help</span>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="file">
+            <div class="paint-dropdown-item" data-action="new">New</div>
+            <div class="paint-dropdown-item" data-action="open">Open...</div>
+            <div class="paint-dropdown-item" data-action="save">Save</div>
+            <div class="paint-dropdown-item" data-action="saveas">Save as...</div>
+            <div class="paint-dropdown-divider"></div>
+            <div class="paint-dropdown-item" data-action="printsetup">Print Setup...</div>
+            <div class="paint-dropdown-item" data-action="print">Print...</div>
+            <div class="paint-dropdown-item" data-action="exit">Exit</div>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="edit">
+            <div class="paint-dropdown-item" data-action="undo">Undo</div>
+            <div class="paint-dropdown-item" data-action="redo">Redo</div>
+            <div class="paint-dropdown-divider"></div>
+            <div class="paint-dropdown-item" data-action="cut">Cut</div>
+            <div class="paint-dropdown-item" data-action="copy">Copy</div>
+            <div class="paint-dropdown-item" data-action="paste">Paste</div>
+            <div class="paint-dropdown-item" data-action="pastetransparent">Paste Transparent</div>
+            <div class="paint-dropdown-item" data-action="selectall">Select All</div>
+            <div class="paint-dropdown-item" data-action="invertselection">Invert Selection</div>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="image">
+            <div class="paint-dropdown-item" data-action="fliprotate">Flip/Rotate</div>
+            <div class="paint-dropdown-item" data-action="stretchandskew">Stretch and Skew</div>
+            <div class="paint-dropdown-item" data-action="invertcolors">Invert Colors</div>
+            <div class="paint-dropdown-item" data-action="attributes">Attributes</div>
+            <div class="paint-dropdown-item" data-action="clearimage">Clear Image</div>
+            <div class="paint-dropdown-item" data-action="drawopaque">Draw Opaque</div>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="colors">
+            <div class="paint-dropdown-item" data-action="editcolors">Edit Colors</div>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="help">
+            <div class="paint-dropdown-item" data-action="viewhelp">View Help</div>
+            <div class="paint-dropdown-divider"></div>
+            <div class="paint-dropdown-item" data-action="about">About Paint</div>
+          </div>
           <iframe id="paintFrame" src="https://jspaint.app/"
             style="display:block;width:100%;height:100%;background-color:rgb(192,192,192);border:none;flex:1;min-height:0;">
           </iframe>
@@ -156,15 +340,49 @@ const iconContent = {
             <span class="np-menu-item" data-menu="format">Format</span>
             <span class="np-menu-item" data-menu="view">View</span>
             <span class="np-menu-item" data-menu="help">Help</span>
-            <div class="np-dropdown hidden" data-dropdown="edit">
-              <div class="np-dropdown-item" data-action="undo">Undo</div>
-              <div class="np-dropdown-item" data-action="redo">Redo</div>
-              <div class="np-dropdown-divider"></div>
-              <div class="np-dropdown-item" data-action="find">Find</div>
-              <div class="np-dropdown-item" data-action="replace">Replace</div>
-              <div class="np-dropdown-divider"></div>
-              <div class="np-dropdown-item" data-action="datetime">Date/Time</div>
-            </div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="file">
+            <div class="np-dropdown-item" data-action="new">New</div>
+            <div class="np-dropdown-item" data-action="open">Open...</div>
+            <div class="np-dropdown-item" data-action="save">Save</div>
+            <div class="np-dropdown-item" data-action="saveas">Save As...</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="pagesetup">Page Setup...</div>
+            <div class="np-dropdown-item" data-action="print">Print...</div>
+            <div class="np-dropdown-item" data-action="printpreview">Print Preview</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="exit">Exit</div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="edit">
+            <div class="np-dropdown-item" data-action="undo">Undo</div>
+            <div class="np-dropdown-item" data-action="redo">Redo</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="cut">Cut</div>
+            <div class="np-dropdown-item" data-action="copy">Copy</div>
+            <div class="np-dropdown-item" data-action="paste">Paste</div>
+            <div class="np-dropdown-item" data-action="delete">Delete</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="find">Find...</div>
+            <div class="np-dropdown-item" data-action="findnext">Find Next</div>
+            <div class="np-dropdown-item" data-action="replace">Replace...</div>
+            <div class="np-dropdown-item" data-action="gotoline">Go To...</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="selectall">Select All</div>
+            <div class="np-dropdown-item" data-action="time/date">Time/Date</div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="format">
+            <div class="np-dropdown-item" data-action="wordwrap">Word Wrap</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="font">Font...</div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="view">
+            <div class="np-dropdown-item" data-action="statusbar">Status Bar</div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="help">
+            <div class="np-dropdown-item" data-action="helpcontents">Help Contents</div>
+            <div class="np-dropdown-item" data-action="helptutorial">Help Tutorial</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="about">About Notepad</div>
           </div>
           <textarea class="np-textarea" spellcheck="false"></textarea>
         `
@@ -2069,6 +2287,7 @@ function createWindowElement(icon) {
         setupBrowser(win);
     } else if (icon.id === 'icon4') {
         contentEl.classList.add('no-padding');
+        setupPaint(win);
     } else if (icon.id === 'icon5') {
         contentEl.classList.add('no-padding');
         setupNotepad(win, initialNotepad);
@@ -2498,6 +2717,50 @@ function setupFolder(win, files) {
         }
     }
 
+    // Menu bar functionality
+    const menubar = win.querySelector('.exp-menubar');
+    if (menubar) {
+        const menuItems = menubar.querySelectorAll('.exp-menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const menuName = item.dataset.menu;
+                // Close any open dropdowns first
+                menubar.querySelectorAll('.exp-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('hidden');
+                });
+                menubar.querySelectorAll('.exp-menu-item.active').forEach(activeItem => {
+                    activeItem.classList.remove('active');
+                });
+
+                // Show dropdown for clicked menu (if it exists)
+                const dropdown = menubar.querySelector(`.exp-dropdown[data-dropdown="${menuName}"]`);
+                if (dropdown) {
+                    dropdown.classList.remove('hidden');
+                    item.classList.add('active');
+
+                    // Position dropdown below the menu item
+                    const rect = item.getBoundingClientRect();
+                    const menubarRect = menubar.getBoundingClientRect();
+                    dropdown.style.top = (rect.bottom - menubarRect.top) + 'px';
+                    dropdown.style.left = (rect.left - menubarRect.left) + 'px';
+                }
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.exp-menubar')) {
+                menubar.querySelectorAll('.exp-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('hidden');
+                });
+                menubar.querySelectorAll('.exp-menu-item.active').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        });
+    }
+
     // Expose the file list (used for Next/Previous navigation in the viewer)
     win.files = files;
 
@@ -2582,6 +2845,50 @@ function setupBin(win) {
         });
     }
 
+    // Menu bar functionality
+    const menubar = win.querySelector('.exp-menubar');
+    if (menubar) {
+        const menuItems = menubar.querySelectorAll('.exp-menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const menuName = item.dataset.menu;
+                // Close any open dropdowns first
+                menubar.querySelectorAll('.exp-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('hidden');
+                });
+                menubar.querySelectorAll('.exp-menu-item.active').forEach(activeItem => {
+                    activeItem.classList.remove('active');
+                });
+
+                // Show dropdown for clicked menu (if it exists)
+                const dropdown = menubar.querySelector(`.exp-dropdown[data-dropdown="${menuName}"]`);
+                if (dropdown) {
+                    dropdown.classList.remove('hidden');
+                    item.classList.add('active');
+
+                    // Position dropdown below the menu item
+                    const rect = item.getBoundingClientRect();
+                    const menubarRect = menubar.getBoundingClientRect();
+                    dropdown.style.top = (rect.bottom - menubarRect.top) + 'px';
+                    dropdown.style.left = (rect.left - menubarRect.left) + 'px';
+                }
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.exp-menubar')) {
+                menubar.querySelectorAll('.exp-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('hidden');
+                });
+                menubar.querySelectorAll('.exp-menu-item.active').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        });
+    }
+
     const emptyBtn = win.querySelector('[data-bin-action="empty"]');
     const restoreAllBtn = win.querySelector('[data-bin-action="restore-all"]');
     if (emptyBtn) emptyBtn.addEventListener('click', () => emptyRecycleBin());
@@ -2633,6 +2940,50 @@ function setupBrowser(win) {
     });
 
     homeButton.addEventListener('click', () => navigateBrowser(HOME_URL, true));
+
+    // Menu bar functionality
+    const menubar = win.querySelector('.ie-menubar');
+    if (menubar) {
+        const menuItems = menubar.querySelectorAll('.ie-menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const menuName = item.textContent.trim().toLowerCase();
+                // Close any open dropdowns first
+                menubar.querySelectorAll('.ie-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('hidden');
+                });
+                menubar.querySelectorAll('.ie-menu-item.active').forEach(activeItem => {
+                    activeItem.classList.remove('active');
+                });
+
+                // Show dropdown for clicked menu (if it exists)
+                const dropdown = menubar.querySelector(`.ie-dropdown[data-dropdown="${menuName}"]`);
+                if (dropdown) {
+                    dropdown.classList.remove('hidden');
+                    item.classList.add('active');
+
+                    // Position dropdown below the menu item
+                    const rect = item.getBoundingClientRect();
+                    const menubarRect = menubar.getBoundingClientRect();
+                    dropdown.style.top = (rect.bottom - menubarRect.top) + 'px';
+                    dropdown.style.left = (rect.left - menubarRect.left) + 'px';
+                }
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.ie-menubar')) {
+                menubar.querySelectorAll('.ie-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('hidden');
+                });
+                menubar.querySelectorAll('.ie-menu-item.active').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        });
+    }
 
     function navigateBrowser(rawUrl, addToHistory) {
         let url = rawUrl.trim();
@@ -2719,7 +3070,7 @@ function setupNotepad(win, typewriter, initialText) {
             item.addEventListener('click', () => {
                 const action = item.dataset.action;
 
-                if (action === 'datetime') {
+                if (action === 'time/date') {
                     const now = new Date();
                     const stamp = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) +
                         ' ' + now.toLocaleDateString();
@@ -2739,6 +3090,297 @@ function setupNotepad(win, typewriter, initialText) {
                 }
 
                 editDropdown.classList.add('hidden');
+                menuItems.forEach(m => m.classList.remove('active'));
+            });
+        });
+    }
+
+    // File dropdown functionality
+    const fileDropdown = win.querySelector('.np-dropdown[data-dropdown="file"]');
+    if (fileDropdown) {
+        fileDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        fileDropdown.querySelectorAll('.np-dropdown-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+
+                if (action === 'new') {
+                    textarea.value = '';
+                    textarea.focus();
+                    win.title = "Untitled - Notepad";
+                } else if (action === 'open') {
+                    // In a real app, this would open a file dialog
+                    alert('Open dialog would appear here in a real Notepad application.');
+                } else if (action === 'save') {
+                    // In a real app, this would save the current file
+                    if (win.title === "Untitled - Notepad") {
+                        alert('Save As dialog would appear here for untitled files.');
+                    } else {
+                        alert('File saved successfully.');
+                    }
+                } else if (action === 'saveas') {
+                    // In a real app, this would open a save as dialog
+                    alert('Save As dialog would appear here.');
+                } else if (action === 'pagesetup') {
+                    alert('Page Setup dialog would appear here.');
+                } else if (action === 'print') {
+                    alert('Print dialog would appear here.');
+                } else if (action === 'printpreview') {
+                    alert('Print Preview would appear here.');
+                } else if (action === 'exit') {
+                    win.close();
+                }
+
+                fileDropdown.classList.add('hidden');
+                menuItems.forEach(m => m.classList.remove('active'));
+            });
+        });
+    }
+
+    // Format dropdown functionality
+    const formatDropdown = win.querySelector('.np-dropdown[data-dropdown="format"]');
+    if (formatDropdown) {
+        formatDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        formatDropdown.querySelectorAll('.np-dropdown-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+
+                if (action === 'wordwrap') {
+                    // Toggle word wrap
+                    textarea.style.wordWrap = textarea.style.wordWrap === 'break-word' ? 'normal' : 'break-word';
+                    // Update checkbox appearance (simplified)
+                    item.textContent = textarea.style.wordWrap === 'break-word' ? 'Word Wrap' : 'Word Wrap';
+                } else if (action === 'font') {
+                    alert('Font dialog would appear here.');
+                }
+
+                formatDropdown.classList.add('hidden');
+                menuItems.forEach(m => m.classList.remove('active'));
+            });
+        });
+    }
+
+    // View dropdown functionality
+    const viewDropdown = win.querySelector('.np-dropdown[data-dropdown="view"]');
+    if (viewDropdown) {
+        viewDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        viewDropdown.querySelectorAll('.np-dropdown-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+
+                if (action === 'statusbar') {
+                    // Toggle status bar (simplified - Notepad XP doesn't have a visible status bar by default)
+                    alert('Status bar toggled.');
+                }
+
+                viewDropdown.classList.add('hidden');
+                menuItems.forEach(m => m.classList.remove('active'));
+            });
+        });
+    }
+
+    // Help dropdown functionality
+    const helpDropdown = win.querySelector('.np-dropdown[data-dropdown="help"]');
+    if (helpDropdown) {
+        helpDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        helpDropdown.querySelectorAll('.np-dropdown-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+
+                if (action === 'helpcontents') {
+                    alert('Help Contents would appear here.');
+                } else if (action === 'helptutorial') {
+                    alert('Help Tutorial would appear here.');
+                } else if (action === 'about') {
+                    alert('About Notepad\n\nNotepad is a simple text editor for Microsoft Windows.\n\n© 1985-2002 Microsoft Corp.');
+                }
+
+                helpDropdown.classList.add('hidden');
+                menuItems.forEach(m => m.classList.remove('active'));
+            });
+        });
+    }
+}
+// Paint app - handles menu functionality for the Paint application
+function setupPaint(win) {
+    const menubar = win.querySelector('.paint-menubar');
+    if (menubar) {
+        const menuItems = menubar.querySelectorAll('.paint-menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const menuName = item.dataset.menu;
+                // Close any open dropdowns first
+                menubar.querySelectorAll('.paint-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('hidden');
+                });
+                menubar.querySelectorAll('.paint-menu-item.active').forEach(activeItem => {
+                    activeItem.classList.remove('active');
+                });
+
+                // Show dropdown for clicked menu (if it exists)
+                const dropdown = menubar.querySelector(`.paint-dropdown[data-dropdown="${menuName}"]`);
+                if (dropdown) {
+                    dropdown.classList.remove('hidden');
+                    item.classList.add('active');
+
+                    // Position dropdown below the menu item
+                    const rect = item.getBoundingClientRect();
+                    const menubarRect = menubar.getBoundingClientRect();
+                    dropdown.style.top = (rect.bottom - menubarRect.top) + 'px';
+                    dropdown.style.left = (rect.left - menubarRect.left) + 'px';
+                }
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.paint-menubar')) {
+                menubar.querySelectorAll('.paint-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('hidden');
+                });
+                menubar.querySelectorAll('.paint-menu-item.active').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        });
+    }
+
+    // File dropdown functionality
+    const fileDropdown = win.querySelector('.paint-dropdown[data-dropdown="file"]');
+    if (fileDropdown) {
+        fileDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        fileDropdown.querySelectorAll('.paint-dropdown-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+
+                if (action === 'new') {
+                    // In a real app, this would clear the canvas
+                    alert('New canvas would be created.');
+                } else if (action === 'open') {
+                    // In a real app, this would open a file dialog
+                    alert('Open dialog would appear here.');
+                } else if (action === 'save') {
+                    // In a real app, this would save the current image
+                    alert('Save dialog would appear here.');
+                } else if (action === 'saveas') {
+                    // In a real app, this would open a save as dialog
+                    alert('Save As dialog would appear here.');
+                } else if (action === 'printsetup') {
+                    alert('Print Setup dialog would appear here.');
+                } else if (action === 'print') {
+                    alert('Print dialog would appear here.');
+                } else if (action === 'exit') {
+                    win.close();
+                }
+
+                fileDropdown.classList.add('hidden');
+                menuItems.forEach(m => m.classList.remove('active'));
+            });
+        });
+    }
+
+    // Edit dropdown functionality
+    const editDropdown = win.querySelector('.paint-dropdown[data-dropdown="edit"]');
+    if (editDropdown) {
+        editDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        editDropdown.querySelectorAll('.paint-dropdown-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+
+                if (action === 'undo') {
+                    alert('Undo action would be performed.');
+                } else if (action === 'redo') {
+                    alert('Redo action would be performed.');
+                } else if (action === 'cut') {
+                    alert('Cut action would be performed.');
+                } else if (action === 'copy') {
+                    alert('Copy action would be performed.');
+                } else if (action === 'paste') {
+                    alert('Paste action would be performed.');
+                } else if (action === 'pastetransparent') {
+                    alert('Paste Transparent action would be performed.');
+                } else if (action === 'selectall') {
+                    alert('Select All action would be performed.');
+                } else if (action === 'invertselection') {
+                    alert('Invert Selection action would be performed.');
+                }
+
+                editDropdown.classList.add('hidden');
+                menuItems.forEach(m => m.classList.remove('active'));
+            });
+        });
+    }
+
+    // Image dropdown functionality
+    const imageDropdown = win.querySelector('.paint-dropdown[data-dropdown="image"]');
+    if (imageDropdown) {
+        imageDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        imageDropdown.querySelectorAll('.paint-dropdown-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+
+                if (action === 'fliprotate') {
+                    alert('Flip/Rotate dialog would appear here.');
+                } else if (action === 'stretchandskew') {
+                    alert('Stretch and Skew dialog would appear here.');
+                } else if (action === 'invertcolors') {
+                    alert('Invert Colors action would be performed.');
+                } else if (action === 'attributes') {
+                    alert('Attributes dialog would appear here.');
+                } else if (action === 'clearimage') {
+                    alert('Clear Image action would be performed.');
+                } else if (action === 'drawopaque') {
+                    alert('Draw Opaque toggle would be changed.');
+                }
+
+                imageDropdown.classList.add('hidden');
+                menuItems.forEach(m => m.classList.remove('active'));
+            });
+        });
+    }
+
+    // Colors dropdown functionality
+    const colorsDropdown = win.querySelector('.paint-dropdown[data-dropdown="colors"]');
+    if (colorsDropdown) {
+        colorsDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        colorsDropdown.querySelectorAll('.paint-dropdown-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+
+                if (action === 'editcolors') {
+                    alert('Edit Colors dialog would appear here.');
+                }
+
+                colorsDropdown.classList.add('hidden');
+                menuItems.forEach(m => m.classList.remove('active'));
+            });
+        });
+    }
+
+    // Help dropdown functionality
+    const helpDropdown = win.querySelector('.paint-dropdown[data-dropdown="help"]');
+    if (helpDropdown) {
+        helpDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        helpDropdown.querySelectorAll('.paint-dropdown-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+
+                if (action === 'viewhelp') {
+                    alert('Help would appear here.');
+                } else if (action === 'about') {
+                    alert('About Paint\n\nPaint is a simple graphics painting program that has been included with all versions of Microsoft Windows.\n\n© 1985-2002 Microsoft Corp.');
+                }
+
+                helpDropdown.classList.add('hidden');
                 menuItems.forEach(m => m.classList.remove('active'));
             });
         });

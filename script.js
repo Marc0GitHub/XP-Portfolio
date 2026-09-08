@@ -10801,6 +10801,20 @@ function saveDesktopLayout() {
     }, 300);
 }
 
+// A position saved in a wide window can fall outside a narrower one, and the
+// desktop deliberately does not scroll (body has overflow:hidden), so an icon
+// restored past the edge is simply gone -- with no scrollbar to reach it and no
+// obvious way back. Clamp on read, which also heals a layout already stored
+// that way.
+function clampIconPos(left, top) {
+    const maxX = Math.max(0, window.innerWidth - 80);
+    const maxY = Math.max(0, workAreaHeight() - 80);
+    return {
+        left: Math.min(Math.max(0, parseInt(left, 10) || 0), maxX),
+        top: Math.min(Math.max(0, parseInt(top, 10) || 0), maxY)
+    };
+}
+
 function restoreDesktopLayout() {
     const saved = Store.get(LAYOUT_KEY, null);
     if (!saved || !Array.isArray(saved.icons)) return;
@@ -10813,8 +10827,9 @@ function restoreDesktopLayout() {
             if (/^icon\d+$/.test(icon.id)) icon.remove();   // it was thrown away
             return;
         }
-        icon.style.left = rec.left + 'px';
-        icon.style.top = rec.top + 'px';
+        const pos = clampIconPos(rec.left, rec.top);
+        icon.style.left = pos.left + 'px';
+        icon.style.top = pos.top + 'px';
         const span = icon.querySelector('span');
         if (span && rec.label && span.textContent !== rec.label) span.textContent = rec.label;
         if (rec.mtime) icon.dataset.mtime = rec.mtime;
@@ -10832,9 +10847,10 @@ function restoreDesktopLayout() {
             x: null, y: null
         });
         if (icon) {
-            // Put it back exactly where it was, not on the next free slot
-            icon.style.left = rec.left + 'px';
-            icon.style.top = rec.top + 'px';
+            // Put it back where it was, not on the next free slot
+            const pos = clampIconPos(rec.left, rec.top);
+            icon.style.left = pos.left + 'px';
+            icon.style.top = pos.top + 'px';
             if (rec.mtime) icon.dataset.mtime = rec.mtime;
         }
     });

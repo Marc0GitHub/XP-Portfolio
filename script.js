@@ -2237,7 +2237,10 @@ function getSavedWallpaper() {
             ...ANIMATED_WALLPAPERS.map(w => w.src)];
         if (known.includes(saved)) return saved;
         // Also accept any data-URL or file-URL (custom Set as Wallpaper)
-        if (/^(data:|file:|blob:)/.test(saved)) return saved;
+        // Only a data: URL survives a reload -- a blob: URL dies with the
+        // document that created it and file: is blocked from an https page,
+        // so honouring either just guarantees a blank desktop next visit.
+        if (/^data:/.test(saved)) return saved;
         if (saved.startsWith('assets/')) return saved; // any asset image
         return DEFAULT_WALLPAPER;
     } catch (e) { return DEFAULT_WALLPAPER; }
@@ -2262,7 +2265,7 @@ function getWallpaperVideo() {
     return video;
 }
 
-function setWallpaper(src) {
+function setWallpaper(src, isFallback) {
     const video = getWallpaperVideo();
     if (isAnimatedWallpaper(src)) {
         // Show the animated (video) wallpaper
@@ -2274,6 +2277,7 @@ function setWallpaper(src) {
             video.src = src;
             video.load();
         }
+        video.onerror = isFallback ? null : () => fallbackWallpaper(src);
         const p = video.play();
         if (p) p.catch(() => { /* autoplay may need a gesture */ });
     } else {
@@ -2283,8 +2287,23 @@ function setWallpaper(src) {
         video.load();
         video.style.display = 'none';
         document.body.style.backgroundImage = `url(${src})`;
+        // An image that never loads leaves the desktop a blank white void with
+        // the icon labels invisible on it, and the dud choice would be saved --
+        // so every later visit would come back broken too. Probe it and undo.
+        if (!isFallback && !/^data:/i.test(src)) {
+            const probe = new Image();
+            probe.onerror = () => fallbackWallpaper(src);
+            probe.src = src;
+        }
     }
     try { localStorage.setItem(WALLPAPER_KEY, src); } catch (e) { /* ignore */ }
+}
+
+// Recover from a wallpaper that cannot be displayed. Guarded so that a missing
+// default cannot send this into a loop.
+function fallbackWallpaper(failed) {
+    if (failed === DEFAULT_WALLPAPER) return;
+    setWallpaper(DEFAULT_WALLPAPER, true);
 }
 
 function getDesktopContextMenu() {

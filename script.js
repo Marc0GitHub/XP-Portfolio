@@ -2308,6 +2308,18 @@ function getDesktopContextMenu() {
             { label: 'Bitmap Image', icon: 'assets/image-file-icon.png', action: () => newBitmapOnDesktop() }
         ]},
         { sep: true },
+        { label: Mascot.on ? 'Hide Desktop Buddy' : 'Show Desktop Buddy',
+          action: () => {
+              const on = Mascot.toggle();
+              notify({
+                  title: on ? 'Desktop Buddy' : 'Desktop Buddy hidden',
+                  text: on
+                      ? 'He is back. Move the mouse near him to watch him bolt.'
+                      : 'Right-click the desktop, or use Display Properties, to bring him back.',
+                  timeout: 5000
+              });
+          } },
+        { sep: true },
         { label: 'Change Background', icon: 'assets/xp-desktop.webp', action: () => showDisplayProperties('desktop') },
         { sep: true },
         { label: 'Properties', icon: 'assets/xp-desktop.webp', action: () => showDisplayProperties('themes') }
@@ -9476,6 +9488,9 @@ function showDisplayProperties(initialTab) {
                 <button class="xp-btn dp-browse">Browse...</button>
                 <span class="dp-hint">Right-click any image on the desktop for “Set as Wallpaper”.</span>
               </div>
+              <label class="xp-check dp-buddy-row">
+                <input type="checkbox" class="dp-buddy"> Show the desktop buddy
+              </label>
             </div>
 
             <div class="xp-tabpage hidden" data-page="saver">
@@ -9567,6 +9582,15 @@ function showDisplayProperties(initialTab) {
             XPAudio.play('click');
         });
     });
+    const buddyBox = el.querySelector('.dp-buddy');
+    if (buddyBox) {
+        buddyBox.checked = Mascot.on;
+        buddyBox.addEventListener('change', () => {
+            Mascot.set(buddyBox.checked);
+            XPAudio.play('click');
+        });
+    }
+
     el.querySelector('.dp-browse').addEventListener('click', () => {
         pickLocalFiles('image/*', (files) => {
             const file = files[0];
@@ -11189,6 +11213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupDesktopKeyboard();
     setupFileDrop();
     ScreenSaver.init();
+    Mascot.init();
 
     // The audio context can only start from a real gesture
     ['pointerdown', 'keydown'].forEach(evt =>
@@ -11214,3 +11239,528 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('XP desktop error:', e.error || e.message);
     });
 });
+
+
+/* ===== 23. Desktop buddy ==================================================
+   A small pixel-art hacker who sits on the desktop typing on his laptop, gets
+   startled when the pointer comes near, and legs it to somewhere quieter.
+
+   The whole point is that he must never get in the way, so: he lives inside
+   .desktop and therefore paints *under* every window; he is pointer-events
+   none, so he can never swallow a click; he only moves every 12-25 seconds and
+   holds still while you are dragging an icon or rubber-band selecting; and he
+   is one right-click away from being gone for good.
+
+   The sprite is drawn from character maps rather than shipped as images, the
+   same way the Command Prompt and All Programs icons are made.
+   ========================================================================= */
+
+const MASCOT_SPRITES = {
+    sit1: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhMMMMMMMMMMhhk...',
+        '...khMMMMMMMMMMMMhk...',
+        '...khMkkMMMMMMkkMhk...',
+        '...khMkkMMMMMMkkMhk...',
+        '...khMrMMMMMMMMrMhk...',
+        '...khMMkMMkkMMkMMhk...',
+        '...khMMMkkkkkkMMMhk...',
+        '...khMMMMMkkMMMMMhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kffkkkkkkkkkkffk...',
+        '...kLSSsSSSSSSSSSLk...',
+        '...kLSSSsSSSSSSSSLk...',
+        '...kLSSsSSSsssSSSLk...',
+        '...kLLLLLLLLLLLLLLk...',
+        '....kkkkkkkkkkkkkk....'
+    ],
+    sit2: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhMMMMMMMMMMhhk...',
+        '...khMMMMMMMMMMMMhk...',
+        '...khMkkMMMMMMkkMhk...',
+        '...khMkkMMMMMMkkMhk...',
+        '...khMrMMMMMMMMrMhk...',
+        '...khMMkMMkkMMkMMhk...',
+        '...khMMMkkkkkkMMMhk...',
+        '...khMMMMMkkMMMMMhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kkkkkkkkkkkkkkkk...',
+        '...kffSSSSSSSSSSffk...',
+        '...kLSSSSSSSSSSSSLk...',
+        '...kLSSSSSSSSSSSSLk...',
+        '...kLLLLLLLLLLLLLLk...',
+        '....kkkkkkkkkkkkkk....'
+    ],
+    bare1: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhffffffffffhhk...',
+        '...khffffffffffffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffTfffffffffhk...',
+        '...khffffffffffffhk...',
+        '...khffffkmmkffffhk...',
+        '...khffffffffffffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kffkkkkkkkkkkffk...',
+        '...kLSSsSSSSSSSSSLk...',
+        '...kLSSSsSSSSSSSSLk...',
+        '...kLSSsSSSsssSSSLk...',
+        '...kLLLLLLLLLLLLLLk...',
+        '....kkkkkkkkkkkkkk....'
+    ],
+    bare2: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhffffffffffhhk...',
+        '...khffffffffffffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffffffffffffhk...',
+        '...khffTfffffffffhk...',
+        '...khffffkmmkffffhk...',
+        '...khffffffffffffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kkkkkkkkkkkkkkkk...',
+        '...kffSSSSSSSSSSffk...',
+        '...kLSSSSSSSSSSSSLk...',
+        '...kLSSSSSSSSSSSSLk...',
+        '...kLLLLLLLLLLLLLLk...',
+        '....kkkkkkkkkkkkkk....'
+    ],
+    run1: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhffffffffffhhk...',
+        '...khfkkfffffkkffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffTffffffTffhk...',
+        '...khffTfkkkkfTffhk...',
+        '...khfffkmmmmkfffhk...',
+        '...khffffkmmkffffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kllllllkhhhhhhk....',
+        '...kLSssSLkhhhhhhk....',
+        '...kLLLLLLkhhhhffk....',
+        '......khhhhhhhhk......',
+        '.....khhk...khhk......',
+        '....kffk.....kffk.....'
+    ],
+    run2: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhffffffffffhhk...',
+        '...khfkkfffffkkffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffffffffffffhk...',
+        '...khffTfkkkkfTffhk...',
+        '...khffTkmmmmkTffhk...',
+        '...khfffkmmmmkfffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kllllllkhhhhhhk....',
+        '...kLSssSLkhhhhhhk....',
+        '...kLLLLLLkhhhhffk....',
+        '......khhhhhhhhk......',
+        '.......khhkkhhk.......',
+        '......kffk..kffk......'
+    ],
+    panic: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk..T.',
+        '...khhhhhhhhhhhhhhk..T',
+        '...khhffffffffffhhk...',
+        '...khfkkfffffkkffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffTffffffTffhk...',
+        '...khffTfkkkkfTffhk...',
+        '...khfffkmmmmkfffhk...',
+        '...khffffkmmkffffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kllllllkhhhhhhk....',
+        '...kLSssSLkhhhhhhk....',
+        '...kLLLLLLkhhhhffk....',
+        '......khhhhhhhhk......',
+        '.....khhk...khhk......',
+        '....kffk.....kffk.....'
+    ],
+};
+
+// The mask on its own, so it can tumble away after it slips off.
+const MASCOT_MASK = [
+    '..kkkkkk..',
+    '.kMMMMMMk.',
+    'kMkkMMkkMk',
+    'kMkkMMkkMk',
+    'kMrMMMMrMk',
+    'kMMkMMkMMk',
+    'kMMkkkkMMk',
+    '.kMMkkMMk.',
+    '..kMMMMk..',
+    '...kkkk...'
+];
+
+const MASCOT_PALETTE = {
+    k: '#08080c',   // outline
+    h: '#26262f',   // hoodie
+    g: '#3d3d4d',   // hoodie fold
+    f: '#f0c49c',   // bare face
+    e: '#ffffff',   // eye white
+    p: '#141428',   // pupil
+    m: '#7a2f34',   // open mouth
+    M: '#f4f1e6',   // mask
+    r: '#d4564a',   // mask cheek
+    T: '#7fd4ff',   // tears
+    l: '#c3cadf',   // laptop shell
+    L: '#828cab',   // laptop shell, shaded
+    S: '#0e2a24',   // screen
+    s: '#5ef2b4'    // screen glow
+};
+
+const MASCOT_KEY = 'xpMascot';
+const MASCOT_SCALE = 3;
+
+const Mascot = (() => {
+    const SPRITE_W = 22;
+    const SPRITE_H = 22;
+    const WIDTH = SPRITE_W * MASCOT_SCALE;
+    const HEIGHT = SPRITE_H * MASCOT_SCALE;
+
+    const FLEE_RADIUS = 95;      // how close the pointer gets before he bolts
+    const WALK_SPEED = 46;       // px per second, strolling
+    const FLEE_SPEED = 210;      // px per second, panicking
+    const IDLE_MIN = 12000;
+    const IDLE_MAX = 25000;
+
+    const cache = {};
+    let el = null;
+    let ctx = null;
+    let raf = null;
+    let enabled = false;
+
+    let x = 0, y = 0;            // top-left within .desktop
+    let targetX = 0, targetY = 0;
+    let facing = 1;              // 1 right, -1 left
+    let state = 'sit';           // sit | walk | flee
+    let frameClock = 0;
+    let frameIndex = 0;
+    let nextWander = 0;
+    let maskDropped = false;     // the falling mask is a one-off gag
+    let remaskAt = 0;            // he sits bare a moment before putting it back on
+    let panicUntil = 0;
+    let lastTime = 0;
+    let pointer = { x: -9999, y: -9999 };
+
+    const reducedMotion = () =>
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---- drawing ---- */
+    function sprite(name) {
+        if (cache[name]) return cache[name];
+        const rows = MASCOT_SPRITES[name];
+        const canvas = document.createElement('canvas');
+        canvas.width = SPRITE_W;
+        canvas.height = SPRITE_H;
+        const c = canvas.getContext('2d');
+        rows.forEach((line, ry) => {
+            for (let rx = 0; rx < line.length; rx++) {
+                const colour = MASCOT_PALETTE[line[rx]];
+                if (!colour) continue;
+                c.fillStyle = colour;
+                c.fillRect(rx, ry, 1, 1);
+            }
+        });
+        cache[name] = canvas;
+        return canvas;
+    }
+
+    // Built once from MASCOT_MASK, then reused for every drop.
+    let maskCanvas = null;
+    function maskSprite() {
+        if (maskCanvas) return maskCanvas;
+        maskCanvas = document.createElement('canvas');
+        maskCanvas.width = 10;
+        maskCanvas.height = 10;
+        const c = maskCanvas.getContext('2d');
+        MASCOT_MASK.forEach((line, ry) => {
+            for (let rx = 0; rx < line.length; rx++) {
+                const colour = MASCOT_PALETTE[line[rx]];
+                if (!colour) continue;
+                c.fillStyle = colour;
+                c.fillRect(rx, ry, 1, 1);
+            }
+        });
+        return maskCanvas;
+    }
+
+    // He is startled, the mask slips off, and it tumbles to the floor behind him.
+    function dropMask() {
+        const desktop = document.querySelector('.desktop');
+        if (!desktop) return;
+        const size = 10 * MASCOT_SCALE;
+        const drop = document.createElement('canvas');
+        drop.className = 'desktop-buddy-mask';
+        drop.width = size;
+        drop.height = size;
+        const c = drop.getContext('2d');
+        c.imageSmoothingEnabled = false;
+        c.drawImage(maskSprite(), 0, 0, 10, 10, 0, 0, size, size);
+        desktop.appendChild(drop);
+
+        const startX = x + (WIDTH - size) / 2;
+        const startY = y + 4 * MASCOT_SCALE;
+        const drift = (Math.random() * 2 - 1) * 26;
+        const spin = 140 + Math.random() * 220;
+        const box = desktopBox();
+        const floor = Math.min(startY + 62, box.h - size - 2);
+
+        const anim = drop.animate([
+            { transform: `translate(${startX}px, ${startY}px) rotate(0deg)`, opacity: 1, offset: 0 },
+            { transform: `translate(${startX + drift * 0.4}px, ${startY - 14}px) rotate(${spin * 0.3}deg)`, opacity: 1, offset: 0.3 },
+            { transform: `translate(${startX + drift}px, ${floor}px) rotate(${spin}deg)`, opacity: 1, offset: 0.75 },
+            { transform: `translate(${startX + drift}px, ${floor}px) rotate(${spin}deg)`, opacity: 0, offset: 1 }
+        ], { duration: 1500, easing: 'linear', fill: 'forwards' });
+        anim.onfinish = () => drop.remove();
+        setTimeout(() => drop.remove(), 1800);
+    }
+
+    function currentFrame() {
+        // Masked and hunched over the keyboard while he works; bare-faced and
+        // in tears the moment the mask comes off, and sheepish ever after.
+        if (state === 'sit') {
+            // Just back from a scare: a moment sniffling before the mask goes on
+            if (performance.now() < remaskAt) return frameIndex % 2 ? 'bare2' : 'bare1';
+            return frameIndex % 2 ? 'sit2' : 'sit1';
+        }
+        if (state === 'flee' && performance.now() < panicUntil) return 'panic';
+        return frameIndex % 2 ? 'run1' : 'run2';
+    }
+
+    function paint() {
+        const frame = sprite(currentFrame());
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        ctx.save();
+        if (facing < 0) {
+            ctx.translate(WIDTH, 0);
+            ctx.scale(-1, 1);
+        }
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(frame, 0, 0, SPRITE_W, SPRITE_H, 0, 0, WIDTH, HEIGHT);
+        ctx.restore();
+        el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
+    }
+
+    /* ---- where he is allowed to stand ---- */
+    function desktopBox() {
+        const desktop = document.querySelector('.desktop');
+        const r = desktop ? desktop.getBoundingClientRect() : { width: 800, height: 600 };
+        return { w: Math.max(WIDTH + 20, r.width), h: Math.max(HEIGHT + 20, r.height) };
+    }
+
+    // Rectangles he should not sit on top of: open windows and desktop icons.
+    function busyRects() {
+        const desktop = document.querySelector('.desktop');
+        const base = desktop ? desktop.getBoundingClientRect() : { left: 0, top: 0 };
+        const rects = [];
+        document.querySelectorAll('.popup').forEach(w => {
+            if (w.style.display === 'none') return;
+            const r = w.getBoundingClientRect();
+            rects.push({ l: r.left - base.left, t: r.top - base.top, r: r.right - base.left, b: r.bottom - base.top });
+        });
+        document.querySelectorAll('.desktop .icon').forEach(i => {
+            const r = i.getBoundingClientRect();
+            rects.push({ l: r.left - base.left, t: r.top - base.top, r: r.right - base.left, b: r.bottom - base.top });
+        });
+        return rects;
+    }
+
+    function overlapArea(px, py, rects) {
+        let worst = 0;
+        for (const r of rects) {
+            const ox = Math.max(0, Math.min(px + WIDTH, r.r) - Math.max(px, r.l));
+            const oy = Math.max(0, Math.min(py + HEIGHT, r.b) - Math.max(py, r.t));
+            worst += ox * oy;
+        }
+        return worst;
+    }
+
+    // Try a handful of spots and take the emptiest — cheap, and good enough to
+    // keep him out from under windows without any real pathfinding.
+    function pickSpot(awayFrom) {
+        const box = desktopBox();
+        const rects = busyRects();
+        let best = null;
+        for (let i = 0; i < 26; i++) {
+            const px = 8 + Math.random() * Math.max(1, box.w - WIDTH - 16);
+            const py = 8 + Math.random() * Math.max(1, box.h - HEIGHT - 16);
+            let score = -overlapArea(px, py, rects);
+            if (awayFrom) {
+                score += Math.hypot(px + WIDTH / 2 - awayFrom.x, py + HEIGHT / 2 - awayFrom.y) * 4;
+            }
+            if (!best || score > best.score) best = { px, py, score };
+        }
+        return best;
+    }
+
+    /* ---- the loop ---- */
+    function step(now) {
+        if (!enabled) return;
+        raf = requestAnimationFrame(step);
+        const dt = Math.min(0.05, (now - lastTime) / 1000 || 0);
+        lastTime = now;
+
+        // Hold still while the desktop is busy or the screen saver is up
+        const busy = document.hidden || (typeof ScreenSaver !== 'undefined' && ScreenSaver.running) ||
+            (typeof marqueeActive !== 'undefined' && marqueeActive) ||
+            (typeof currentIcon !== 'undefined' && currentIcon);
+        if (busy) { paint(); return; }
+
+        const box = desktopBox();
+        const cx = x + WIDTH / 2;
+        const cy = y + HEIGHT / 2;
+
+        // Startle: the pointer got too close
+        if (pointer.x > -9000) {
+            const d = Math.hypot(pointer.x - cx, pointer.y - cy);
+            if (d < FLEE_RADIUS && state !== 'flee') {
+                const spot = pickSpot(pointer);
+                targetX = spot.px;
+                targetY = spot.py;
+                // The mask tumbling away is a one-off: chasing him around
+                // should not litter the desktop with them.
+                if (!maskDropped) {
+                    dropMask();
+                    maskDropped = true;
+                }
+                state = 'flee';
+                panicUntil = now + 260;
+                nextWander = now + IDLE_MIN + Math.random() * (IDLE_MAX - IDLE_MIN);
+            }
+        }
+
+        if (state === 'sit') {
+            if (!reducedMotion() && now > nextWander) {
+                const spot = pickSpot(null);
+                targetX = spot.px;
+                targetY = spot.py;
+                state = 'walk';
+            }
+        } else {
+            const speed = state === 'flee' ? FLEE_SPEED : WALK_SPEED;
+            const dx = targetX - x;
+            const dy = targetY - y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 3) {
+                x = targetX;
+                y = targetY;
+                if (state === 'flee') remaskAt = now + 1600;   // compose yourself
+                state = 'sit';
+                nextWander = now + IDLE_MIN + Math.random() * (IDLE_MAX - IDLE_MIN);
+            } else {
+                const move = Math.min(dist, speed * dt);
+                x += (dx / dist) * move;
+                y += (dy / dist) * move;
+                if (Math.abs(dx) > 2) facing = dx < 0 ? -1 : 1;
+            }
+        }
+
+        x = Math.max(0, Math.min(x, box.w - WIDTH));
+        y = Math.max(0, Math.min(y, box.h - HEIGHT));
+
+        // Feet shuffle while moving, gentle typing while sat down
+        frameClock += dt * 1000;
+        const period = state === 'sit' ? 420 : (state === 'flee' ? 110 : 190);
+        if (frameClock > period) { frameClock = 0; frameIndex++; }
+
+        paint();
+    }
+
+    function onPointerMove(e) {
+        const desktop = document.querySelector('.desktop');
+        if (!desktop) return;
+        const r = desktop.getBoundingClientRect();
+        pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+
+    /* ---- public ---- */
+    function show() {
+        if (el) return;
+        const desktop = document.querySelector('.desktop');
+        if (!desktop) return;
+        el = document.createElement('canvas');
+        el.className = 'desktop-buddy';
+        el.width = WIDTH;
+        el.height = HEIGHT;
+        el.setAttribute('aria-hidden', 'true');
+        ctx = el.getContext('2d');
+        desktop.appendChild(el);
+
+        const box = desktopBox();
+        const spot = pickSpot(null);
+        x = spot ? spot.px : box.w - WIDTH - 40;
+        y = spot ? spot.py : box.h - HEIGHT - 40;
+        targetX = x;
+        targetY = y;
+        state = 'sit';
+        maskDropped = false;
+        remaskAt = 0;
+        lastTime = performance.now();
+        nextWander = lastTime + IDLE_MIN;
+
+        document.addEventListener('pointermove', onPointerMove, { passive: true });
+        enabled = true;
+        raf = requestAnimationFrame(step);
+    }
+
+    function hide() {
+        enabled = false;
+        if (raf) cancelAnimationFrame(raf);
+        raf = null;
+        document.removeEventListener('pointermove', onPointerMove);
+        document.querySelectorAll('.desktop-buddy-mask').forEach(n => n.remove());
+        if (el) { el.remove(); el = null; ctx = null; }
+    }
+
+    return {
+        get on() { return Store.get(MASCOT_KEY, true) !== false; },
+        init() { if (this.on) show(); },
+        set(next) {
+            Store.set(MASCOT_KEY, !!next);
+            if (next) show(); else hide();
+        },
+        toggle() { this.set(!this.on); return this.on; }
+    };
+})();

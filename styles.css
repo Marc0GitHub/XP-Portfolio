@@ -4376,3 +4376,29 @@ body.luna-silver .xp-dialog-header {
 .ie-status-hint[hidden] { display: none; }
 .ie-status-hint:hover { background: #fff3bf; border-color: #d4b64a; color: #4a3d0a; }
 @media (max-width: 720px) { .ie-status-hint { display: none; } }
+
+/* ---- desktop buddy ------------------------------------------------------
+   Sits inside .desktop, so every window paints over him, and never takes a
+   pointer event, so he can never swallow a click meant for the desktop. */
+.desktop-buddy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  pointer-events: none;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, .35));
+  will-change: transform;
+}
+.desktop-buddy-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  pointer-events: none;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, .35));
+}
+.dp-buddy-row { margin-top: 10px; }

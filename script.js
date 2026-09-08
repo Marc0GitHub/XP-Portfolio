@@ -4011,7 +4011,7 @@ const IE_BOOKMARKS = [
     { name: 'Winamp Skins', url: 'https://skins.webamp.org' },
     { name: 'js-dos', url: 'https://js-dos.com' },
     { name: "Cameron's World", url: 'https://cameronsworld.net' },
-    { name: 'The First Website', url: 'http://info.cern.ch/hypertext/WWW/TheProject.html' },
+    { name: 'The First Website', url: 'https://info.cern.ch/hypertext/WWW/TheProject.html' },
     { name: 'xkcd', url: 'https://xkcd.com' },
     { name: 'daedalOS', url: 'https://dustinbrett.com' }
 ];
@@ -4059,6 +4059,15 @@ function ieIsBlockedHost(url) {
 function ieWaybackUrl(url, era) {
     const stamp = era === 'latest' ? IE_LATEST_STAMP : String(era) + IE_ERA_STAMP;
     return 'https://web.archive.org/web/' + stamp + 'if_/' + url;
+}
+
+// We are served over https, so an http:// page loaded live in the iframe is
+// blocked as mixed content and shows as a silent blank frame -- indistinguish-
+// able from a site that simply refuses framing. Upgrade the scheme instead: a
+// site with no https was unreachable from here either way. Archived URLs keep
+// their original scheme, which is what the archive indexed them under.
+function ieForceHttps(url) {
+    return String(url).replace(/^http:\/\//i, 'https://');
 }
 
 // A drive root ("C:"), a drive path, "My Computer" and about: URLs are all
@@ -4465,7 +4474,7 @@ function setupBrowser(win) {
         // this one will render, so the escape hatch is simply always there.
         statusHint.hidden = era !== 'live';
 
-        const target = era === 'live' ? addr : ieWaybackUrl(addr, era);
+        const target = era === 'live' ? ieForceHttps(addr) : ieWaybackUrl(addr, era);
         statusText.textContent = 'Opening ' + target + '\u2026';
         startLoading();
         swapFrame(REMOTE_SANDBOX, (f) => { f.src = target; });

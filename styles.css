@@ -88,6 +88,10 @@ body {
   width: 100%;
   font-size: 0.8em;
   color: white;
+  /* Real XP labels are white with a drop shadow. Without it they are
+     invisible against a light wallpaper -- or against the blank white page
+     you get if the wallpaper fails to load at all. */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
   text-align: center;
   line-height: 1.1;
   overflow-wrap: anywhere;

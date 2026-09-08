@@ -11478,11 +11478,16 @@ const Mascot = (() => {
     let frameClock = 0;
     let frameIndex = 0;
     let nextWander = 0;
-    let maskDropped = false;     // the falling mask is a one-off gag
     let remaskAt = 0;            // he sits bare a moment before putting it back on
+    let settledAt = 0;           // grace period so he is seen before he can bolt
     let panicUntil = 0;
     let lastTime = 0;
     let pointer = { x: -9999, y: -9999 };
+
+    // He can only lose a mask he is currently wearing. That single rule gives
+    // the whole gag: it falls on every genuine scare, but parking the cursor on
+    // him does not rain masks, because a startled buddy never gets it back on.
+    const wearingMask = () => state !== 'flee' && performance.now() >= remaskAt;
 
     const reducedMotion = () =>
         window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -11562,7 +11567,7 @@ const Mascot = (() => {
         // in tears the moment the mask comes off, and sheepish ever after.
         if (state === 'sit') {
             // Just back from a scare: a moment sniffling before the mask goes on
-            if (performance.now() < remaskAt) return frameIndex % 2 ? 'bare2' : 'bare1';
+            if (!wearingMask()) return frameIndex % 2 ? 'bare2' : 'bare1';
             return frameIndex % 2 ? 'sit2' : 'sit1';
         }
         if (state === 'flee' && performance.now() < panicUntil) return 'panic';
@@ -11652,19 +11657,16 @@ const Mascot = (() => {
         const cx = x + WIDTH / 2;
         const cy = y + HEIGHT / 2;
 
-        // Startle: the pointer got too close
-        if (pointer.x > -9000) {
+        // Startle: the pointer got too close. Ignored for a moment after he
+        // appears, so landing under the cursor cannot rob you of ever seeing
+        // him sat there in the mask.
+        if (pointer.x > -9000 && now > settledAt) {
             const d = Math.hypot(pointer.x - cx, pointer.y - cy);
             if (d < FLEE_RADIUS && state !== 'flee') {
                 const spot = pickSpot(pointer);
                 targetX = spot.px;
                 targetY = spot.py;
-                // The mask tumbling away is a one-off: chasing him around
-                // should not litter the desktop with them.
-                if (!maskDropped) {
-                    dropMask();
-                    maskDropped = true;
-                }
+                if (wearingMask()) dropMask();
                 state = 'flee';
                 panicUntil = now + 260;
                 nextWander = now + IDLE_MIN + Math.random() * (IDLE_MAX - IDLE_MIN);
@@ -11735,9 +11737,9 @@ const Mascot = (() => {
         targetX = x;
         targetY = y;
         state = 'sit';
-        maskDropped = false;
         remaskAt = 0;
         lastTime = performance.now();
+        settledAt = lastTime + 1800;
         nextWander = lastTime + IDLE_MIN;
 
         document.addEventListener('pointermove', onPointerMove, { passive: true });

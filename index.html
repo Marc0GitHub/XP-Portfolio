@@ -1,34 +1,82 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Marco Tancredi's portfolio — a fully interactive Windows XP desktop in the browser, with projects, a blog, games and more.">
     <link rel="stylesheet" href="styles.css">
-    <title>XP</title>
+    <link rel="icon" type="image/png" href="assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png">
+    <title>Marco Tancredi — XP Portfolio</title>
 </head>
 <body>
+    <!-- Boot: the XP wordmark over the sliding block loader -->
+    <div class="boot-splash" id="bootSplash">
+        <div class="boot-brand">
+            <img class="boot-flag" src="assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png" alt="">
+            <div class="boot-wordmark">
+                <span class="boot-ms">Microsoft&reg;</span>
+                <span class="boot-win">Windows<span class="boot-xp">xp</span></span>
+            </div>
+        </div>
+        <div class="boot-progress-bar" id="bootProgressBar">
+            <div class="boot-blocks"><i></i><i></i><i></i></div>
+        </div>
+        <span class="boot-text" id="bootText">Starting Windows&hellip;</span>
+        <span class="boot-copyright">Portfolio Edition &mdash; a Windows XP desktop rebuilt by Marco Tancredi</span>
+    </div>
+
+    <!-- Logon: the XP welcome screen -->
+    <div class="logon-screen hidden" id="logonScreen">
+        <div class="logon-top"></div>
+        <div class="logon-main">
+            <div class="logon-left">
+                <img class="logon-brand" src="assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png" alt="">
+                <span class="logon-brandtext">Windows<span class="logon-xp">xp</span></span>
+                <span class="logon-tagline">Portfolio Edition</span>
+            </div>
+            <div class="logon-divider"></div>
+            <div class="logon-right">
+                <p class="logon-prompt">To begin, click your user name</p>
+                <button class="logon-user" id="logonUser">
+                    <img src="assets/start-avatar.png" alt="">
+                    <span class="logon-username">Marco Tancredi</span>
+                </button>
+                <button class="logon-user logon-user-guest" id="logonGuest">
+                    <img src="assets/start-avatar.png" alt="">
+                    <span class="logon-username">Guest</span>
+                    <span class="logon-userhint">Have a look around</span>
+                </button>
+            </div>
+        </div>
+        <div class="logon-bottom">
+            <span class="logon-hint">After you log on, you can add or change accounts.<br>
+                Just go to Control Panel and click User Accounts.</span>
+        </div>
+    </div>
+
     <div class="desktop">
-        <div id="icon1" class="icon">
-            <img src="assets/bin-icon.png" alt="My Computer">
+        <div id="icon1" class="icon" data-tip="Contains the files and folders that you have deleted.">
+            <img src="assets/bin-icon.png" alt="Recycle Bin">
             <span>Bin</span>
         </div>
-        <div id="icon2" class="icon">
-            <img src="assets/internet-explorer-2-icon.png" alt="My Documents">
+        <div id="icon2" class="icon" data-tip="Finds and displays information and Web sites on the Internet.">
+            <img src="assets/internet-explorer-2-icon.png" alt="Internet Explorer">
             <span>Internet</span>
         </div>
-        <div id="icon3" class="icon">
-            <img src="assets/folder-icon.png" alt="Recycle Bin">
-            <span>Folder</span>
+        <div id="icon3" class="icon" data-tip="The things Marco has built — open a project to see the source.">
+            <img src="assets/folder-icon.png" alt="Projects">
+            <span>Projects</span>
         </div>
-        <div id="icon4" class="icon">
+        <div id="icon4" class="icon" data-tip="Creates and edits drawings.">
             <img src="assets/paint-icon.png" alt="Paint">
             <span>Paint</span>
         </div>
-        <div id="icon5" class="icon">
+        <div id="icon5" class="icon" data-tip="Creates and edits text files using basic text formatting.">
             <img src="assets/notepad-icon.png" alt="Notepad">
             <span>Notepad</span>
         </div>
-        <div id="icon9" class="icon" style="left:0; top:360px">
-            <img src="assets/snake-icon.png" alt="Snake">
+        <div id="icon9" class="icon" data-tip="Steer the snake, eat the apples, do not bite yourself." style="left:0; top:360px">
+            <img src="assets/snake-icon.png" alt="Snake Game">
             <span>Snake</span>
         </div>
         <div id="icon6" class="icon image-file" data-image="assets/doggo_at_the_beach.jpg" data-name="Kira at the Beach.jpg">
@@ -48,7 +96,7 @@
     <div class="start-menu hidden" id="start-menu">
         <div class="start-menu-header">
             <img class="start-avatar" src="assets/start-avatar.png" alt="">
-            <span class="start-user">User</span>
+            <span class="start-user">Marco Tancredi</span>
         </div>
         <div class="start-menu-body">
             <div class="start-menu-col start-menu-left">
@@ -58,11 +106,20 @@
                 <div class="start-menu-item" data-app="email">
                     <img src="assets/start-email.png" alt=""><span>E-mail</span><em>Outlook Express</em>
                 </div>
+                <div class="start-menu-item" data-app="projects">
+                    <img src="assets/folder-icon.png" alt=""><span>Projects</span><em>My work</em>
+                </div>
                 <div class="start-menu-item" data-app="minesweeper">
                     <img src="assets/start-minesweeper.png" alt=""><span>Minesweeper</span>
                 </div>
                 <div class="start-menu-item" data-app="snake">
                     <img src="assets/snake-icon.png" alt=""><span>Snake</span>
+                </div>
+                <div class="start-menu-item" data-app="cmd">
+                    <img src="" alt="" class="cmd-start-icon"><span>Command Prompt</span><em>cmd.exe</em>
+                </div>
+                <div class="start-menu-item" data-app="blog">
+                    <img src="" alt="" class="blog-start-icon"><span>Marco's Blog</span>
                 </div>
                 <div class="start-menu-item" data-app="notepad">
                     <img src="assets/notepad-icon.png" alt=""><span>Notepad</span>
@@ -80,7 +137,7 @@
                     <img src="assets/start-messenger.png" alt=""><span>Windows Messenger</span>
                 </div>
                 <div class="start-menu-item start-menu-all" data-app="allprograms">
-                    <img src="assets/start-allprograms.png" alt=""><span>All Programs</span><span class="start-chevron">&#9656;</span>
+                    <img src="" alt="" class="allprograms-start-icon"><span>All Programs</span><span class="start-chevron">&#9656;</span>
                 </div>
             </div>
             <div class="start-menu-col start-menu-right">
@@ -128,10 +185,49 @@
         </div>
     </div>
 
+    <div class="calendar-popup hidden" id="calendar-popup"></div>
+
     <div class="taskbar">
         <button id="start-button"><img src="assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png" alt="">Start</button>
+
+        <!-- Quick Launch: one-click shortcuts, like the real XP taskbar -->
+        <div class="quick-launch" id="quick-launch">
+            <button class="ql-btn" data-app="showdesktop" data-tip="Show Desktop">
+                <img src="assets/start-mycomputer.png" alt="Show Desktop">
+            </button>
+            <button class="ql-btn" data-app="internet" data-tip="Launch Internet Explorer Browser">
+                <img src="assets/internet-explorer-2-icon.png" alt="Internet Explorer">
+            </button>
+            <button class="ql-btn" data-app="email" data-tip="Launch Outlook Express">
+                <img src="assets/start-email.png" alt="Outlook Express">
+            </button>
+            <button class="ql-btn" data-app="notepad" data-tip="Notepad">
+                <img src="assets/notepad-icon.png" alt="Notepad">
+            </button>
+            <span class="ql-grip"></span>
+        </div>
+
         <div class="taskbar-windows"></div>
-        <div class="taskbar-clock" id="taskbar-clock"></div>
+
+        <!-- Notification area (system tray) -->
+        <div class="taskbar-tray" id="taskbar-tray">
+            <button class="tray-icon" id="tray-volume" data-tip="Volume">
+                <svg viewBox="0 0 16 16" class="tray-svg-volume" aria-hidden="true">
+                    <path d="M3 6h2.5L9 3v10L5.5 10H3z"></path>
+                    <path class="tray-wave tray-wave-1" d="M10.5 5.5a3.5 3.5 0 0 1 0 5" fill="none" stroke-width="1.3"></path>
+                    <path class="tray-wave tray-wave-2" d="M12.4 3.6a6 6 0 0 1 0 8.8" fill="none" stroke-width="1.3"></path>
+                    <path class="tray-mute-x" d="M11 5.6l4 4.8M15 5.6l-4 4.8" fill="none" stroke-width="1.4"></path>
+                </svg>
+            </button>
+            <button class="tray-icon" id="tray-network" data-tip="Local Area Connection — Connected">
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <rect x="1" y="9" width="6" height="5" rx="1"></rect>
+                    <rect x="9" y="3" width="6" height="5" rx="1"></rect>
+                    <path d="M4 9V7h8V8" fill="none" stroke-width="1.2"></path>
+                </svg>
+            </button>
+            <div class="taskbar-clock" id="taskbar-clock"></div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

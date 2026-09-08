@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Python virtual environment (used only to generate icons during development)
+.venv/
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Claude Code workspace config (local dev server + launch config)
+.claude/

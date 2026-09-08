@@ -1,0 +1,12 @@
+# The repo had mixed line endings — script.js used LF while index.html and
+# styles.css used CRLF — which made small edits show up as whole-file
+# rewrites. Everything is normalised to LF and pinned here so it stays that way.
+* text=auto eol=lf
+
+# Binary assets must never be touched
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.mp4 binary
+*.ico binary

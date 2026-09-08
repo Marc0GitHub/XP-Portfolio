@@ -5,12 +5,58 @@ const iconContent = {
         content: `
           <div class="exp-chrome">
             <div class="exp-menubar">
-              <span class="exp-menu-item">File</span>
-              <span class="exp-menu-item">Edit</span>
-              <span class="exp-menu-item">View</span>
-              <span class="exp-menu-item">Favorites</span>
-              <span class="exp-menu-item">Tools</span>
-              <span class="exp-menu-item">Help</span>
+              <span class="exp-menu-item" data-menu="file">File</span>
+              <span class="exp-menu-item" data-menu="edit">Edit</span>
+              <span class="exp-menu-item" data-menu="view">View</span>
+              <span class="exp-menu-item" data-menu="favorites">Favorites</span>
+              <span class="exp-menu-item" data-menu="tools">Tools</span>
+              <span class="exp-menu-item" data-menu="help">Help</span>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="file">
+              <div class="exp-dropdown-item" data-action="empty">Empty Recycle Bin</div>
+              <div class="exp-dropdown-item" data-action="properties">Properties</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="edit">
+              <div class="exp-dropdown-item" data-action="undo">Undo</div>
+              <div class="exp-dropdown-item" data-action="redo">Redo</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="cut">Cut</div>
+              <div class="exp-dropdown-item" data-action="copy">Copy</div>
+              <div class="exp-dropdown-item" data-action="paste">Paste</div>
+              <div class="exp-dropdown-item" data-action="delete">Delete</div>
+              <div class="exp-dropdown-item" data-action="rename">Rename</div>
+              <div class="exp-dropdown-item" data-action="selectall">Select All</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="view">
+              <div class="exp-dropdown-item" data-action="details">Details</div>
+              <div class="exp-dropdown-item" data-action="list">List</div>
+              <div class="exp-dropdown-item" data-action="tiles">Tiles</div>
+              <div class="exp-dropdown-item" data-action="thumbnails">Thumbnails</div>
+              <div class="exp-dropdown-item" data-action="arrangelineup">Arrange Icons →</div>
+              <div class="exp-dropdown-hidden" data-dropdown="arrangelineup_submenu">
+                <div class="exp-dropdown-item" data-action="arrangelineupbyname">by Name</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbysize">by Size</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbytype">by Type</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbymodified">by Modified</div>
+              </div>
+              <div class="exp-dropdown-item" data-action="aligntogrid">Align to Grid</div>
+              <div class="exp-dropdown-item" data-action="autoadjust">Auto Arrange</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="favorites">
+              <div class="exp-dropdown-item" data-action="addtofavorites">Add to Favorites...</div>
+              <div class="exp-dropdown-item" data-action="organizefavorites">Organize Favorites...</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="tools">
+              <div class="exp-dropdown-item" data-action="mapnetworkdrive">Map Network Drive...</div>
+              <div class="exp-dropdown-item" data-action="disconnectnetworkdrive">Disconnect Network Drive</div>
+              <div class="exp-dropdown-item" data-action="toolsoptions">Tools Options...</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="help">
+              <div class="exp-dropdown-item" data-action="helpcontents">Help Contents</div>
+              <div class="exp-dropdown-item" data-action="helpsearch">Help Search</div>
+              <div class="exp-dropdown-item" data-action="helptutorial">Help Tutorial</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="about">About Windows Explorer</div>
             </div>
             <div class="exp-toolbar">
               <button class="exp-tool-btn">&#8592; Back</button>
@@ -53,59 +99,120 @@ const iconContent = {
         content: `
           <div class="ie-chrome">
             <div class="ie-menubar">
-              <span class="ie-menu-item">File</span>
-              <span class="ie-menu-item">Edit</span>
-              <span class="ie-menu-item">View</span>
-              <span class="ie-menu-item">Favorites</span>
-              <span class="ie-menu-item">Tools</span>
-              <span class="ie-menu-item">Help</span>
+              <span class="ie-menu-item" data-menu="file">File</span>
+              <span class="ie-menu-item" data-menu="edit">Edit</span>
+              <span class="ie-menu-item" data-menu="view">View</span>
+              <span class="ie-menu-item" data-menu="favorites">Favorites</span>
+              <span class="ie-menu-item" data-menu="tools">Tools</span>
+              <span class="ie-menu-item" data-menu="help">Help</span>
               <img class="ie-logo" src="assets/internet-explorer-icon.png" alt="">
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="file">
+              <div class="ie-dropdown-item" data-action="new">New Window</div>
+              <div class="ie-dropdown-item" data-action="open">Open...</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="opentab">Open in a Real Browser Tab</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="properties">Properties</div>
+              <div class="ie-dropdown-item" data-action="close">Close</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="edit">
+              <div class="ie-dropdown-item" data-action="cut">Cut</div>
+              <div class="ie-dropdown-item" data-action="copy">Copy</div>
+              <div class="ie-dropdown-item" data-action="copyurl">Copy Address</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="find">Find (on this page)...</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="view">
+              <div class="ie-dropdown-item" data-action="stop">Stop<span class="ie-accel">Esc</span></div>
+              <div class="ie-dropdown-item" data-action="refresh">Refresh<span class="ie-accel">F5</span></div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="togglelinks">Links Bar</div>
+              <div class="ie-dropdown-item" data-action="toggletime">Time Machine Bar</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="source">Source</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="favorites">
+              <div class="ie-dropdown-item" data-action="addtofavorites">Add to Favorites...</div>
+              <div class="ie-dropdown-item" data-action="organizefavorites">Organize Favorites...</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="links">Show Links Bar</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="tools">
+              <div class="ie-dropdown-item" data-action="searchengine">Change Search Engine...</div>
+              <div class="ie-dropdown-item" data-action="timemachine">Time Machine...</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="history">Show History</div>
+              <div class="ie-dropdown-item" data-action="internetoptions">Internet Options...</div>
+              <div class="ie-dropdown-item" data-action="windowsupdate">Windows Update</div>
+            </div>
+            <div class="ie-dropdown hidden" data-dropdown="help">
+              <div class="ie-dropdown-item" data-action="helpcontents">Contents and Index</div>
+              <div class="ie-dropdown-item" data-action="whyblocked">Why won't some pages load?</div>
+              <div class="ie-dropdown-divider"></div>
+              <div class="ie-dropdown-item" data-action="about">About Internet Explorer</div>
             </div>
             <div class="ie-toolbar">
               <button class="ie-nav-btn" id="browserBack" disabled><span class="ie-nav-icon">&#8592;</span><span>Back</span></button>
               <button class="ie-nav-btn" id="browserForward" disabled><span class="ie-nav-icon">&#8594;</span><span>Forward</span></button>
-              <button class="ie-nav-btn" id="browserRefresh"><span class="ie-nav-icon">&#8635;</span><span>Refresh</span></button>
-              <button class="ie-nav-btn" id="browserHome"><span class="ie-nav-icon">&#8962;</span><span>Home</span></button>
+              <button class="ie-nav-btn ie-icon-btn" id="browserStop" title="Stop"><span class="ie-nav-icon ie-stop">&#10005;</span></button>
+              <button class="ie-nav-btn ie-icon-btn" id="browserRefresh" title="Refresh"><span class="ie-nav-icon">&#8635;</span></button>
+              <button class="ie-nav-btn ie-icon-btn" id="browserHome" title="Home"><span class="ie-nav-icon">&#8962;</span></button>
               <span class="ie-tool-sep"></span>
               <button class="ie-nav-btn" id="browserSearch"><span class="ie-nav-icon">&#128269;</span><span>Search</span></button>
               <button class="ie-nav-btn" id="browserFavorites"><span class="ie-nav-icon">&#9733;</span><span>Favorites</span></button>
+              <button class="ie-nav-btn" id="browserHistory"><span class="ie-nav-icon">&#128340;</span><span>History</span></button>
             </div>
             <div class="ie-address-bar">
               <span class="ie-address-title">Address</span>
               <div class="ie-address-input-wrap">
                 <img id="ieFavicon" src="assets/internet-explorer-icon.png" alt="">
-                <input type="text" id="browserUrl" value="https://en.wikipedia.org" placeholder="Type a URL or search the web…" autocomplete="off" spellcheck="false">
+                <input type="text" id="browserUrl" placeholder="Type a web address or search the web&hellip;" autocomplete="off" spellcheck="false">
               </div>
               <button id="browserGo">Go</button>
             </div>
+            <!-- The Time Machine: the same page, as it looked in any year. Powered
+                 by the Internet Archive, which is why it works on sites that refuse
+                 to be embedded live. -->
+            <div class="ie-era-bar" id="ieEraBar">
+              <label class="ie-era-label" for="ieEra">View as it looked in</label>
+              <select class="ie-era-select" id="ieEra"></select>
+              <span class="ie-era-note" id="ieEraNote"></span>
+            </div>
             <div class="ie-progress" id="ieProgress"><div class="ie-progress-fill" id="ieProgressFill"></div></div>
-            <div class="ie-bookmarks-bar" id="ieBookmarksBar">
+            <div class="ie-bookmarks-bar ie-bookmarks-visible" id="ieBookmarksBar">
               <span class="ie-bm-label">Links</span>
-              <a class="ie-bm-link" data-url="https://en.wikipedia.org" title="Wikipedia">Wikipedia</a>
-              <a class="ie-bm-link" data-url="https://en.wikipedia.org/wiki/Special:Search" title="Wikipedia Search">Search Wiki</a>
-              <a class="ie-bm-link" data-url="https://www.britannica.com" title="Britannica">Britannica</a>
-              <a class="ie-bm-link" data-url="https://news.ycombinator.com" title="Hacker News">Hacker News</a>
-              <a class="ie-bm-link" data-url="https://stackoverflow.com" title="Stack Overflow">Stack Overflow</a>
             </div>
             <div class="ie-content-area">
-              <iframe id="browserFrame" src="https://en.wikipedia.org" allow="fullscreen"></iframe>
+              <iframe id="browserFrame" title="Browser content"
+                referrerpolicy="no-referrer"
+                sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
               <div class="ie-error-page" id="ieErrorPage" style="display:none">
-                <div class="ie-error-icon">&#9888;</div>
-                <h2 class="ie-error-title">This page can't be displayed</h2>
-                <p class="ie-error-msg" id="ieErrorMsg">The website may have blocked embedding or is unreachable.</p>
-                <div class="ie-error-actions">
-                  <button class="ie-error-btn" id="ieOpenInTab">&#8599; Open in New Tab</button>
-                  <button class="ie-error-btn ie-error-btn-secondary" id="ieRetryBtn">&#8635; Retry</button>
-                  <button class="ie-error-btn ie-error-btn-secondary" id="ieGoHomeBtn">&#8962; Go Home</button>
+                <div class="ie-error-head">
+                  <div class="ie-error-icon">&#9888;</div>
+                  <div>
+                    <h2 class="ie-error-title">This page cannot be displayed</h2>
+                    <p class="ie-error-msg" id="ieErrorMsg"></p>
+                  </div>
                 </div>
                 <div class="ie-error-url" id="ieErrorUrl"></div>
+                <div class="ie-error-actions" id="ieErrorActions"></div>
+                <p class="ie-error-fine">Cannot find server or DNS Error &mdash; Internet Explorer</p>
+              </div>
+              <!-- Non-modal nudge: browsers give JavaScript no way to detect a
+                   refused frame, so instead of guessing we offer the way out. -->
+              <div class="ie-nudge" id="ieNudge" hidden>
+                <span class="ie-nudge-text" id="ieNudgeText"></span>
+                <button class="ie-nudge-btn" id="ieNudgeGo">View in the Time Machine</button>
+                <button class="ie-nudge-btn ie-nudge-alt" id="ieNudgeTab">Open in a real tab</button>
+                <button class="ie-nudge-x" id="ieNudgeClose" title="Close">&#10005;</button>
               </div>
             </div>
             <div class="ie-status-bar">
               <span id="ieStatusText">Done</span>
               <span class="ie-status-right">
-                <a class="ie-open-tab-link" id="ieOpenTabLink" title="Open current page in a new browser tab">&#8599; Open in New Tab</a>
-                <span class="ie-zone">Internet</span>
+                <button class="ie-status-hint" id="ieStatusHint" hidden>Page blank? View it in the Time Machine</button>
+                <span class="ie-zone" id="ieZone">Internet</span>
               </span>
             </div>
           </div>
@@ -117,12 +224,65 @@ const iconContent = {
         content: `
           <div class="exp-chrome">
             <div class="exp-menubar">
-              <span class="exp-menu-item">File</span>
-              <span class="exp-menu-item">Edit</span>
-              <span class="exp-menu-item">View</span>
-              <span class="exp-menu-item">Favorites</span>
-              <span class="exp-menu-item">Tools</span>
-              <span class="exp-menu-item">Help</span>
+              <span class="exp-menu-item" data-menu="file">File</span>
+              <span class="exp-menu-item" data-menu="edit">Edit</span>
+              <span class="exp-menu-item" data-menu="view">View</span>
+              <span class="exp-menu-item" data-menu="favorites">Favorites</span>
+              <span class="exp-menu-item" data-menu="tools">Tools</span>
+              <span class="exp-menu-item" data-menu="help">Help</span>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="file">
+              <div class="exp-dropdown-item" data-action="new">New</div>
+              <div class="exp-dropdown-item" data-action="open">Open...</div>
+              <div class="exp-dropdown-item" data-action="save">Save</div>
+              <div class="exp-dropdown-item" data-action="saveas">Save As...</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="print">Print...</div>
+              <div class="exp-dropdown-item" data-action="properties">Properties</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="close">Close</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="edit">
+              <div class="exp-dropdown-item" data-action="undo">Undo</div>
+              <div class="exp-dropdown-item" data-action="redo">Redo</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="cut">Cut</div>
+              <div class="exp-dropdown-item" data-action="copy">Copy</div>
+              <div class="exp-dropdown-item" data-action="paste">Paste</div>
+              <div class="exp-dropdown-item" data-action="delete">Delete</div>
+              <div class="exp-dropdown-item" data-action="rename">Rename</div>
+              <div class="exp-dropdown-item" data-action="selectall">Select All</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="view">
+              <div class="exp-dropdown-item" data-action="details">Details</div>
+              <div class="exp-dropdown-item" data-action="list">List</div>
+              <div class="exp-dropdown-item" data-action="tiles">Tiles</div>
+              <div class="exp-dropdown-item" data-action="thumbnails">Thumbnails</div>
+              <div class="exp-dropdown-item" data-action="arrangelineup">Arrange Icons →</div>
+              <div class="exp-dropdown-hidden" data-dropdown="arrangelineup_submenu">
+                <div class="exp-dropdown-item" data-action="arrangelineupbyname">by Name</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbysize">by Size</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbytype">by Type</div>
+                <div class="exp-dropdown-item" data-action="arrangelineupbymodified">by Modified</div>
+              </div>
+              <div class="exp-dropdown-item" data-action="aligntogrid">Align to Grid</div>
+              <div class="exp-dropdown-item" data-action="autoadjust">Auto Arrange</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="favorites">
+              <div class="exp-dropdown-item" data-action="addtofavorites">Add to Favorites...</div>
+              <div class="exp-dropdown-item" data-action="organizefavorites">Organize Favorites...</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="tools">
+              <div class="exp-dropdown-item" data-action="mapnetworkdrive">Map Network Drive...</div>
+              <div class="exp-dropdown-item" data-action="disconnectnetworkdrive">Disconnect Network Drive</div>
+              <div class="exp-dropdown-item" data-action="toolsoptions">Tools Options...</div>
+            </div>
+            <div class="exp-dropdown hidden" data-dropdown="help">
+              <div class="exp-dropdown-item" data-action="helpcontents">Help Contents</div>
+              <div class="exp-dropdown-item" data-action="helpsearch">Help Search</div>
+              <div class="exp-dropdown-item" data-action="helptutorial">Help Tutorial</div>
+              <div class="exp-dropdown-divider"></div>
+              <div class="exp-dropdown-item" data-action="about">About Windows Explorer</div>
             </div>
             <div class="exp-toolbar">
               <button class="exp-tool-btn">&#8592; Back</button>
@@ -169,6 +329,50 @@ const iconContent = {
         title: "Untitled - Paint",
         icon: "assets/paint-icon.png",
         content: `
+          <div class="paint-menubar">
+            <span class="paint-menu-item" data-menu="file">File</span>
+            <span class="paint-menu-item" data-menu="edit">Edit</span>
+            <span class="paint-menu-item" data-menu="image">Image</span>
+            <span class="paint-menu-item" data-menu="colors">Colors</span>
+            <span class="paint-menu-item" data-menu="help">Help</span>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="file">
+            <div class="paint-dropdown-item" data-action="new">New</div>
+            <div class="paint-dropdown-item" data-action="open">Open...</div>
+            <div class="paint-dropdown-item" data-action="save">Save</div>
+            <div class="paint-dropdown-item" data-action="saveas">Save as...</div>
+            <div class="paint-dropdown-divider"></div>
+            <div class="paint-dropdown-item" data-action="printsetup">Print Setup...</div>
+            <div class="paint-dropdown-item" data-action="print">Print...</div>
+            <div class="paint-dropdown-item" data-action="exit">Exit</div>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="edit">
+            <div class="paint-dropdown-item" data-action="undo">Undo</div>
+            <div class="paint-dropdown-item" data-action="redo">Redo</div>
+            <div class="paint-dropdown-divider"></div>
+            <div class="paint-dropdown-item" data-action="cut">Cut</div>
+            <div class="paint-dropdown-item" data-action="copy">Copy</div>
+            <div class="paint-dropdown-item" data-action="paste">Paste</div>
+            <div class="paint-dropdown-item" data-action="pastetransparent">Paste Transparent</div>
+            <div class="paint-dropdown-item" data-action="selectall">Select All</div>
+            <div class="paint-dropdown-item" data-action="invertselection">Invert Selection</div>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="image">
+            <div class="paint-dropdown-item" data-action="fliprotate">Flip/Rotate</div>
+            <div class="paint-dropdown-item" data-action="stretchandskew">Stretch and Skew</div>
+            <div class="paint-dropdown-item" data-action="invertcolors">Invert Colors</div>
+            <div class="paint-dropdown-item" data-action="attributes">Attributes</div>
+            <div class="paint-dropdown-item" data-action="clearimage">Clear Image</div>
+            <div class="paint-dropdown-item" data-action="drawopaque">Draw Opaque</div>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="colors">
+            <div class="paint-dropdown-item" data-action="editcolors">Edit Colors</div>
+          </div>
+          <div class="paint-dropdown hidden" data-dropdown="help">
+            <div class="paint-dropdown-item" data-action="viewhelp">View Help</div>
+            <div class="paint-dropdown-divider"></div>
+            <div class="paint-dropdown-item" data-action="about">About Paint</div>
+          </div>
           <iframe id="paintFrame" src="https://jspaint.app/"
             style="display:block;width:100%;height:100%;background-color:rgb(192,192,192);border:none;flex:1;min-height:0;">
           </iframe>
@@ -184,15 +388,49 @@ const iconContent = {
             <span class="np-menu-item" data-menu="format">Format</span>
             <span class="np-menu-item" data-menu="view">View</span>
             <span class="np-menu-item" data-menu="help">Help</span>
-            <div class="np-dropdown hidden" data-dropdown="edit">
-              <div class="np-dropdown-item" data-action="undo">Undo</div>
-              <div class="np-dropdown-item" data-action="redo">Redo</div>
-              <div class="np-dropdown-divider"></div>
-              <div class="np-dropdown-item" data-action="find">Find</div>
-              <div class="np-dropdown-item" data-action="replace">Replace</div>
-              <div class="np-dropdown-divider"></div>
-              <div class="np-dropdown-item" data-action="datetime">Date/Time</div>
-            </div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="file">
+            <div class="np-dropdown-item" data-action="new">New</div>
+            <div class="np-dropdown-item" data-action="open">Open...</div>
+            <div class="np-dropdown-item" data-action="save">Save</div>
+            <div class="np-dropdown-item" data-action="saveas">Save As...</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="pagesetup">Page Setup...</div>
+            <div class="np-dropdown-item" data-action="print">Print...</div>
+            <div class="np-dropdown-item" data-action="printpreview">Print Preview</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="exit">Exit</div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="edit">
+            <div class="np-dropdown-item" data-action="undo">Undo</div>
+            <div class="np-dropdown-item" data-action="redo">Redo</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="cut">Cut</div>
+            <div class="np-dropdown-item" data-action="copy">Copy</div>
+            <div class="np-dropdown-item" data-action="paste">Paste</div>
+            <div class="np-dropdown-item" data-action="delete">Delete</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="find">Find...</div>
+            <div class="np-dropdown-item" data-action="findnext">Find Next</div>
+            <div class="np-dropdown-item" data-action="replace">Replace...</div>
+            <div class="np-dropdown-item" data-action="gotoline">Go To...</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="selectall">Select All</div>
+            <div class="np-dropdown-item" data-action="time/date">Time/Date</div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="format">
+            <div class="np-dropdown-item" data-action="wordwrap">Word Wrap</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="font">Font...</div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="view">
+            <div class="np-dropdown-item" data-action="statusbar">Status Bar</div>
+          </div>
+          <div class="np-dropdown hidden" data-dropdown="help">
+            <div class="np-dropdown-item" data-action="helpcontents">Help Contents</div>
+            <div class="np-dropdown-item" data-action="helptutorial">Help Tutorial</div>
+            <div class="np-dropdown-divider"></div>
+            <div class="np-dropdown-item" data-action="about">About Notepad</div>
           </div>
           <textarea class="np-textarea" spellcheck="false"></textarea>
         `
@@ -494,6 +732,61 @@ function escHtml(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+// Escape a string for use inside an HTML attribute value.
+function escAttr(s) {
+    return escHtml(s);
+}
+
+/* ===== System helpers =====================================================
+   Small utilities the whole desktop leans on: the real taskbar height (it
+   changes on mobile), the usable work area, and a cleanup chain so several
+   setup functions can register teardown on the same window without one
+   overwriting another.
+   ========================================================================= */
+
+// Actual taskbar height in px (30 on desktop, 40 on the mobile layout).
+function getTaskbarHeight() {
+    const tb = document.querySelector('.taskbar');
+    const h = tb ? tb.offsetHeight : 0;
+    return h || (isMobileLayout() ? 40 : 30);
+}
+
+// The desktop work area: everything above the taskbar.
+function workAreaHeight() {
+    return window.innerHeight - getTaskbarHeight();
+}
+
+// Register a teardown callback on a window without clobbering existing ones.
+function addCleanup(win, fn) {
+    const prev = win._cleanup;
+    win._cleanup = () => {
+        try { fn(); } catch (e) { /* keep tearing down */ }
+        if (prev) { try { prev(); } catch (e) { /* ignore */ } }
+    };
+}
+
+/* ===== Persistent storage =================================================
+   Every localStorage read/write goes through here so a disabled/full storage
+   (private browsing, quota) degrades to an in-memory session instead of
+   throwing somewhere deep in the UI.
+   ========================================================================= */
+const Store = {
+    get(key, fallback) {
+        try {
+            const raw = localStorage.getItem(key);
+            if (raw == null) return fallback;
+            return JSON.parse(raw);
+        } catch (e) { return fallback; }
+    },
+    set(key, value) {
+        try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+        catch (e) { return false; }
+    },
+    del(key) {
+        try { localStorage.removeItem(key); } catch (e) { /* ignore */ }
+    }
+};
+
 // ---- Real email delivery (EmailJS, free static-site email service) ----
 // The message is truly delivered to MAILBOX_EMAIL from the visitor's browser.
 // To activate it:
@@ -707,31 +1000,8 @@ const folderFiles = [
 const newFolderFiles = {};
 
 document.addEventListener('DOMContentLoaded', () => {
-    // XP boot splash animation
-    (function bootSplash() {
-        const splash = document.getElementById('bootSplash');
-        const fill = document.getElementById('bootProgressFill');
-        if (!splash || !fill) return;
-        // Quick XP-style loading bar animation
-        let w = 0;
-        const tick = () => {
-            w += Math.random() * 35 + 5;
-            if (w >= 100) {
-                w = 100;
-                fill.style.width = '100%';
-                setTimeout(() => {
-                    splash.style.opacity = '0';
-                    splash.style.transition = 'opacity 0.4s ease-out';
-                    setTimeout(() => splash.remove(), 450);
-                }, 180);
-                return;
-            }
-            fill.style.width = w + '%';
-            setTimeout(tick, 60 + Math.random() * 120);
-        };
-        fill.style.width = '0%';
-        setTimeout(tick, 100);
-    })();
+    // Boot -> logon -> desktop. Defined further down in the depth layer.
+    runBootSequence();
 
     // Apply the user's saved wallpaper (or the default XP image)
     setWallpaper(getSavedWallpaper());
@@ -1192,8 +1462,16 @@ function touchEnd(e) {
 
     // A quick tap without dragging opens the item (mobile-friendly)
     if (!dragMoved && touchDuration < 300) {
-        if (currentIcon) openIconWindow(currentIcon);
+        const tapped = currentIcon;
         lastTapTime = touchEndTime;
+        currentIcon = null;
+        if (tapped) {
+            deselectAllIcons();
+            tapped.classList.add('selected');
+            tapped.style.transform = '';
+            openIconWindow(tapped);
+        }
+        return;
     }
 
     if (!currentIcon) return;
@@ -1538,11 +1816,11 @@ function setupImageViewer(win, collection, index) {
         ro = new ResizeObserver(onStageResize);
         ro.observe(stage);
     }
-    win._cleanup = () => {
+    addCleanup(win, () => {
         document.removeEventListener('mousemove', onDocMouseMove);
         document.removeEventListener('mouseup', onDocMouseUp);
         if (ro) ro.disconnect();
-    };
+    });
 
     apply();
     updatePanCursor();
@@ -1556,10 +1834,7 @@ function setupImageViewer(win, collection, index) {
 function getDesktopImageCollection() {
     return [...document.querySelectorAll('.icon.image-file')]
         .filter(i => i.dataset.image)
-        .map(i => ({
-            src: i.dataset.image,
-            name: i.dataset.name || (i.querySelector('span') ? i.querySelector('span').textContent : 'Image')
-        }));
+        .map(i => ({ src: i.dataset.image, name: i.dataset.name || iconLabel(i) || 'Image' }));
 }
 
 function getFolderImageCollection(folderWin) {
@@ -1637,7 +1912,7 @@ function getDropTarget(clientX, clientY) {
 
 function moveImageToFolder(icon, targetEl) {
     const src = icon.dataset.image;
-    const name = icon.dataset.name || (icon.querySelector('span') ? icon.querySelector('span').textContent : 'Image');
+    const name = icon.dataset.name || iconLabel(icon) || 'Image';
 
     // Resolve the folder to drop into from the hovered target: an open folder
     // window, or a folder icon on the desktop.
@@ -1785,8 +2060,8 @@ function buildContextMenuItems(items) {
         }
         const el = document.createElement('div');
         el.className = 'context-menu-item' + (item.disabled ? ' context-menu-item-disabled' : '');
-        el.innerHTML = `<span class="context-menu-icon">${item.icon ? `<img src="${item.icon}" alt="">` : ''}</span>` +
-            `<span class="context-menu-label">${item.label}</span>` +
+        el.innerHTML = `<span class="context-menu-icon">${item.icon ? `<img src="${escAttr(item.icon)}" alt="">` : ''}</span>` +
+            `<span class="context-menu-label">${item.html || escHtml(item.label)}</span>` +
             (item.submenu ? '<span class="context-menu-arrow">&#9656;</span>' : '');
 
         if (item.submenu) {
@@ -1855,7 +2130,46 @@ function attachIconListeners(icon) {
 
 function openIconWindow(icon) {
     const targetId = icon.dataset.opens;
+    // Documents opened from the desktop show up in My Recent Documents
+    if (icon.classList.contains('image-file') || icon.classList.contains('text-file')) {
+        rememberRecent({
+            name: iconLabel(icon),
+            path: VFS.join(VFS.DESKTOP, iconLabel(icon)),
+            icon: (icon.querySelector('img') || {}).src
+        });
+    }
     openWindow(targetId ? document.getElementById(targetId) : icon);
+}
+
+// Grid slots that already have an icon on them, as "x,y" keys.
+function occupiedDesktopSlots(except) {
+    const taken = new Set();
+    document.querySelectorAll('.desktop .icon').forEach(icon => {
+        if (icon === except) return;
+        const s = snapToGrid(parseInt(icon.style.left, 10) || icon.offsetLeft,
+                             parseInt(icon.style.top, 10) || icon.offsetTop);
+        taken.add(s.x + ',' + s.y);
+    });
+    return taken;
+}
+
+// The next free grid slot at or after (x, y), walking down each column and
+// then across — the order Windows fills the desktop in.
+function freeDesktopSlot(x, y) {
+    const taken = occupiedDesktopSlots();
+    const rows = Math.max(1, Math.floor(workAreaHeight() / GRID_SIZE_Y));
+    const cols = Math.max(1, Math.floor(window.innerWidth / GRID_SIZE_X));
+    const start = snapToGrid(Math.max(0, x || 0), Math.max(0, y || 0));
+    let col = Math.round(start.x / GRID_SIZE_X);
+    let row = Math.round(start.y / GRID_SIZE_Y);
+    for (let n = 0; n < rows * cols; n++) {
+        const px = col * GRID_SIZE_X;
+        const py = row * GRID_SIZE_Y;
+        if (!taken.has(px + ',' + py)) return { x: px, y: py };
+        row++;
+        if (row >= rows) { row = 0; col = (col + 1) % cols; }
+    }
+    return start;   // desktop is full; stack rather than lose the icon
 }
 
 function createDesktopIcon({ iconSrc, label, className, dataset, dataOpens, x, y }) {
@@ -1866,22 +2180,24 @@ function createDesktopIcon({ iconSrc, label, className, dataset, dataOpens, x, y
     icon.id = 'dyn-' + (++windowCounter);
     if (dataOpens) icon.dataset.opens = dataOpens;
     if (dataset) Object.assign(icon.dataset, dataset);
-    icon.innerHTML = `<img src="${iconSrc}" alt="${label}"><span>${label}</span>`;
+    icon.innerHTML = `<img src="${escAttr(iconSrc)}" alt="" draggable="false"><span>${escHtml(label)}</span>`;
     icon.dataset.mtime = String(Date.now());
     icon.style.position = 'absolute';
-    const snapped = snapToGrid(
+    // Land on the drop point when there is one, otherwise on the first free
+    // slot — and never stack two icons on the same square.
+    const spot = freeDesktopSlot(
         x != null ? Math.max(0, x - 45) : 0,
         y != null ? Math.max(0, y - 20) : 0
     );
-    icon.style.left = snapped.x + 'px';
-    icon.style.top = snapped.y + 'px';
+    icon.style.left = spot.x + 'px';
+    icon.style.top = spot.y + 'px';
     attachIconListeners(icon);
     desktop.appendChild(icon);
     return icon;
 }
 
 function uniqueDesktopName(base) {
-    const names = new Set([...document.querySelectorAll('.desktop .icon span')].map(s => s.textContent));
+    const names = new Set([...document.querySelectorAll('.desktop .icon')].map(iconLabel));
     if (!names.has(base)) return base;
     let n = 2;
     while (names.has(`${base} (${n})`)) n++;
@@ -1971,81 +2287,6 @@ function setWallpaper(src) {
     try { localStorage.setItem(WALLPAPER_KEY, src); } catch (e) { /* ignore */ }
 }
 
-function showWallpaperPicker() {
-    // Remove any existing picker
-    document.querySelectorAll('.wallpaper-dialog').forEach(d => d.remove());
-
-    const current = getSavedWallpaper();
-    const dlg = document.createElement('div');
-    dlg.className = 'wallpaper-dialog';
-    dlg.innerHTML = `
-        <div class="wallpaper-dialog-inner">
-            <div class="wp-head">
-                <span>Change Background</span>
-                <button class="win-btn win-btn-close wp-close">
-                    <svg viewBox="0 0 10 10"><path d="M1 0L0 1l4 4-4 4 1 1 4-4 4 4 1-1-4-4 4-4-1-1-4 4z"></path></svg>
-                </button>
-            </div>
-            <div class="wp-body">
-                <div class="wp-section-label">Animated Wallpapers</div>
-                <div class="wp-grid">
-                    ${ANIMATED_WALLPAPERS.map(w => `
-                        <div class="wp-item ${current === w.src ? 'wp-active' : ''}" data-src="${w.src}" data-anim="1">
-                            <div class="wp-thumb wp-thumb-anim" style="background-image:url(${w.poster})"><span class="wp-play">&#9658;</span></div>
-                            <span class="wp-label">${w.label}</span>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="wp-section-label">Pictures</div>
-                <div class="wp-grid">
-                    <div class="wp-item ${current === DEFAULT_WALLPAPER ? 'wp-active' : ''}" data-src="${DEFAULT_WALLPAPER}">
-                        <div class="wp-thumb" style="background-image:url(${DEFAULT_WALLPAPER})"></div>
-                        <span class="wp-label">Default</span>
-                    </div>
-                    ${WALLPAPERS.map(w => `
-                        <div class="wp-item ${current === w.src ? 'wp-active' : ''}" data-src="${w.src}">
-                            <div class="wp-thumb" style="background-image:url(${w.src})"></div>
-                            <span class="wp-label">${w.label}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-            <div class="wp-footer">
-                <button class="wp-btn wp-close">Close</button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(dlg);
-
-    const close = () => dlg.remove();
-    dlg.querySelectorAll('.wp-close').forEach(b => b.addEventListener('click', close));
-
-    // Click a wallpaper -> apply immediately and highlight
-    dlg.querySelectorAll('.wp-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const src = item.dataset.src;
-            setWallpaper(src);
-            dlg.querySelectorAll('.wp-item').forEach(i => i.classList.remove('wp-active'));
-            item.classList.add('wp-active');
-        });
-    });
-
-    // Center it
-    const r = dlg.getBoundingClientRect();
-    dlg.style.left = Math.max(0, (window.innerWidth - r.width) / 2) + 'px';
-    dlg.style.top = Math.max(0, (window.innerHeight - r.height) / 2) + 'px';
-
-    // Click outside to close
-    setTimeout(() => {
-        document.addEventListener('click', function handler(e) {
-            if (!e.target.closest('.wallpaper-dialog')) {
-                dlg.remove();
-                document.removeEventListener('click', handler);
-            }
-        });
-    }, 0);
-}
-
 function getDesktopContextMenu() {
     return [
         { label: 'Arrange Icons By', submenu: [
@@ -2056,9 +2297,9 @@ function getDesktopContextMenu() {
             { sep: true },
             { label: 'Align to Grid', action: () => alignIconsToGrid() }
         ]},
-        { label: 'Refresh', action: () => location.reload() },
+        { label: 'Refresh', action: () => { refreshExplorerWindows(); XPAudio.play('navigate'); } },
         { sep: true },
-        { label: 'Paste', disabled: true },
+        { label: 'Paste', disabled: !clipboard, action: () => pasteClipboardToDesktop() },
         { label: 'Paste Shortcut', disabled: true },
         { sep: true },
         { label: 'New', submenu: [
@@ -2067,9 +2308,21 @@ function getDesktopContextMenu() {
             { label: 'Bitmap Image', icon: 'assets/image-file-icon.png', action: () => newBitmapOnDesktop() }
         ]},
         { sep: true },
-        { label: 'Change Background', icon: 'assets/xp-desktop.webp', action: () => showWallpaperPicker() },
+        { label: Mascot.on ? 'Hide Desktop Buddy' : 'Show Desktop Buddy',
+          action: () => {
+              const on = Mascot.toggle();
+              notify({
+                  title: on ? 'Desktop Buddy' : 'Desktop Buddy hidden',
+                  text: on
+                      ? 'He is back. Move the mouse near him to watch him bolt.'
+                      : 'Right-click the desktop, or use Display Properties, to bring him back.',
+                  timeout: 5000
+              });
+          } },
         { sep: true },
-        { label: 'Properties', action: () => showDesktopProperties() }
+        { label: 'Change Background', icon: 'assets/xp-desktop.webp', action: () => showDisplayProperties('desktop') },
+        { sep: true },
+        { label: 'Properties', icon: 'assets/xp-desktop.webp', action: () => showDisplayProperties('themes') }
     ];
 }
 
@@ -2087,8 +2340,11 @@ function alignIconsToGrid() {
 // ---- Icon info (sizes, types, dates) used by Properties + Arrange Icons By ----
 function formatBytes(bytes) {
     if (!bytes || bytes <= 0) return '0 bytes';
-    if (bytes >= 1048576) return (bytes / 1048576).toFixed(1) + ' MB';
-    if (bytes >= 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    const TB = 1099511627776, GB = 1073741824, MB = 1048576, KB = 1024;
+    if (bytes >= TB) return (bytes / TB).toFixed(1) + ' TB';
+    if (bytes >= GB) return (bytes / GB).toFixed(1) + ' GB';
+    if (bytes >= MB) return (bytes / MB).toFixed(1) + ' MB';
+    if (bytes >= KB) return (bytes / KB).toFixed(1) + ' KB';
     return bytes + ' bytes';
 }
 
@@ -2137,7 +2393,7 @@ function getIconType(icon) {
 
 // Info used for both sorting and the Properties dialog
 function getIconInfo(icon) {
-    const name = icon.querySelector('span').textContent;
+    const name = iconLabel(icon);
     const type = getIconType(icon);
     const mtime = parseInt(icon.dataset.mtime || '0', 10) || 0;
     let sizeValue = 0;
@@ -2188,12 +2444,12 @@ function arrangeIconsBy(criteria) {
         if (typeof a.key === 'number' && typeof b.key === 'number') return a.key - b.key;
         return String(a.key).localeCompare(String(b.key));
     });
-    // Lay them out top-to-bottom in two columns, like Windows XP
-    const n = keyed.length;
-    const perCol = Math.max(1, Math.ceil(n / 2));
+    // Lay them out top-to-bottom, filling each column before starting the
+    // next one, exactly like Windows XP's "Arrange Icons By".
+    const perCol = Math.max(1, Math.floor(workAreaHeight() / GRID_SIZE_Y));
     keyed.forEach((item, i) => {
-        item.icon.style.left = (Math.floor(i / perCol) * 90) + 'px';
-        item.icon.style.top = ((i % perCol) * 90) + 'px';
+        item.icon.style.left = (Math.floor(i / perCol) * GRID_SIZE_X) + 'px';
+        item.icon.style.top = ((i % perCol) * GRID_SIZE_Y) + 'px';
     });
     deselectAllIcons();
 }
@@ -2267,7 +2523,7 @@ function getIconContextMenu(icon) {
 function createShortcut(icon) {
     const img = icon.querySelector('img');
     const iconSrc = img ? img.getAttribute('src') : 'assets/image-file-icon.png';
-    const base = (icon.querySelector('span').textContent || 'Shortcut').replace(/\.(jpeg|jpg|png|bmp|txt)$/i, '');
+    const base = (iconLabel(icon) || 'Shortcut').replace(/\.(jpeg|jpg|png|bmp|txt)$/i, '');
     const label = uniqueDesktopName(base + ' - Shortcut');
     const opts = {
         iconSrc,
@@ -2316,7 +2572,7 @@ function binEntryFor(icon) {
             : icon.classList.contains('folder-new') ? 'folder-new'
             : icon.classList.contains('text-file') ? 'text-file'
             : 'shortcut',
-        label: icon.querySelector('span').textContent,
+        label: iconLabel(icon),
         iconSrc: img ? img.getAttribute('src') : 'assets/image-file-icon.png',
         x: parseInt(icon.style.left, 10) || icon.offsetLeft,
         y: parseInt(icon.style.top, 10) || icon.offsetTop
@@ -2333,6 +2589,7 @@ function binEntryFor(icon) {
 function moveIconsToBin(icons) {
     const list = (Array.isArray(icons) ? icons : [icons]).filter(i => i && i.isConnected && isDeletable(i));
     if (!list.length) return;
+    XPAudio.play('recycle');
     list.forEach(icon => {
         if (icon.classList.contains('folder-new') && newFolderFiles[icon.id]) {
             // Deleted folders take their contents with them
@@ -2343,11 +2600,6 @@ function moveIconsToBin(icons) {
     });
     deselectAllIcons();
     refreshBinWindows();
-}
-
-// Move a single desktop icon into the Recycle Bin.
-function moveIconToBin(icon) {
-    moveIconsToBin([icon]);
 }
 
 // Move the whole current selection (plus an optional anchor icon) to the bin.
@@ -2361,6 +2613,14 @@ function restoreBinItem(index) {
     const entry = recycleBin[index];
     if (!entry) return;
     recycleBin.splice(index, 1);
+    // Items deleted from Explorer go back where they came from
+    if (entry.type === 'vfs') {
+        VFS.add(entry.fromPath, entry.node);
+        refreshExplorerWindows();
+        refreshBinWindows();
+        XPAudio.play('restore');
+        return;
+    }
     createDesktopIcon({
         iconSrc: entry.iconSrc,
         label: entry.label,
@@ -2386,6 +2646,7 @@ function deleteBinItemForever(index) {
 
 function restoreAllBinItems() {
     recycleBin.slice().forEach(entry => {
+        if (entry.type === 'vfs') { VFS.add(entry.fromPath, entry.node); return; }
         createDesktopIcon({
             iconSrc: entry.iconSrc,
             label: entry.label,
@@ -2397,7 +2658,9 @@ function restoreAllBinItems() {
         });
     });
     recycleBin.length = 0;
+    refreshExplorerWindows();
     refreshBinWindows();
+    XPAudio.play('restore');
 }
 
 function emptyRecycleBin() {
@@ -2407,7 +2670,18 @@ function emptyRecycleBin() {
         () => {
             recycleBin.length = 0;
             refreshBinWindows();
+            XPAudio.play('recycle');
         });
+}
+
+// The visible label of a desktop icon (works mid-rename, when the <span>
+// has been swapped for the inline text input).
+function iconLabel(icon) {
+    if (!icon) return '';
+    const span = icon.querySelector('span');
+    if (span) return span.textContent;
+    const input = icon.querySelector('.icon-rename-input');
+    return input ? input.value : (icon.dataset.name || '');
 }
 
 function renameIcon(icon) {
@@ -2469,7 +2743,7 @@ function showPropertiesDialog(title, iconSrc, rows) {
     dlg.innerHTML = `
         <div class="popup-header">
             <img class="popup-icon" src="${iconSrc}" alt="" draggable="false">
-            <span class="popup-title">${title} Properties</span>
+            <span class="popup-title">${escHtml(title)} Properties</span>
             <div class="popup-controls">
                 <button class="win-btn win-btn-close props-dialog-close">
                     <svg viewBox="0 0 10 10"><path d="M1 0L0 1l4 4-4 4 1 1 4-4 4 4 1-1-4-4 4-4-1-1-4 4z"></path></svg>
@@ -2477,10 +2751,10 @@ function showPropertiesDialog(title, iconSrc, rows) {
             </div>
         </div>
         <div class="props-dialog-body">
-            <img src="${iconSrc}" alt="">
+            <img src="${escAttr(iconSrc)}" alt="">
             <div>
-                <h3>${title}</h3>
-                ${rows.map(([k, v]) => `<div class="props-row"><strong>${k}:</strong> ${v}</div>`).join('')}
+                <h3>${escHtml(title)}</h3>
+                ${rows.map(([k, v]) => `<div class="props-row"><strong>${escHtml(k)}:</strong> ${escHtml(v)}</div>`).join('')}
             </div>
         </div>
         <div class="props-dialog-buttons">
@@ -2545,6 +2819,7 @@ function openImageFileWindow(src, name, collection) {
 
 // Open (or focus existing) window for an icon
 function openWindow(icon) {
+    XPAudio.unlock();
     if (openWindows[icon.id]) {
         const existing = openWindows[icon.id];
         if (existing.style.display === 'none') {
@@ -2567,9 +2842,8 @@ function isMobileLayout() {
 
 // Keep windows usable on small screens: clamp size/position to the viewport
 function clampWindowToScreen(win) {
-    if (!isMobileLayout()) return;
     const vw = window.innerWidth;
-    const vh = window.innerHeight - 40; // leave room for the taskbar
+    const vh = workAreaHeight(); // leave room for the taskbar
     const r = win.getBoundingClientRect();
     let w = parseFloat(win.style.width) || r.width;
     let h = parseFloat(win.style.height) || r.height;
@@ -2582,14 +2856,18 @@ function clampWindowToScreen(win) {
     // Keep the whole window on screen when possible
     const left = parseFloat(win.style.left) || r.left;
     const top = parseFloat(win.style.top) || r.top;
-    const maxLeft = Math.max(4, vw - w - 4);
-    const maxTop = Math.max(4, vh - h + 4);
-    win.style.left = Math.round(Math.min(Math.max(left, 4), maxLeft)) + 'px';
-    win.style.top = Math.round(Math.min(Math.max(top, 4), maxTop)) + 'px';
+    const maxLeft = Math.max(0, vw - w);
+    const maxTop = Math.max(0, vh - h);
+    win.style.left = Math.round(Math.min(Math.max(left, 0), maxLeft)) + 'px';
+    win.style.top = Math.round(Math.min(Math.max(top, 0), maxTop)) + 'px';
 }
 
 function createWindowElement(icon) {
-    let data = iconContent[icon.id];
+    // Windows opened by the app launcher carry their whole definition on the
+    // icon (`_windowSpec`), so new apps don't need an entry in `iconContent`
+    // or a branch in the id ladder below.
+    const spec = icon._windowSpec || null;
+    let data = spec || iconContent[icon.id];
 
     // Image files (desktop icons or files inside the Folder) don't need an
     // entry in iconContent - build the viewer content on the fly.
@@ -2602,7 +2880,7 @@ function createWindowElement(icon) {
             content: `
                 <div class="img-viewer">
                     <div class="img-stage">
-                        <img src="${src}" alt="${name}">
+                        <img src="${escAttr(src)}" alt="${escAttr(name)}">
                     </div>
                     <div class="img-toolbar">
                         <button class="img-btn" data-action="prev" title="Previous Image"><img class="img-btn-icon" src="assets/viewer-prev.png" alt=""></button>
@@ -2684,7 +2962,7 @@ function createWindowElement(icon) {
         };
     } else if (!data && icon.classList.contains('text-file')) {
         // A text document created from the right-click menu: its own empty Notepad
-        const textLabel = icon.querySelector('span').textContent || 'New Text Document.txt';
+        const textLabel = iconLabel(icon) || 'New Text Document.txt';
         data = {
             title: textLabel + ' - Notepad',
             icon: 'assets/notepad-icon.png',
@@ -2695,15 +2973,49 @@ function createWindowElement(icon) {
                   <span class="np-menu-item" data-menu="format">Format</span>
                   <span class="np-menu-item" data-menu="view">View</span>
                   <span class="np-menu-item" data-menu="help">Help</span>
-                  <div class="np-dropdown hidden" data-dropdown="edit">
-                    <div class="np-dropdown-item" data-action="undo">Undo</div>
-                    <div class="np-dropdown-item" data-action="redo">Redo</div>
-                    <div class="np-dropdown-divider"></div>
-                    <div class="np-dropdown-item" data-action="find">Find</div>
-                    <div class="np-dropdown-item" data-action="replace">Replace</div>
-                    <div class="np-dropdown-divider"></div>
-                    <div class="np-dropdown-item" data-action="datetime">Date/Time</div>
-                  </div>
+                </div>
+                <div class="np-dropdown hidden" data-dropdown="file">
+                  <div class="np-dropdown-item" data-action="new">New</div>
+                  <div class="np-dropdown-item" data-action="open">Open...</div>
+                  <div class="np-dropdown-item" data-action="save">Save</div>
+                  <div class="np-dropdown-item" data-action="saveas">Save As...</div>
+                  <div class="np-dropdown-divider"></div>
+                  <div class="np-dropdown-item" data-action="pagesetup">Page Setup...</div>
+                  <div class="np-dropdown-item" data-action="print">Print...</div>
+                  <div class="np-dropdown-item" data-action="printpreview">Print Preview</div>
+                  <div class="np-dropdown-divider"></div>
+                  <div class="np-dropdown-item" data-action="exit">Exit</div>
+                </div>
+                <div class="np-dropdown hidden" data-dropdown="edit">
+                  <div class="np-dropdown-item" data-action="undo">Undo</div>
+                  <div class="np-dropdown-item" data-action="redo">Redo</div>
+                  <div class="np-dropdown-divider"></div>
+                  <div class="np-dropdown-item" data-action="cut">Cut</div>
+                  <div class="np-dropdown-item" data-action="copy">Copy</div>
+                  <div class="np-dropdown-item" data-action="paste">Paste</div>
+                  <div class="np-dropdown-item" data-action="delete">Delete</div>
+                  <div class="np-dropdown-divider"></div>
+                  <div class="np-dropdown-item" data-action="find">Find...</div>
+                  <div class="np-dropdown-item" data-action="findnext">Find Next</div>
+                  <div class="np-dropdown-item" data-action="replace">Replace...</div>
+                  <div class="np-dropdown-item" data-action="gotoline">Go To...</div>
+                  <div class="np-dropdown-divider"></div>
+                  <div class="np-dropdown-item" data-action="selectall">Select All</div>
+                  <div class="np-dropdown-item" data-action="time/date">Time/Date</div>
+                </div>
+                <div class="np-dropdown hidden" data-dropdown="format">
+                  <div class="np-dropdown-item" data-action="wordwrap">Word Wrap</div>
+                  <div class="np-dropdown-divider"></div>
+                  <div class="np-dropdown-item" data-action="font">Font...</div>
+                </div>
+                <div class="np-dropdown hidden" data-dropdown="view">
+                  <div class="np-dropdown-item" data-action="statusbar">Status Bar</div>
+                </div>
+                <div class="np-dropdown hidden" data-dropdown="help">
+                  <div class="np-dropdown-item" data-action="helpcontents">Help Contents</div>
+                  <div class="np-dropdown-item" data-action="helptutorial">Help Tutorial</div>
+                  <div class="np-dropdown-divider"></div>
+                  <div class="np-dropdown-item" data-action="about">About Notepad</div>
                 </div>
                 <textarea class="np-textarea" spellcheck="false"></textarea>`
         };
@@ -2718,8 +3030,8 @@ function createWindowElement(icon) {
 
     win.innerHTML = `
         <div class="popup-header">
-            <img class="popup-icon" src="${data.icon}" alt="" draggable="false">
-            <span class="popup-title">${data.title}</span>
+            <img class="popup-icon" src="${escAttr(data.icon)}" alt="" draggable="false">
+            <span class="popup-title">${escHtml(data.title)}</span>
             <div class="popup-controls">
                 <button class="win-btn popup-minimize">
                     <svg viewBox="0 0 10 10"><rect x="1" y="7" width="8" height="1.5"></rect></svg>
@@ -2818,14 +3130,28 @@ function createWindowElement(icon) {
         win.style.height = '440px';
         win.dataset.minW = '320';
         win.dataset.minH = '400';
+    } else if (spec) {
+        win.style.width = (spec.width || 520) + 'px';
+        win.style.height = (spec.height || 400) + 'px';
+        win.dataset.minW = String(spec.minW || 320);
+        win.dataset.minH = String(spec.minH || 220);
     } else {
         win.style.width = '400px';
         win.style.height = '300px';
     }
 
+    if (spec && spec.center) {
+        win.style.left = Math.max(0, Math.round((window.innerWidth - parseFloat(win.style.width)) / 2)) + 'px';
+        win.style.top = Math.max(0, Math.round((workAreaHeight() - parseFloat(win.style.height)) / 2)) + 'px';
+    }
+
     clampWindowToScreen(win);
 
-    if (icon.id === 'icon1') {
+    if (spec && typeof spec.setup === 'function') {
+        contentEl.classList.add('no-padding');
+        win._appId = spec.appId || null;
+        spec.setup(win, icon);
+    } else if (icon.id === 'icon1') {
         contentEl.classList.add('no-padding');
         setupBin(win);
     } else if (icon.id === 'icon2') {
@@ -2833,6 +3159,7 @@ function createWindowElement(icon) {
         setupBrowser(win);
     } else if (icon.id === 'icon4') {
         contentEl.classList.add('no-padding');
+        setupPaint(win);
     } else if (icon.id === 'icon5') {
         contentEl.classList.add('no-padding');
         setupNotepad(win, initialNotepad);
@@ -2910,7 +3237,7 @@ function addTaskbarButton(win) {
     const item = document.createElement('div');
     item.className = 'taskbar-item';
     item.dataset.owner = win.dataset.owner;
-    item.innerHTML = `<img src="${iconSrc}" alt=""><span>${title}</span>`;
+    item.innerHTML = `<img src="${escAttr(iconSrc)}" alt=""><span>${escHtml(title)}</span>`;
 
     item.addEventListener('click', () => {
         const isMinimized = win.style.display === 'none';
@@ -2929,6 +3256,7 @@ function addTaskbarButton(win) {
         }
     });
 
+    enhanceTaskbarItem(item, win);
     taskbarWindows.appendChild(item);
     updateTaskbarItemState(win);
 }
@@ -2956,7 +3284,12 @@ function setupWindowControls(win) {
     minimizeBtn.addEventListener('click', () => minimizeWindow(win));
     closeBtn.addEventListener('click', () => closeWindow(win));
 
-    maximizeBtn.addEventListener('click', () => {
+    // Exposed so the title-bar double-click, the window menu, the taskbar
+    // context menu and the snap logic can all drive the same code path.
+    win._isMaximized = () => isMaximized;
+    win._toggleMaximize = () => {
+        if (win.dataset.busy === '1') return;
+        XPAudio.play(isMaximized ? 'restore' : 'maximize');
         if (isMaximized) {
             const prev = win._maxPrev;
             if (!prev) return;
@@ -2966,6 +3299,7 @@ function setupWindowControls(win) {
                 win.style.width = prev.width + 'px';
                 win.style.height = prev.height + 'px';
                 win._maxPrev = null;
+                win.classList.remove('maximized');
                 isMaximized = false;
                 win.dispatchEvent(new CustomEvent('windowResized'));
             });
@@ -2977,16 +3311,25 @@ function setupWindowControls(win) {
                 width: r.width,
                 height: r.height
             };
-            const target = { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight - 40 };
+            win._snapped = null;
+            const target = { left: 0, top: 0, width: window.innerWidth, height: workAreaHeight() };
             animateWindowTo(win, target, 180, 'cubic-bezier(0.25, 0.1, 0.25, 1)', () => {
                 win.style.left = '0';
                 win.style.top = '0';
-                win.style.width = '100vw';
-                win.style.height = 'calc(100vh - 40px)';
+                win.style.width = window.innerWidth + 'px';
+                win.style.height = workAreaHeight() + 'px';
+                win.classList.add('maximized');
                 isMaximized = true;
                 win.dispatchEvent(new CustomEvent('windowResized'));
             });
         }
+    };
+
+    maximizeBtn.addEventListener('click', win._toggleMaximize);
+    // Double-clicking the title bar maximizes / restores, like every Windows
+    header.addEventListener('dblclick', (e) => {
+        if (e.target.closest('.popup-controls')) return;
+        win._toggleMaximize();
     });
 
     // Dragging by header (mouse)
@@ -2995,34 +3338,55 @@ function setupWindowControls(win) {
     let startY = 0;
 
     function moveWindow(x, y) {
-        // Keep the title bar reachable on small screens
-        if (isMobileLayout()) {
-            x = Math.max(-win.offsetWidth + 80, Math.min(x, window.innerWidth - 80));
-            y = Math.max(0, Math.min(y, window.innerHeight - 60));
-        }
+        // The title bar always stays grabbable: never let it leave the screen
+        // sideways completely, and never let it slide under the taskbar.
+        x = Math.max(-win.offsetWidth + 90, Math.min(x, window.innerWidth - 90));
+        y = Math.max(0, Math.min(y, workAreaHeight() - 24));
         win.style.left = x + 'px';
         win.style.top = y + 'px';
     }
 
     header.addEventListener('mousedown', (e) => {
+        // The control buttons and the system-menu icon handle their own clicks
+        if (e.target.closest('.popup-controls, .popup-icon')) return;
         e.preventDefault();
         isDragging = true;
         bringToFront(win);
         startX = e.clientX - win.offsetLeft;
         startY = e.clientY - win.offsetTop;
+        // Grab ratio, so restoring a maximized window keeps it under the cursor
+        win._grabRatio = e.clientX / Math.max(1, win.offsetWidth);
         document.addEventListener('mousemove', onMove);
         document.addEventListener('mouseup', onUp);
     });
 
     function onMove(e) {
         if (!isDragging) return;
+        // Pulling a maximized (or snapped) window off the top restores it
+        if ((isMaximized || win._snapped) && win._maxPrev) {
+            const prev = win._maxPrev;
+            win.getAnimations().forEach(a => a.cancel());
+            win.classList.remove('maximized');
+            win.style.width = prev.width + 'px';
+            win.style.height = prev.height + 'px';
+            isMaximized = false;
+            win._snapped = null;
+            startX = Math.round(prev.width * (win._grabRatio || 0.5));
+            startY = Math.min(startY, 16);
+            win.dispatchEvent(new CustomEvent('windowResized'));
+        }
         moveWindow(e.clientX - startX, e.clientY - startY);
+        updateSnapPreview(e.clientX, e.clientY);
     }
 
-    function onUp() {
+    function onUp(e) {
+        if (!isDragging) return;
         isDragging = false;
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup', onUp);
+        const zone = e ? snapZoneFor(e.clientX, e.clientY) : null;
+        hideSnapPreview();
+        if (zone) applySnap(win, zone);
     }
 
     // Dragging by header (touch)
@@ -3072,6 +3436,7 @@ function setupWindowControls(win) {
         const minH = parseInt(win.dataset.minH || '150', 10);
         win.style.width = Math.max(rw + (e.clientX - rx), minW) + 'px';
         win.style.height = Math.max(rh + (e.clientY - ry), minH) + 'px';
+        win.dispatchEvent(new CustomEvent('windowResizing'));
     }
 
     function onResizeUp() {
@@ -3109,6 +3474,98 @@ function setupWindowControls(win) {
         document.removeEventListener('touchend', onResizeTouchUp);
         win.dispatchEvent(new CustomEvent('windowResized'));
     }
+
+    // Edge/corner resizing, the window (system) menu and focus sounds
+    installEdgeResizers(win);
+    installWindowMenu(win);
+}
+
+// Shared Windows XP menu-bar behaviour. Clicking a menu item toggles its
+// dropdown (positioned under the item) and clicking anywhere outside closes
+// all of them. itemCls/dropdownCls are the CSS class names used by the
+// menubar, e.g. 'paint-menu-item' / 'paint-dropdown'. Dropdowns are looked up
+// anywhere in the window (they are siblings of the menubar in the HTML).
+function setupMenubar(win, itemCls, dropdownCls) {
+    const menubarCls = itemCls.replace('-menu-item', '-menubar');
+    const menubar = win.querySelector('.' + menubarCls);
+    if (!menubar) return;
+    const menuItems = menubar.querySelectorAll('.' + itemCls);
+    const dropdowns = win.querySelectorAll('.' + dropdownCls);
+
+    const closeAll = () => {
+        dropdowns.forEach(d => d.classList.add('hidden'));
+        menuItems.forEach(m => m.classList.remove('active'));
+    };
+
+    menuItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const dropdown = win.querySelector(`.${dropdownCls}[data-dropdown="${item.dataset.menu}"]`);
+            const wasOpen = dropdown ? !dropdown.classList.contains('hidden') : false;
+            closeAll();
+            if (dropdown && !wasOpen) {
+                dropdown.classList.remove('hidden');
+                item.classList.add('active');
+                // Position dropdown below the menu item
+                const rect = item.getBoundingClientRect();
+                const menubarRect = menubar.getBoundingClientRect();
+                dropdown.style.top = (rect.bottom - menubarRect.top) + 'px';
+                dropdown.style.left = (rect.left - menubarRect.left) + 'px';
+            }
+        });
+    });
+
+    // Close the menus when clicking anywhere outside this window's menubar.
+    // The handler is kept in a variable so cleanup can actually remove it
+    // (removing `closeAll` would have removed nothing).
+    const onDocClick = (e) => {
+        if (!e.target.closest('.' + menubarCls)) closeAll();
+    };
+    document.addEventListener('click', onDocClick);
+
+    // Hovering another menu title while one is open switches to it, like XP.
+    menuItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            const anyOpen = [...dropdowns].some(d => !d.classList.contains('hidden'));
+            if (anyOpen && !item.classList.contains('active')) item.click();
+        });
+    });
+
+    // Escape closes the open menu
+    const onKey = (e) => { if (e.key === 'Escape') closeAll(); };
+    document.addEventListener('keydown', onKey);
+
+    addCleanup(win, () => {
+        document.removeEventListener('click', onDocClick);
+        document.removeEventListener('keydown', onKey);
+    });
+}
+
+// Generic XP "not implemented" dialog for menu items that have no real
+// behaviour in this demo (kept consistent with the XP error/info style).
+function showNotImplemented(feature) {
+    showInfoDialog('Not Available', 'assets/error-icon.png',
+        `<b>${escHtml(feature)}</b> is not available in this demo.<br><br>` +
+        `This is a portfolio recreation of Windows XP, so some menu items are decorative.`);
+}
+
+// Wire up a dropdown's items to a map of { actionName: handler }. Clicking an
+// item runs its handler (if defined) then closes the dropdown. itemCls is the
+// dropdown item class, e.g. 'exp-dropdown-item'.
+function setupDropdownActions(win, itemCls, actions) {
+    win.querySelectorAll('.' + itemCls).forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const fn = actions[item.dataset.action];
+            if (fn) fn(item);
+            // Close the dropdown + deactivate the menu item
+            const menubar = win.querySelector('.' + itemCls.replace('-dropdown-item', '-menubar'));
+            if (menubar) {
+                menubar.querySelectorAll('.' + itemCls.replace('-dropdown-item', '-menu-item')).forEach(m => m.classList.remove('active'));
+            }
+            win.querySelectorAll('.' + itemCls.replace('-dropdown-item', '-dropdown')).forEach(d => d.classList.add('hidden'));
+        });
+    });
 }
 
 // Where a window "flies" to on the taskbar when minimizing
@@ -3118,7 +3575,7 @@ function getTaskbarTargetRect(win) {
         const r = item.getBoundingClientRect();
         return { left: r.left + r.width / 2, top: r.top + r.height / 2, width: r.width, height: r.height };
     }
-    return { left: window.innerWidth / 2, top: window.innerHeight - 15, width: 60, height: 30 };
+    return { left: window.innerWidth / 2, top: window.innerHeight - getTaskbarHeight() / 2, width: 60, height: getTaskbarHeight() };
 }
 
 // Animate the window to a target rect (used for maximize / restore)
@@ -3153,6 +3610,7 @@ function onAnimComplete(anim, onDone, duration) {
 function minimizeWindow(win) {
     if (win.dataset.busy === '1') return;
     win.dataset.busy = '1';
+    XPAudio.play('minimize');
     const r = win.getBoundingClientRect();
     win._restoreRect = { left: r.left, top: r.top, width: r.width, height: r.height };
     const t = getTaskbarTargetRect(win);
@@ -3171,6 +3629,7 @@ function minimizeWindow(win) {
 
 // Restore a minimized window: grow it back out of the taskbar button
 function restoreWindow(win) {
+    XPAudio.play('restore');
     const restore = win._restoreRect || { left: 80, top: 60, width: 400, height: 300 };
     const t = getTaskbarTargetRect(win);
     win.getAnimations().forEach(a => a.cancel());
@@ -3197,6 +3656,7 @@ function restoreWindow(win) {
 function closeWindow(win) {
     if (win.dataset.busy === '1') return;
     win.dataset.busy = '1';
+    XPAudio.play('close');
     if (typeof win._cleanup === 'function') {
         try { win._cleanup(); } catch (e) { /* ignore */ }
     }
@@ -3233,8 +3693,8 @@ function setupFolder(win, files) {
                 <button class="exp-project-item${index === activeIndex ? ' active' : ''}" data-index="${index}">
                     ${iconHtml}
                     <div class="exp-project-text">
-                        <strong>${file.name}</strong>
-                        <span>${type}</span>
+                        <strong>${escHtml(file.name)}</strong>
+                        <span>${escHtml(type)}</span>
                     </div>
                 </button>`;
         }).join('');
@@ -3259,8 +3719,8 @@ function setupFolder(win, files) {
 
         if (file.kind === 'image') {
             preview.innerHTML = `
-                <h3>${file.name}</h3>
-                <div class="exp-image-preview"><img src="${file.src}" alt="${file.name}"></div>
+                <h3>${escHtml(file.name)}</h3>
+                <div class="exp-image-preview"><img src="${escAttr(file.src)}" alt="${escAttr(file.name)}"></div>
                 <div class="exp-preview-actions">
                     <button class="exp-open-btn">Open image</button>
                 </div>`;
@@ -3269,12 +3729,12 @@ function setupFolder(win, files) {
             });
         } else {
             const screenshotHtml = file.screenshot
-                ? `<div class="exp-project-shot"><img src="${file.screenshot}" alt="${file.name}" loading="lazy"></div>`
+                ? `<div class="exp-project-shot"><img src="${escAttr(file.screenshot)}" alt="${escAttr(file.name)}" loading="lazy"></div>`
                 : '';
             preview.innerHTML = `
-                <h3>${file.name}</h3>
+                <h3>${escHtml(file.name)}</h3>
                 ${screenshotHtml}
-                <p>${file.summary}</p>
+                <p>${escHtml(file.summary)}</p>
                 <div class="exp-preview-actions">
                     <button class="exp-open-btn">Open project</button>
                 </div>`;
@@ -3283,6 +3743,54 @@ function setupFolder(win, files) {
             });
         }
     }
+
+    // Menu bar functionality (shared dropdown logic)
+    setupMenubar(win, 'exp-menu-item', 'exp-dropdown');
+
+    // Dropdown menu actions (File / Edit / View / Favorites / Tools / Help)
+    setupDropdownActions(win, 'exp-dropdown-item', {
+        // File
+        new: () => newFolderOnDesktop(),
+        open: () => { const f = files[activeIndex]; if (f) window.open(f.url, '_blank', 'noopener,noreferrer'); },
+        save: () => showNotImplemented('Save'),
+        saveas: () => showNotImplemented('Save As'),
+        print: () => showNotImplemented('Print'),
+        properties: () => showDesktopProperties(),
+        close: () => closeWindow(win),
+        // Edit
+        undo: () => showNotImplemented('Undo'),
+        redo: () => showNotImplemented('Redo'),
+        cut: () => showNotImplemented('Cut'),
+        copy: () => showNotImplemented('Copy'),
+        paste: () => showNotImplemented('Paste'),
+        delete: () => { const f = files[activeIndex]; if (f && f.kind === 'image') win.removeImageFile(activeIndex); },
+        rename: () => showNotImplemented('Rename'),
+        selectall: () => showNotImplemented('Select All'),
+        // View
+        details: () => showNotImplemented('Details'),
+        list: () => showNotImplemented('List'),
+        tiles: () => showNotImplemented('Tiles'),
+        thumbnails: () => showNotImplemented('Thumbnails'),
+        arrangelineupbyname: () => arrangeIconsBy('name'),
+        arrangelineupbysize: () => arrangeIconsBy('size'),
+        arrangelineupbytype: () => arrangeIconsBy('type'),
+        arrangelineupbymodified: () => arrangeIconsBy('modified'),
+        aligntogrid: () => alignIconsToGrid(),
+        autoadjust: () => showNotImplemented('Auto Arrange'),
+        // Favorites
+        addtofavorites: () => showNotImplemented('Add to Favorites'),
+        organizefavorites: () => showNotImplemented('Organize Favorites'),
+        // Tools
+        mapnetworkdrive: () => showNotImplemented('Map Network Drive'),
+        disconnectnetworkdrive: () => showNotImplemented('Disconnect Network Drive'),
+        toolsoptions: () => showNotImplemented('Tools Options'),
+        // Help
+        helpcontents: () => showNotImplemented('Help Contents'),
+        helpsearch: () => showNotImplemented('Help Search'),
+        helptutorial: () => showNotImplemented('Help Tutorial'),
+        about: () => showInfoDialog('About Windows Explorer', 'assets/folder-icon.png',
+            'Windows Explorer<br><br>Part of the Windows XP Portfolio desktop recreation.')
+    });
 
     // Expose the file list (used for Next/Previous navigation in the viewer)
     win.files = files;
@@ -3323,6 +3831,15 @@ function setupNewFolderWindow(win) {
 // New text document created from the right-click menu: an empty Notepad
 function setupNewNotepadWindow(win) {
     setupNotepad(win, false, '');
+}
+
+// Open a brand-new empty Notepad window (used by File > New)
+function openNewNotepad() {
+    const fakeIcon = document.createElement('div');
+    fakeIcon.className = 'icon text-file';
+    fakeIcon.id = 'notepad-' + (++windowCounter);
+    fakeIcon.innerHTML = '<span>Untitled.txt</span>';
+    openWindow(fakeIcon);
 }
 
 // Recycle Bin window: lists deleted items with Restore / Delete Forever
@@ -3368,6 +3885,44 @@ function setupBin(win) {
         });
     }
 
+    // Menu bar functionality
+    setupMenubar(win, 'exp-menu-item', 'exp-dropdown');
+
+    // Dropdown menu actions (File / Edit / View / Favorites / Tools / Help)
+    setupDropdownActions(win, 'exp-dropdown-item', {
+        // File
+        empty: () => emptyRecycleBin(),
+        properties: () => showDesktopProperties(),
+        undo: () => showNotImplemented('Undo'),
+        redo: () => showNotImplemented('Redo'),
+        cut: () => showNotImplemented('Cut'),
+        copy: () => showNotImplemented('Copy'),
+        paste: () => showNotImplemented('Paste'),
+        delete: () => emptyRecycleBin(),
+        rename: () => showNotImplemented('Rename'),
+        selectall: () => showNotImplemented('Select All'),
+        details: () => showNotImplemented('Details'),
+        list: () => showNotImplemented('List'),
+        tiles: () => showNotImplemented('Tiles'),
+        thumbnails: () => showNotImplemented('Thumbnails'),
+        arrangelineupbyname: () => arrangeIconsBy('name'),
+        arrangelineupbysize: () => arrangeIconsBy('size'),
+        arrangelineupbytype: () => arrangeIconsBy('type'),
+        arrangelineupbymodified: () => arrangeIconsBy('modified'),
+        aligntogrid: () => alignIconsToGrid(),
+        autoadjust: () => showNotImplemented('Auto Arrange'),
+        addtofavorites: () => showNotImplemented('Add to Favorites'),
+        organizefavorites: () => showNotImplemented('Organize Favorites'),
+        mapnetworkdrive: () => showNotImplemented('Map Network Drive'),
+        disconnectnetworkdrive: () => showNotImplemented('Disconnect Network Drive'),
+        toolsoptions: () => showNotImplemented('Tools Options'),
+        helpcontents: () => showNotImplemented('Help Contents'),
+        helpsearch: () => showNotImplemented('Help Search'),
+        helptutorial: () => showNotImplemented('Help Tutorial'),
+        about: () => showInfoDialog('About Windows Explorer', 'assets/bin-icon.png',
+            'Windows Explorer<br><br>Part of the Windows XP Portfolio desktop recreation.')
+    });
+
     const emptyBtn = win.querySelector('[data-bin-action="empty"]');
     const restoreAllBtn = win.querySelector('[data-bin-action="restore-all"]');
     if (emptyBtn) emptyBtn.addEventListener('click', () => emptyRecycleBin());
@@ -3383,324 +3938,813 @@ function setupBin(win) {
 // Sites known to allow iframe embedding: Wikipedia, DuckDuckGo Lite, Hacker News,
 // Stack Overflow, Britannica, and many older/static sites.
 
-const HOME_URL = 'https://en.wikipedia.org';
-const SEARCH_ENGINE = 'https://en.wikipedia.org/wiki/Special:Search?search=';
+/* ===== Internet Explorer ===================================================
+   A browser inside a browser has one hard problem: most sites send
+   X-Frame-Options or CSP frame-ancestors, which forbids embedding them, and
+   the browser deliberately gives JavaScript NO way to detect that it happened
+   (a refused frame and a loaded frame are indistinguishable — same load event,
+   same null contentDocument, same SecurityError on any property read).
 
-// Detect if input looks like a URL (domain-like) or a search query
+   So this app does not guess. It does three things instead:
+     1. Ships a verified table of which hosts allow embedding and which don't,
+        so a known-refusing site shows a real IE error page instead of a blank
+        white rectangle.
+     2. Offers the Time Machine — the Internet Archive's `if_` URL form, which
+        serves any archived page with no framing restrictions at all. That
+        makes almost the entire web browsable, in period-correct form, which on
+        a Windows XP desktop is the point rather than a consolation.
+     3. Always leaves the era selector and "open in a real tab" one click away.
+
+   The Time Machine needs no API call, no CORS and no third-party proxy: the
+   archive resolves <year>1022173245 to its nearest real snapshot itself, via a
+   redirect the iframe follows on its own.
+   ========================================================================= */
+
+const IE_HOME = 'about:home';
+
+// Years the Internet Archive covers well enough to browse for fun.
+const IE_ERAS = [1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
+    2006, 2007, 2008, 2009, 2010, 2012, 2015, 2018, 2021];
+
+// The archive resolves this fixed month/day/time to the closest real capture.
+const IE_ERA_STAMP = '1022173245';
+const IE_LATEST_STAMP = '29991231235959';
+
+const IE_SEARCH_ENGINES = {
+    google: { name: 'Google', url: 'https://www.google.com/search?igu=1&q=' },
+    wiby: { name: 'Wiby (the old web)', url: 'https://wiby.me/?q=' },
+    marginalia: { name: 'Marginalia (indie web)', url: 'https://search.marginalia.nu/search?query=' },
+    bing: { name: 'Bing', url: 'https://www.bing.com/search?q=' },
+    wikipedia: { name: 'Wikipedia', url: 'https://en.wikipedia.org/wiki/Special:Search?search=' },
+    searx: { name: 'SearXNG', url: 'https://searx.be/search?q=' }
+};
+
+// Verified by checking X-Frame-Options and CSP frame-ancestors on each host.
+// These load correctly inside a frame, so they are safe to offer as links.
+const IE_BOOKMARKS = [
+    { name: 'Wikipedia', url: 'https://en.wikipedia.org' },
+    { name: 'Internet Archive', url: 'https://archive.org' },
+    { name: 'Lobsters', url: 'https://lobste.rs' },
+    { name: 'NPR Text', url: 'https://text.npr.org' },
+    { name: 'JS Paint', url: 'https://jspaint.app' },
+    { name: 'Photopea', url: 'https://www.photopea.com' },
+    { name: 'CyberChef', url: 'https://gchq.github.io/CyberChef' },
+    { name: 'Winamp Skins', url: 'https://skins.webamp.org' },
+    { name: 'js-dos', url: 'https://js-dos.com' },
+    { name: "Cameron's World", url: 'https://cameronsworld.net' },
+    { name: 'The First Website', url: 'http://info.cern.ch/hypertext/WWW/TheProject.html' },
+    { name: 'xkcd', url: 'https://xkcd.com' },
+    { name: 'daedalOS', url: 'https://dustinbrett.com' }
+];
+
+// Sites confirmed to refuse embedding. Loading these would show a blank frame
+// with no error, so we show a proper IE error page and offer the Time Machine.
+const IE_BLOCKED_HOSTS = new Set([
+    'github.com', 'www.github.com', 'gist.github.com',
+    'news.ycombinator.com', 'stackoverflow.com', 'serverfault.com', 'superuser.com',
+    'developer.mozilla.org', 'www.w3schools.com', 'w3schools.com',
+    'youtube.com', 'www.youtube.com', 'm.youtube.com',
+    'reddit.com', 'www.reddit.com', 'old.reddit.com',
+    'x.com', 'twitter.com', 'www.twitter.com',
+    'facebook.com', 'www.facebook.com', 'instagram.com', 'www.instagram.com',
+    'linkedin.com', 'www.linkedin.com', 'tiktok.com', 'www.tiktok.com',
+    'amazon.com', 'www.amazon.com', 'ebay.com', 'www.ebay.com',
+    'netflix.com', 'www.netflix.com', 'spotify.com', 'open.spotify.com',
+    'duckduckgo.com', 'html.duckduckgo.com', 'lite.duckduckgo.com',
+    'www.mojeek.com', 'mojeek.com', 'search.brave.com', 'www.ecosia.org',
+    'www.startpage.com', 'www.qwant.com',
+    'www.openstreetmap.org', 'openstreetmap.org',
+    'neal.fun', 'www.neal.fun', 'lite.cnn.com', 'legiblenews.com',
+    'classicreload.com', 'www.classicreload.com', 'emupedia.net',
+    'regex101.com', 'bestmotherfucking.website',
+    'gitlab.com', 'bitbucket.org', 'npmjs.com', 'www.npmjs.com',
+    'medium.com', 'www.medium.com', 'quora.com', 'www.quora.com',
+    'pinterest.com', 'www.pinterest.com', 'twitch.tv', 'www.twitch.tv'
+]);
+
+function ieHostOf(url) {
+    try { return new URL(url).hostname.toLowerCase(); } catch (e) { return ''; }
+}
+
+function ieIsBlockedHost(url) {
+    const host = ieHostOf(url);
+    if (!host) return false;
+    if (IE_BLOCKED_HOSTS.has(host)) return true;
+    // Bare google.com refuses framing; only the ?igu=1 endpoints allow it.
+    if (/(^|\.)google\.(com?|[a-z]{2}|com\.[a-z]{2}|co\.[a-z]{2})$/.test(host) && !/[?&]igu=1(&|$)/.test(url)) return true;
+    return false;
+}
+
+// Wrap a URL so the Internet Archive serves it. `if_` is the archive's iframe
+// mode: no toolbar banner, and in-page links stay inside the archive.
+function ieWaybackUrl(url, era) {
+    const stamp = era === 'latest' ? IE_LATEST_STAMP : String(era) + IE_ERA_STAMP;
+    return 'https://web.archive.org/web/' + stamp + 'if_/' + url;
+}
+
+// A drive root ("C:"), a drive path, "My Computer" and about: URLs are all
+// places on this computer. Anything with a space in it is a search phrase, so
+// these have to be recognised BEFORE that rule or "My Computer" becomes a query.
+function ieIsLocalAddress(text) {
+    const t = String(text || '').trim();
+    return /^about:/i.test(t) || /^[A-Za-z]:(\\|$)/.test(t) || t === MY_COMPUTER;
+}
+
+function ieIsSearch(text) {
+    const t = String(text || '').trim();
+    if (!t) return false;
+    if (ieIsLocalAddress(t)) return false;
+    if (/^https?:/i.test(t)) return false;
+    if (/\s/.test(t)) return true;                       // a phrase is a search
+    return !looksLikeURL(t);
+}
+
+/* ---- pages we render ourselves -------------------------------------------
+   These go into the frame via srcdoc under a stricter sandbox (no
+   allow-same-origin), so they get an opaque origin and cannot touch this
+   page. They talk back by postMessage, which the parent only accepts from an
+   opaque origin — a remote site can never impersonate them.
+   ------------------------------------------------------------------------- */
+
+const IE_LOCAL_STYLE = `
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; font:13px Tahoma, "Noto Sans", sans-serif; color:#00246b;
+           background:#fff; }
+    a { color:#0d4fa8; text-decoration:none; cursor:pointer; }
+    a:hover { text-decoration:underline; }
+    .hero { background:linear-gradient(to bottom,#3f7fdc,#1d4fa8);
+            color:#fff; padding:18px 22px 22px; }
+    .hero h1 { margin:0 0 2px; font-size:22px; letter-spacing:-.4px;
+               text-shadow:1px 1px 2px rgba(0,0,0,.35); }
+    .hero p { margin:0; font-size:11px; color:#cfe0ff; }
+    .searchrow { display:flex; gap:6px; margin-top:14px; max-width:520px; }
+    .searchrow input { flex:1; height:26px; padding:0 7px; border:1px solid #16407f;
+                       font:13px Tahoma, sans-serif; }
+    .searchrow button { height:26px; padding:0 14px; cursor:pointer;
+                        font:11px Tahoma, sans-serif; border:1px solid #7a7a7a;
+                        border-radius:3px;
+                        background:linear-gradient(to bottom,#fdfdfd,#e4e4dc); }
+    .wrap { padding:16px 22px 24px; }
+    h2 { font-size:12px; text-transform:uppercase; letter-spacing:.6px;
+         color:#4a6ea8; margin:18px 0 8px; border-bottom:1px solid #d6e0f0;
+         padding-bottom:4px; }
+    h2:first-child { margin-top:0; }
+    ul.links { list-style:none; margin:0; padding:0; display:grid;
+               grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:3px 16px; }
+    ul.links li { padding:3px 0; font-size:12px; }
+    ul.links li::before { content:"\\00BB"; color:#6f93cc; margin-right:6px; }
+    .note { margin-top:20px; padding:10px 12px; background:#fffbe6;
+            border:1px solid #e3d69a; font-size:11px; line-height:1.6; color:#5a4a12; }
+    .note b { color:#3d3208; }
+  </style>`;
+
+// Where each "the web in <year>" link lands - a site worth seeing in that year.
+const IE_ERA_LANDINGS = {
+    1996: 'http://www.yahoo.com',
+    1999: 'http://www.google.com',
+    2001: 'http://www.apple.com',
+    2004: 'http://www.myspace.com',
+    2008: 'http://www.nokia.com'
+};
+
+// The IE start page, styled like a 2003 portal.
+function ieHomePage(engineKey) {
+    const engine = IE_SEARCH_ENGINES[engineKey] || IE_SEARCH_ENGINES.google;
+    const link = (b) => `<li><a data-go="${escAttr(b.url)}">${escHtml(b.name)}</a></li>`;
+    const era = (y) => `<li><a data-era="${y}">The web in ${y}</a></li>`;
+    return `<!doctype html><html><head><meta charset="utf-8">${IE_LOCAL_STYLE}</head><body>
+      <div class="hero">
+        <h1>Marco Tancredi &mdash; Internet Explorer</h1>
+        <p>Search the live web, or travel back and browse it as it was.</p>
+        <form class="searchrow" id="f">
+          <input id="q" type="text" placeholder="Search with ${escAttr(engine.name)}&hellip;" autofocus>
+          <button type="submit">Search</button>
+        </form>
+      </div>
+      <div class="wrap">
+        <h2>Places that work in here</h2>
+        <ul class="links">${IE_BOOKMARKS.map(link).join('')}</ul>
+        <h2>Time Machine</h2>
+        <ul class="links">${[1996, 1999, 2001, 2004, 2008].map(era).join('')}</ul>
+        <div class="note">
+          <b>Why do some sites show an error?</b> Most modern sites send a header
+          that forbids being displayed inside another page, and browsers give
+          scripts no way to detect it. When that happens, pick a year above and
+          the Internet Archive will serve you the page instead &mdash; that works
+          almost everywhere.
+        </div>
+      </div>
+      <script>
+        var send = function (msg) { parent.postMessage(Object.assign({ xpBrowser: 1 }, msg), '*'); };
+        document.addEventListener('click', function (e) {
+          var a = e.target.closest('a[data-go], a[data-era]');
+          if (!a) return;
+          e.preventDefault();
+          if (a.dataset.era) send({ era: a.dataset.era });
+          else send({ url: a.dataset.go });
+        });
+        document.getElementById('f').addEventListener('submit', function (e) {
+          e.preventDefault();
+          var v = document.getElementById('q').value.trim();
+          if (v) send({ search: v });
+        });
+      <\/script>
+    </body></html>`;
+}
+
+// Browsing the virtual file system from the address bar, Apache-index style.
+function ieDirectoryIndex(path) {
+    const node = path === MY_COMPUTER ? null : VFS.get(path);
+    const entries = path === MY_COMPUTER
+        ? myComputerEntries().map(e => ({ name: e.name, path: e.path, folder: true }))
+        : (node && node.type === 'folder'
+            ? (node.children || []).map(c => ({
+                name: c.name,
+                path: VFS.join(path, c.name),
+                folder: c.type === 'folder',
+                size: c.type === 'folder' ? '-' : formatBytes(VFS.sizeOf(c)),
+                modified: c.mtime ? formatDate(c.mtime) : '-'
+            }))
+            : null);
+
+    if (!entries) {
+        return `<!doctype html><html><head><meta charset="utf-8">${IE_LOCAL_STYLE}</head><body>
+          <div class="wrap"><h2>404 Not Found</h2>
+          <p>The requested path <b>${escHtml(path)}</b> was not found on this computer.</p>
+          </div></body></html>`;
+    }
+
+    const parent = path === MY_COMPUTER ? null
+        : (/^[A-Za-z]:$/.test(path) ? MY_COMPUTER : VFS.parentOf(path));
+    const row = (e) => `<tr>
+        <td><a data-go="${escAttr(e.path)}">${escHtml(e.name)}${e.folder ? '/' : ''}</a></td>
+        <td>${escHtml(e.modified || '-')}</td>
+        <td class="r">${escHtml(e.size || '-')}</td></tr>`;
+
+    return `<!doctype html><html><head><meta charset="utf-8">${IE_LOCAL_STYLE}
+      <style>
+        table { border-collapse:collapse; width:100%; font-size:12px; }
+        th { text-align:left; border-bottom:1px solid #99a; padding:4px 8px; font-size:11px; }
+        td { padding:2px 8px; }
+        td.r, th.r { text-align:right; }
+        tr:hover td { background:#eef4ff; }
+      </style></head><body>
+      <div class="wrap">
+        <h2>Index of ${escHtml(path)}</h2>
+        <table>
+          <tr><th>Name</th><th>Last modified</th><th class="r">Size</th></tr>
+          ${parent ? `<tr><td><a data-go="${escAttr(parent)}">../</a></td><td>-</td><td class="r">-</td></tr>` : ''}
+          ${entries.sort((a, b) => (b.folder - a.folder) || a.name.localeCompare(b.name)).map(row).join('')}
+        </table>
+      </div>
+      <script>
+        document.addEventListener('click', function (e) {
+          var a = e.target.closest('a[data-go]');
+          if (!a) return;
+          e.preventDefault();
+          parent.postMessage({ xpBrowser: 1, url: a.dataset.go }, '*');
+        });
+      <\/script>
+    </body></html>`;
+}
+
+// Does this look like an address rather than something to search for?
 function looksLikeURL(text) {
-    const t = text.trim();
-    // Already a full URL
+    const t = String(text || '').trim();
+    if (!t || /\s/.test(t)) return false;
     if (/^https?:\/\//i.test(t)) return true;
-    // Looks like a domain: example.com, sub.example.co.uk, localhost, 192.168.1.1
-    if (/^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(\/|$)/.test(t)) return true;
-    // IP address
+    if (ieIsLocalAddress(t)) return true;
+    if (/^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(\/|\?|#|$)/.test(t)) return true;
     if (/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?(\/|$)/.test(t)) return true;
-    // localhost
     if (/^localhost(:\d+)?(\/|$)/.test(t)) return true;
     return false;
 }
 
 function normalizeURL(text) {
-    let url = text.trim();
-    if (!/^https?:\/\//i.test(url)) {
-        url = 'https://' + url;
-    }
-    return url;
+    const t = String(text || '').trim();
+    if (/^(https?:\/\/|about:)/i.test(t)) return t;
+    // Anything else (javascript:, data:, vbscript:, file:) is treated as a
+    // hostname, so it can never be handed to the frame as a live scheme.
+    return 'https://' + t.replace(/^[a-z][a-z0-9+.-]*:/i, '');
+}
+
+const IE_ENGINE_KEY = 'xpBrowserEngine';
+const IE_ERA_KEY = 'xpBrowserEra';
+
+// localStorage is shared by every project on a *.github.io origin, and eras can
+// also arrive from a page message, so never trust a stored era unread.
+function ieValidEra(value) {
+    const v = String(value);
+    return v === 'live' || v === 'latest' || IE_ERAS.includes(Number(v));
 }
 
 function setupBrowser(win) {
     const urlInput = win.querySelector('#browserUrl');
-    const goButton = win.querySelector('#browserGo');
-    const frame = win.querySelector('#browserFrame');
-    const backButton = win.querySelector('#browserBack');
-    const forwardButton = win.querySelector('#browserForward');
-    const refreshButton = win.querySelector('#browserRefresh');
-    const homeButton = win.querySelector('#browserHome');
-    const searchButton = win.querySelector('#browserSearch');
-    const favoritesButton = win.querySelector('#browserFavorites');
+    let frame = win.querySelector('#browserFrame');
+    const backBtn = win.querySelector('#browserBack');
+    const fwdBtn = win.querySelector('#browserForward');
+    const stopBtn = win.querySelector('#browserStop');
+    const refreshBtn = win.querySelector('#browserRefresh');
+    const homeBtn = win.querySelector('#browserHome');
     const statusText = win.querySelector('#ieStatusText');
+    const zoneText = win.querySelector('#ieZone');
     const progressBar = win.querySelector('#ieProgress');
     const progressFill = win.querySelector('#ieProgressFill');
     const errorPage = win.querySelector('#ieErrorPage');
     const errorMsg = win.querySelector('#ieErrorMsg');
     const errorUrl = win.querySelector('#ieErrorUrl');
+    const errorActions = win.querySelector('#ieErrorActions');
     const faviconImg = win.querySelector('#ieFavicon');
     const bookmarksBar = win.querySelector('#ieBookmarksBar');
+    const eraSelect = win.querySelector('#ieEra');
+    const eraBar = win.querySelector('#ieEraBar');
+    const eraNote = win.querySelector('#ieEraNote');
+    const nudge = win.querySelector('#ieNudge');
+    const nudgeText = win.querySelector('#ieNudgeText');
+    const statusHint = win.querySelector('#ieStatusHint');
+    const titleEl = win.querySelector('.popup-title');
 
-    let browserHistory = [HOME_URL];
-    let browserHistoryIndex = 0;
-    let currentURL = HOME_URL;
+    const REMOTE_SANDBOX = 'allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts';
+    const LOCAL_SANDBOX = 'allow-scripts';
+
+    let history = [];
+    let index = -1;
+    let era = 'live';                                  // every session starts live
+    const storedEra = String(Store.get(IE_ERA_KEY, '2004'));
+    let preferredEra = ieValidEra(storedEra) && storedEra !== 'live' ? storedEra : '2004';
+    let engineKey = Store.get(IE_ENGINE_KEY, 'google');
     let loadTimer = null;
-    let isLoading = false;
+    let loadSeq = 0;
+    let showingLocalPage = false;
 
-    // ── Button state helpers ──
-    function updateNavButtons() {
-        backButton.disabled = browserHistoryIndex <= 0;
-        forwardButton.disabled = browserHistoryIndex >= browserHistory.length - 1;
+    const current = () => (index >= 0 ? history[index] : null);
+    const isLocal = ieIsLocalAddress;
+
+    /* ---- era selector ---- */
+    eraSelect.innerHTML =
+        '<option value="live">Today &mdash; the live web</option>' +
+        '<optgroup label="Internet Archive">' +
+        '<option value="latest">Latest archived copy</option>' +
+        IE_ERAS.map(y => `<option value="${y}">${y}</option>`).join('') +
+        '</optgroup>';
+    eraSelect.value = era;
+
+    function setEra(next, reload = true) {
+        if (!ieValidEra(next)) return;
+        era = next;
+        eraSelect.value = next;
+        if (next !== 'live') {
+            preferredEra = next;
+            Store.set(IE_ERA_KEY, next);
+        }
+        eraBar.classList.toggle('ie-era-active', next !== 'live');
+        eraNote.textContent = next === 'live'
+            ? ''
+            : (next === 'latest' ? 'Serving the most recent archived copy.'
+                : 'Serving the page as the Internet Archive saw it in ' + next + '.');
+        zoneText.textContent = next === 'live' ? 'Internet' : 'Internet Archive';
+        if (reload && current() && !isLocal(current())) navigate(current(), { push: false });
     }
 
-    // ── Progress bar ──
+    /* ---- progress + status ---- */
     function startLoading() {
-        isLoading = true;
         progressBar.classList.add('ie-progress-active');
         progressFill.style.transition = 'none';
         progressFill.style.width = '0%';
-        // Force reflow
-        progressFill.offsetHeight;
-        // Animate to 80% quickly (the last 20% comes when load finishes)
-        progressFill.style.transition = 'width 1.5s cubic-bezier(0.1, 0.6, 0.3, 1)';
-        progressFill.style.width = '75%';
+        void progressFill.offsetHeight;
+        progressFill.style.transition = 'width 1.6s cubic-bezier(0.1,0.6,0.3,1)';
+        progressFill.style.width = '78%';
     }
-
-    function finishLoading(success) {
-        isLoading = false;
-        if (success) {
-            progressFill.style.transition = 'width 0.3s ease-out';
+    function finishLoading(ok) {
+        if (ok) {
+            progressFill.style.transition = 'width .3s ease-out';
             progressFill.style.width = '100%';
             setTimeout(() => {
                 progressBar.classList.remove('ie-progress-active');
                 progressFill.style.width = '0%';
-            }, 350);
+            }, 320);
         } else {
             progressBar.classList.remove('ie-progress-active');
             progressFill.style.width = '0%';
         }
     }
 
-    // ── Favicon update ──
-    function updateFavicon(url) {
+    // Only fetch a favicon from a host we are actually about to load. Asking
+    // github.com for one while telling the user we refused to open it would be
+    // a credentialed request to a site they never visited - and in Time Machine
+    // mode the live site is not the one being shown at all.
+    function setFavicon(addr) {
+        const fallback = 'assets/internet-explorer-icon.png';
+        if (isLocal(addr) || era !== 'live' || ieIsBlockedHost(addr)) {
+            faviconImg.src = fallback;
+            return;
+        }
         try {
-            const u = new URL(url);
-            faviconImg.src = u.origin + '/favicon.ico';
-            faviconImg.onerror = () => {
-                faviconImg.src = 'assets/internet-explorer-icon.png';
-            };
-        } catch {
-            faviconImg.src = 'assets/internet-explorer-icon.png';
+            faviconImg.referrerPolicy = 'no-referrer';
+            faviconImg.src = new URL(addr).origin + '/favicon.ico';
+            faviconImg.onerror = () => { faviconImg.src = fallback; };
+        } catch (e) {
+            faviconImg.src = fallback;
         }
     }
 
-    // ── Error page ──
-    function showErrorPage(url, reason) {
-        frame.style.display = 'none';
-        errorPage.style.display = 'flex';
-        errorUrl.textContent = url;
-        errorMsg.textContent = reason || "This website may have blocked embedding or is unreachable. Many modern sites don't allow being shown inside another page.";
-        // Store for retry
-        errorPage.dataset.failedUrl = url;
+    function setTitle(addr) {
+        let label = 'Internet Explorer';
+        if (addr === IE_HOME) label = 'Home';
+        else if (isLocal(addr)) label = addr;
+        else label = ieHostOf(addr) || addr;
+        const full = label + ' - Microsoft Internet Explorer';
+        if (titleEl) titleEl.textContent = full;
+        const tb = document.querySelector(`.taskbar-item[data-owner="${win.dataset.owner}"] span`);
+        if (tb) tb.textContent = full;
     }
 
-    function hideErrorPage() {
-        frame.style.display = '';
+    /* ---- error page + nudge ---- */
+    function hideChrome() {
         errorPage.style.display = 'none';
+        nudge.hidden = true;
+        statusHint.hidden = true;
     }
 
-    // ── Core navigation ──
-    function navigateBrowser(rawUrl, addToHistory) {
-        let url;
+    function showErrorPage(addr, headline, detail, actions) {
+        parkFrame();
+        frame.style.display = 'none';
+        errorPage.style.display = 'block';
+        errorPage.querySelector('.ie-error-title').textContent = headline;
+        errorMsg.innerHTML = detail;
+        errorUrl.textContent = addr;
+        errorActions.innerHTML = '';
+        actions.forEach(a => {
+            const b = document.createElement('button');
+            b.className = 'ie-error-btn' + (a.primary ? '' : ' ie-error-btn-secondary');
+            b.textContent = a.label;
+            b.addEventListener('click', a.action);
+            errorActions.appendChild(b);
+        });
+        finishLoading(false);
+        statusText.textContent = 'Done';
+    }
 
-        // Decide: search or URL?
-        if (looksLikeURL(rawUrl)) {
-            url = normalizeURL(rawUrl);
-        } else {
-            // Search query
-            url = SEARCH_ENGINE + encodeURIComponent(rawUrl.trim());
+    function showNudge(addr) {
+        nudgeText.textContent = ieHostOf(addr) + ' refuses to be displayed inside another page.';
+        nudge.hidden = false;
+    }
+
+    /* ---- the one place that decides what the frame shows ---- */
+    function render(addr) {
+        hideChrome();
+        setFavicon(addr);
+        setTitle(addr);
+        urlInput.value = addr === IE_HOME ? '' : addr;
+        urlInput.placeholder = addr === IE_HOME
+            ? 'Type a web address or search the web\u2026'
+            : 'Type a web address or search the web\u2026';
+
+        if (loadTimer) { clearTimeout(loadTimer); loadTimer = null; }
+
+        // Pages we generate ourselves
+        if (isLocal(addr)) {
+            const html = addr === IE_HOME ? ieHomePage(engineKey)
+                : addr === 'about:blank' ? BLANK_DOC
+                : ieDirectoryIndex(addr);
+            swapFrame(LOCAL_SANDBOX, (f) => { f.srcdoc = html; });
+            showingLocalPage = true;
+            statusText.textContent = 'Done';
+            finishLoading(true);
+            eraBar.classList.add('ie-era-na');
+            return;
         }
+        eraBar.classList.remove('ie-era-na');
 
-        // If already on this URL, just refresh
-        if (url === currentURL && frame.style.display !== 'none') {
-            frame.src = frame.src;
+        // A site we know refuses framing, browsed live: say so honestly rather
+        // than showing a blank rectangle the user cannot explain.
+        if (era === 'live' && ieIsBlockedHost(addr)) {
+            showingLocalPage = false;
+            const host = ieHostOf(addr);
+            showErrorPage(addr, 'This page cannot be displayed',
+                `<b>${escHtml(host)}</b> sends a security header that forbids other sites from ` +
+                `displaying it, and there is no way for this browser to override that.<br><br>` +
+                `The Internet Archive is not bound by it, so the Time Machine can usually still show you the page.`,
+                [
+                    { label: 'View in the Time Machine', primary: true, action: () => { setEra(preferredEra, false); navigate(addr, { push: false }); } },
+                    { label: 'Open in a real browser tab', action: () => window.open(addr, '_blank', 'noopener,noreferrer') },
+                    { label: 'Try anyway', action: () => loadRemote(addr, true) }
+                ]);
             return;
         }
 
-        hideErrorPage();
-        currentURL = url;
-        urlInput.value = url;
-        updateFavicon(url);
-        statusText.textContent = 'Opening ' + url + '…';
-        startLoading();
-
-        // Clear any previous load timer
-        if (loadTimer) clearTimeout(loadTimer);
-
-        // Record navigation start time for potential diagnostics
-        win._navStartTime = performance.now();
-
-        // Set a fallback timeout for pages that truly hang (15 seconds)
-        loadTimer = setTimeout(() => {
-            if (isLoading) {
-                finishLoading(false);
-                showErrorPage(url, "The page took too long to respond. It may be unreachable or very slow. Try opening it in a new tab instead.");
-                statusText.textContent = 'Page could not be displayed';
-            }
-        }, 15000);
-
-        // Navigate
-        frame.src = url;
-
-        if (addToHistory) {
-            // Trim forward history
-            browserHistory = browserHistory.slice(0, browserHistoryIndex + 1);
-            browserHistory.push(url);
-            browserHistoryIndex = browserHistory.length - 1;
-        }
-
-        updateNavButtons();
+        loadRemote(addr, false);
     }
 
-    // ── Iframe load handler ──
-    frame.addEventListener('load', () => {
-        if (loadTimer) clearTimeout(loadTimer);
-        loadTimer = null;
+    function loadRemote(addr, force) {
+        showingLocalPage = false;
+        errorPage.style.display = 'none';
+        nudge.hidden = true;
 
-        // Normal load — give a small delay for the iframe to settle
-        setTimeout(() => {
-            finishLoading(true);
-            statusText.textContent = 'Done';
-            // Update URL bar in case the iframe navigated (cross-origin = we can't detect, but try)
-            try {
-                const frameURL = frame.contentWindow.location.href;
-                if (frameURL && frameURL !== 'about:blank' && !frameURL.startsWith('chrome-error:')) {
-                    currentURL = frameURL;
-                    urlInput.value = frameURL;
-                    updateFavicon(frameURL);
-                }
-            } catch (e) {
-                // Cross-origin — can't read, keep the URL we set
+        // Offer the way out for every live remote page: we cannot tell whether
+        // this one will render, so the escape hatch is simply always there.
+        statusHint.hidden = era !== 'live';
+
+        const target = era === 'live' ? addr : ieWaybackUrl(addr, era);
+        statusText.textContent = 'Opening ' + target + '\u2026';
+        startLoading();
+        swapFrame(REMOTE_SANDBOX, (f) => { f.src = target; });
+
+        // Browsers hide whether a frame was refused, so the only honest signal
+        // is that nothing arrived at all within a generous window.
+        loadTimer = setTimeout(() => {
+            finishLoading(false);
+            statusText.textContent = 'The page is taking a long time to respond';
+        }, 20000);
+
+        if (force || (era === 'live' && ieIsBlockedHost(addr))) {
+            setTimeout(() => { if (current() === addr) showNudge(addr); }, 900);
+        }
+    }
+
+    function onFrameLoad(e) {
+        if (e.target !== frame) return;                       // a retired frame
+        if (loadTimer) { clearTimeout(loadTimer); loadTimer = null; }
+        finishLoading(true);
+        if (frame.dataset.quiet === '1') return;              // a parked blank frame
+        statusText.textContent = 'Done';
+    }
+
+    // Every navigation gets a brand new iframe, with its src or srcdoc set
+    // BEFORE insertion so exactly one load event fires. This also destroys the
+    // outgoing document instead of leaving it running behind an error page,
+    // and gives Stop something real to do: a cross-origin contentWindow.stop()
+    // is unreachable, so cancelling means discarding the frame.
+    function swapFrame(sandbox, apply, quiet) {
+        const next = document.createElement('iframe');
+        next.id = 'browserFrame';
+        next.title = 'Browser content';
+        next.referrerPolicy = 'no-referrer';
+        next.setAttribute('sandbox', sandbox);
+        next.dataset.seq = String(++loadSeq);
+        if (quiet) next.dataset.quiet = '1';
+        next.addEventListener('load', onFrameLoad);
+        if (apply) apply(next);
+        frame.replaceWith(next);
+        frame = next;
+        return next;
+    }
+
+    const BLANK_DOC = '<!doctype html><html><body style="background:#fff"></body></html>';
+
+    // Discard whatever is loaded or loading, without announcing anything.
+    function parkFrame() {
+        if (loadTimer) { clearTimeout(loadTimer); loadTimer = null; }
+        swapFrame(LOCAL_SANDBOX, (f) => { f.srcdoc = BLANK_DOC; }, true);
+    }
+
+    /* ---- navigation ---- */
+    function navigate(input, opts = {}) {
+        const push = opts.push !== false;
+        let addr = String(input || '').trim();
+        if (!addr) return;
+
+        // Locality first: a path on this computer must never be mistaken for a
+        // search, however much it looks like prose.
+        if (!isLocal(addr)) {
+            if (ieIsSearch(addr)) {
+                const engine = IE_SEARCH_ENGINES[engineKey] || IE_SEARCH_ENGINES.google;
+                addr = engine.url + encodeURIComponent(addr);
+            } else {
+                addr = normalizeURL(addr);
             }
-            updateNavButtons();
-        }, 150);
-    });
+        }
 
-    // ── Button handlers ──
-    goButton.addEventListener('click', () => navigateBrowser(urlInput.value, true));
+        // A path pointing at a file, not a folder, belongs to whichever app
+        // handles that file - the browser hands it over rather than rendering it.
+        if (/^[A-Za-z]:\\/.test(addr)) {
+            const node = VFS.get(addr);
+            if (node && node.type === 'file') {
+                openVfsFile(node, addr);
+                // The browser is still showing whatever it was showing, so put
+                // the address bar and status back to describing that.
+                const shown = current();
+                urlInput.value = shown && shown !== IE_HOME ? shown : '';
+                statusText.textContent = 'Done';
+                return;
+            }
+        }
+
+        if (push) {
+            history = history.slice(0, index + 1);
+            if (history[history.length - 1] !== addr) history.push(addr);
+            index = history.length - 1;
+        }
+        updateNav();
+        XPAudio.play('navigate');
+        render(addr);
+    }
+
+    function updateNav() {
+        backBtn.disabled = index <= 0;
+        fwdBtn.disabled = index >= history.length - 1;
+    }
+
+    backBtn.addEventListener('click', () => { if (index > 0) { index--; updateNav(); render(history[index]); } });
+    fwdBtn.addEventListener('click', () => { if (index < history.length - 1) { index++; updateNav(); render(history[index]); } });
+    homeBtn.addEventListener('click', () => navigate(IE_HOME));
+    refreshBtn.addEventListener('click', () => { if (current()) render(current()); });
+    stopBtn.addEventListener('click', () => {
+        const wasLoading = !!loadTimer;
+        parkFrame();
+        finishLoading(false);
+        // Pressing Stop with nothing in flight should not claim to have
+        // cancelled something, nor poison the next navigation's status.
+        if (wasLoading) statusText.textContent = 'Stopped';
+    });
+    win.querySelector('#browserGo').addEventListener('click', () => navigate(urlInput.value));
+    win.querySelector('#browserSearch').addEventListener('click', () => { urlInput.focus(); urlInput.select(); });
+    win.querySelector('#browserFavorites').addEventListener('click', () => bookmarksBar.classList.toggle('ie-bookmarks-visible'));
+    win.querySelector('#browserHistory').addEventListener('click', showHistoryMenu);
 
     urlInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') navigateBrowser(urlInput.value, true);
+        e.stopPropagation();
+        if (e.key === 'Enter') navigate(urlInput.value);
     });
-
-    // Focus the URL bar selects all text (like real browsers)
     urlInput.addEventListener('focus', () => urlInput.select());
 
-    backButton.addEventListener('click', () => {
-        if (browserHistoryIndex > 0) {
-            browserHistoryIndex--;
-            navigateBrowser(browserHistory[browserHistoryIndex], false);
-        }
+    eraSelect.addEventListener('change', () => setEra(eraSelect.value));
+
+    win.querySelector('#ieNudgeGo').addEventListener('click', () => {
+        setEra(era === 'live' ? preferredEra : era, false);
+        if (current()) navigate(current(), { push: false });
+    });
+    win.querySelector('#ieNudgeTab').addEventListener('click', () => {
+        if (current()) window.open(current(), '_blank', 'noopener,noreferrer');
+    });
+    win.querySelector('#ieNudgeClose').addEventListener('click', () => { nudge.hidden = true; });
+    statusHint.addEventListener('click', () => {
+        setEra(preferredEra, false);
+        if (current()) navigate(current(), { push: false });
     });
 
-    forwardButton.addEventListener('click', () => {
-        if (browserHistoryIndex < browserHistory.length - 1) {
-            browserHistoryIndex++;
-            navigateBrowser(browserHistory[browserHistoryIndex], false);
-        }
+    /* ---- links bar ---- */
+    IE_BOOKMARKS.forEach(b => {
+        const a = document.createElement('a');
+        a.className = 'ie-bm-link';
+        a.textContent = b.name;
+        a.title = b.url;
+        a.addEventListener('click', (e) => { e.preventDefault(); navigate(b.url); });
+        bookmarksBar.appendChild(a);
     });
 
-    refreshButton.addEventListener('click', () => {
-        if (frame.style.display === 'none') {
-            // Retry the failed URL
-            const failedUrl = errorPage.dataset.failedUrl || currentURL;
-            navigateBrowser(failedUrl, false);
-        } else {
-            startLoading();
-            frame.src = frame.src;
-        }
-    });
-
-    homeButton.addEventListener('click', () => navigateBrowser(HOME_URL, true));
-
-    searchButton.addEventListener('click', () => {
-        urlInput.focus();
-        urlInput.select();
-        statusText.textContent = 'Type a search query or URL and press Enter';
-    });
-
-    favoritesButton.addEventListener('click', () => {
-        bookmarksBar.classList.toggle('ie-bookmarks-visible');
-    });
-
-    // ── Bookmarks bar links ──
-    bookmarksBar.querySelectorAll('.ie-bm-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const bookmarkURL = link.dataset.url;
-            if (bookmarkURL) navigateBrowser(bookmarkURL, true);
-        });
-    });
-
-    // ── Error page buttons ──
-    const openInTabBtn = win.querySelector('#ieOpenInTab');
-    const retryBtn = win.querySelector('#ieRetryBtn');
-    const goHomeBtn = win.querySelector('#ieGoHomeBtn');
-
-    openInTabBtn.addEventListener('click', () => {
-        const failedUrl = errorPage.dataset.failedUrl || currentURL;
-        window.open(failedUrl, '_blank', 'noopener');
-        statusText.textContent = 'Opened in new tab';
-    });
-
-    retryBtn.addEventListener('click', () => {
-        const failedUrl = errorPage.dataset.failedUrl || currentURL;
-        navigateBrowser(failedUrl, false);
-    });
-
-    goHomeBtn.addEventListener('click', () => navigateBrowser(HOME_URL, true));
-
-    // ── Status bar "Open in New Tab" link ──
-    const openTabLink = win.querySelector('#ieOpenTabLink');
-    openTabLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.open(currentURL, '_blank', 'noopener');
-        statusText.textContent = 'Opened in new tab';
-    });
-
-    // ── Keyboard shortcuts ──
-    function handleBrowserKeys(e) {
-        // Only when this window is active
-        if (!win.classList.contains('active-window')) return;
-        // Don't intercept when typing in the URL bar
-        if (document.activeElement === urlInput) return;
-
-        if (e.key === 'F5' || (e.key === 'r' && (e.ctrlKey || e.metaKey))) {
-            e.preventDefault();
-            refreshButton.click();
-        }
-        if ((e.altKey || e.metaKey) && e.key === 'ArrowLeft') {
-            e.preventDefault();
-            if (browserHistoryIndex > 0) backButton.click();
-        }
-        if ((e.altKey || e.metaKey) && e.key === 'ArrowRight') {
-            e.preventDefault();
-            if (browserHistoryIndex < browserHistory.length - 1) forwardButton.click();
-        }
-        if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
-            e.preventDefault();
-            urlInput.focus();
-            urlInput.select();
-        }
+    function showHistoryMenu() {
+        const r = win.querySelector('#browserHistory').getBoundingClientRect();
+        const items = history.slice().reverse().slice(0, 15).map((h, i) => ({
+            label: h === IE_HOME ? 'Home' : h,
+            action: () => { const target = history.length - 1 - i; index = target; updateNav(); render(history[target]); }
+        }));
+        showContextMenu(r.left, r.bottom, items.length ? items : [{ label: '(empty)', disabled: true }]);
     }
 
-    document.addEventListener('keydown', handleBrowserKeys);
+    /* ---- messages from our own generated pages ---- */
+    function onMessage(e) {
+        // Our srcdoc pages run under a sandbox without allow-same-origin, so
+        // their origin is opaque. A remote site can also obtain an opaque
+        // origin by serving itself with `Content-Security-Policy: sandbox`,
+        // so origin alone is not enough - we also require that the frame is
+        // currently showing a page we generated.
+        if (!showingLocalPage) return;
+        if (e.source !== frame.contentWindow) return;
+        if (e.origin !== 'null') return;
+        const d = e.data;
+        if (!d || d.xpBrowser !== 1) return;
+        if (d.era) {
+            if (!ieValidEra(d.era)) return;
+            setEra(d.era, false);
+            const landing = Object.prototype.hasOwnProperty.call(IE_ERA_LANDINGS, d.era)
+                ? IE_ERA_LANDINGS[d.era] : 'http://www.yahoo.com';
+            navigate(landing);
+        }
+        else if (d.search) navigate(d.search);
+        else if (d.url) navigate(d.url);
+    }
+    window.addEventListener('message', onMessage);
 
-    // ── Cleanup ──
-    const prevCleanup = win._cleanup;
-    win._cleanup = () => {
+    /* ---- menus ---- */
+    setupMenubar(win, 'ie-menu-item', 'ie-dropdown');
+    setupDropdownActions(win, 'ie-dropdown-item', {
+        new: () => navigate(IE_HOME),
+        open: () => { urlInput.focus(); urlInput.select(); },
+        opentab: () => { if (current() && !isLocal(current())) window.open(current(), '_blank', 'noopener,noreferrer'); },
+        properties: () => showPropertiesDialog(ieHostOf(current() || '') || 'Internet Explorer',
+            'assets/internet-explorer-icon.png', [
+                ['Address', current() || ''],
+                ['Mode', era === 'live' ? 'Live web' : 'Internet Archive ' + era],
+                ['Zone', era === 'live' ? 'Internet' : 'Internet Archive'],
+                ['Search', (IE_SEARCH_ENGINES[engineKey] || {}).name || 'Google']
+            ]),
+        close: () => closeWindow(win),
+        cut: () => showNotImplemented('Cut'),
+        copy: () => showNotImplemented('Copy'),
+        copyurl: () => {
+            const v = current() || '';
+            if (navigator.clipboard) navigator.clipboard.writeText(v).catch(() => {});
+            statusText.textContent = 'Address copied';
+        },
+        find: () => { urlInput.focus(); urlInput.select(); },
+        stop: () => stopBtn.click(),
+        refresh: () => refreshBtn.click(),
+        togglelinks: () => bookmarksBar.classList.toggle('ie-bookmarks-visible'),
+        toggletime: () => eraBar.classList.toggle('hidden'),
+        source: () => showNotImplemented('View Source'),
+        addtofavorites: () => showNotImplemented('Add to Favorites'),
+        organizefavorites: () => showNotImplemented('Organize Favorites'),
+        links: () => bookmarksBar.classList.add('ie-bookmarks-visible'),
+        searchengine: chooseSearchEngine,
+        timemachine: () => { eraBar.classList.remove('hidden'); eraSelect.focus(); },
+        history: showHistoryMenu,
+        internetoptions: chooseSearchEngine,
+        windowsupdate: () => navigate('https://web.archive.org/web/20010801000000if_/http://windowsupdate.microsoft.com/'),
+        helpcontents: () => openHelpCenter(),
+        whyblocked: explainBlocking,
+        about: () => showInfoDialog('About Internet Explorer', 'assets/internet-explorer-icon.png',
+            'Microsoft&reg; Internet Explorer<br>Version 6.0 (Portfolio Edition)<br><br>' +
+            'Browses the live web where sites allow it, and the Internet Archive everywhere else.')
+    });
+
+    function chooseSearchEngine() {
+        const dlg = showDialog({
+            title: 'Internet Options',
+            icon: 'assets/internet-explorer-icon.png',
+            width: 380,
+            bodyHtml: `<label class="xp-field"><span>Search using:</span>
+                 <select class="ie-engine-pick">${Object.entries(IE_SEARCH_ENGINES)
+                    .map(([k, v]) => `<option value="${k}" ${k === engineKey ? 'selected' : ''}>${escHtml(v.name)}</option>`)
+                    .join('')}</select></label>
+               <label class="xp-field"><span>Default era:</span>
+                 <select class="ie-era-pick">
+                   ${[['live', 'Today (live web)'], ['latest', 'Latest archived copy']]
+                     .concat(IE_ERAS.map(y => [String(y), String(y)]))
+                     .map(([v, label]) => `<option value="${v}" ${String(era) === v ? 'selected' : ''}>${escHtml(label)}</option>`)
+                     .join('')}
+                 </select></label>
+               <p class="dp-hint">Only engines that allow being displayed in a frame are listed.
+                  DuckDuckGo and Mojeek refuse, so they are not offered.</p>`,
+            buttons: [
+                { label: 'OK', primary: true, action: (el) => {
+                    const nextEngine = el.querySelector('.ie-engine-pick').value;
+                    const nextEra = el.querySelector('.ie-era-pick').value;
+                    if (nextEngine !== engineKey) {
+                        engineKey = nextEngine;
+                        Store.set(IE_ENGINE_KEY, engineKey);
+                        if (current() === IE_HOME) render(IE_HOME);
+                    }
+                    if (nextEra !== era) setEra(nextEra);
+                }},
+                { label: 'Cancel' }   // nothing was applied yet, so this really cancels
+            ]
+        });
+    }
+
+    function explainBlocking() {
+        showInfoDialog('Why won\'t some pages load?', 'assets/internet-explorer-icon.png',
+            'Most large sites send an <b>X-Frame-Options</b> or <b>Content-Security-Policy</b> header ' +
+            'that forbids other pages from embedding them. Browsers enforce that and, by design, give ' +
+            'scripts no way to even detect it &mdash; a refused page looks exactly like a blank one.<br><br>' +
+            'That is why this browser ships a list of the sites that refuse, and offers the ' +
+            '<b>Time Machine</b> instead: the Internet Archive serves its copies without those headers, ' +
+            'so almost any site can still be read &mdash; as it looked in the year you pick.');
+    }
+
+    /* ---- keyboard ---- */
+    function onKey(e) {
+        if (!win.classList.contains('active-window')) return;
+        if (document.activeElement === urlInput) return;
+        const meta = e.ctrlKey || e.metaKey;
+        if (e.key === 'F5' || (meta && e.key.toLowerCase() === 'r')) { e.preventDefault(); refreshBtn.click(); }
+        else if (meta && e.key.toLowerCase() === 'l') { e.preventDefault(); urlInput.focus(); urlInput.select(); }
+        else if (e.key === 'Escape') stopBtn.click();
+        else if (e.altKey && e.key === 'ArrowLeft') { e.preventDefault(); backBtn.click(); }
+        else if (e.altKey && e.key === 'ArrowRight') { e.preventDefault(); fwdBtn.click(); }
+        else if (e.altKey && e.key.toLowerCase() === 'home') { e.preventDefault(); homeBtn.click(); }
+    }
+    document.addEventListener('keydown', onKey);
+
+    addCleanup(win, () => {
         if (loadTimer) clearTimeout(loadTimer);
-        document.removeEventListener('keydown', handleBrowserKeys);
-        if (prevCleanup) prevCleanup();
-    };
+        document.removeEventListener('keydown', onKey);
+        window.removeEventListener('message', onMessage);
+    });
 
-    // ── Initial state ──
-    updateNavButtons();
-    updateFavicon(HOME_URL);
+    // Let the rest of the desktop drive this window (Run box, shortcuts).
+    win._browserGo = (addr) => navigate(addr);
+
+    setEra(era, false);
+    navigate(IE_HOME);
 }
 
 // Paint app now loads the full classic Windows Paint (all tools & menus)
 // via an embedded iframe to https://jspaint.app/ - see iconContent.icon4.
 
 // Notepad app
-function setupNotepad(win, typewriter, initialText) {
-    const menuItems = win.querySelectorAll('.np-menu-item');
+function setupNotepad(win, typewriter, initialText, boundFile) {
     const textarea = win.querySelector('.np-textarea');
 
     textarea.value = initialText != null ? initialText : WELCOME_NOTE_TEXT;
@@ -3723,69 +4767,146 @@ function setupNotepad(win, typewriter, initialText) {
         typeChar();
     }
 
-    menuItems.forEach((menuItem) => {
-        menuItem.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const menuName = menuItem.dataset.menu;
-            const dropdown = win.querySelector(`.np-dropdown[data-dropdown="${menuName}"]`);
+    // Menu bar dropdown behaviour (shared logic)
+    setupMenubar(win, 'np-menu-item', 'np-dropdown');
 
-            const wasOpen = dropdown && !dropdown.classList.contains('hidden');
-            win.querySelectorAll('.np-dropdown').forEach(d => d.classList.add('hidden'));
-            win.querySelectorAll('.np-menu-item').forEach(m => m.classList.remove('active'));
-
-            if (dropdown && !wasOpen) {
-                dropdown.classList.remove('hidden');
-                menuItem.classList.add('active');
-            }
-        });
+    // Dropdown menu actions (File / Edit / Format / View / Help)
+    setupDropdownActions(win, 'np-dropdown-item', {
+        // File
+        new: () => openNewNotepad(),
+        open: () => openExplorer(VFS.DOCS),
+        save: () => saveNotepad(false),
+        saveas: () => saveNotepad(true),
+        pagesetup: () => showNotImplemented('Page Setup'),
+        print: () => showNotImplemented('Print'),
+        printpreview: () => showNotImplemented('Print Preview'),
+        exit: () => closeWindow(win),
+        // Edit
+        undo: () => { textarea.focus(); document.execCommand('undo'); },
+        redo: () => { textarea.focus(); document.execCommand('redo'); },
+        cut: () => { textarea.focus(); document.execCommand('cut'); },
+        copy: () => { textarea.focus(); document.execCommand('copy'); },
+        paste: () => { textarea.focus(); document.execCommand('paste'); },
+        delete: () => { textarea.focus(); document.execCommand('delete'); },
+        find: () => showNotImplemented('Find'),
+        findnext: () => showNotImplemented('Find Next'),
+        replace: () => showNotImplemented('Replace'),
+        gotoline: () => showNotImplemented('Go To'),
+        selectall: () => { textarea.focus(); textarea.select(); },
+        'time/date': () => {
+            const now = new Date();
+            const stamp = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) +
+                ' ' + now.toLocaleDateString();
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            textarea.value = textarea.value.slice(0, start) + stamp + textarea.value.slice(end);
+            const newPos = start + stamp.length;
+            textarea.focus();
+            textarea.setSelectionRange(newPos, newPos);
+        },
+        // Format
+        wordwrap: () => {
+            textarea.style.wordWrap = textarea.style.wordWrap === 'break-word' ? 'normal' : 'break-word';
+        },
+        font: () => showNotImplemented('Font'),
+        // View
+        statusbar: () => showNotImplemented('Status Bar'),
+        // Help
+        helpcontents: () => showNotImplemented('Help Contents'),
+        helptutorial: () => showNotImplemented('Help Tutorial'),
+        about: () => showInfoDialog('About Notepad', 'assets/notepad-icon.png',
+            'Notepad<br><br>Part of the Windows XP Portfolio desktop recreation.')
     });
 
-    const closeDropdowns = () => {
-        win.querySelectorAll('.np-dropdown').forEach(d => d.classList.add('hidden'));
-        win.querySelectorAll('.np-menu-item').forEach(m => m.classList.remove('active'));
-    };
-
-    document.addEventListener('click', closeDropdowns);
-
-    const editDropdown = win.querySelector('.np-dropdown[data-dropdown="edit"]');
-    if (editDropdown) {
-        editDropdown.addEventListener('click', (e) => e.stopPropagation());
-
-        editDropdown.querySelectorAll('.np-dropdown-item').forEach((item) => {
-            item.addEventListener('click', () => {
-                const action = item.dataset.action;
-
-                if (action === 'datetime') {
-                    const now = new Date();
-                    const stamp = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) +
-                        ' ' + now.toLocaleDateString();
-
-                    const start = textarea.selectionStart;
-                    const end = textarea.selectionEnd;
-                    const before = textarea.value.slice(0, start);
-                    const after = textarea.value.slice(end);
-
-                    textarea.value = before + stamp + after;
-                    const newPos = start + stamp.length;
-                    textarea.focus();
-                    textarea.setSelectionRange(newPos, newPos);
-                } else if (action === 'undo' || action === 'redo') {
-                    textarea.focus();
-                    document.execCommand(action);
-                }
-
-                editDropdown.classList.add('hidden');
-                menuItems.forEach(m => m.classList.remove('active'));
-            });
+    // Save the buffer back into the file system (Save As prompts for a name).
+    function saveNotepad(askForName) {
+        const titleEl = win.querySelector('.popup-title');
+        if (!askForName && boundFile && VFS.get(boundFile.path)) {
+            VFS.writeFile(boundFile.path, textarea.value);
+            refreshExplorerWindows();
+            notify({ title: 'Notepad', text: `${boundFile.name} saved.`,
+                     icon: 'assets/notepad-icon.png', timeout: 2600 });
+            return;
+        }
+        const suggested = boundFile ? boundFile.name : 'Untitled.txt';
+        const dlg = showDialog({
+            title: 'Save As', icon: 'assets/notepad-icon.png', width: 380,
+            bodyHtml: `<label class="xp-field"><span>File name:</span>
+                         <input class="np-saveas" type="text" value="${escAttr(suggested)}" spellcheck="false"></label>
+                       <p class="dp-hint">Saved into My Documents.</p>`,
+            buttons: [
+                { label: 'Save', primary: true, action: (el) => {
+                    let name = el.querySelector('.np-saveas').value.trim() || 'Untitled.txt';
+                    if (!/\.[A-Za-z0-9]+$/.test(name)) name += '.txt';
+                    const node = VFS.add(VFS.DOCS, VFS.file(name, {
+                        kind: 'text', icon: 'assets/notepad-icon.png', content: textarea.value
+                    }));
+                    if (node) {
+                        boundFile = { path: VFS.join(VFS.DOCS, node.name), name: node.name };
+                        if (titleEl) titleEl.textContent = node.name + ' - Notepad';
+                        refreshExplorerWindows();
+                        notify({ title: 'Notepad', text: `${node.name} saved to My Documents.`,
+                                 icon: 'assets/notepad-icon.png', timeout: 3000 });
+                    }
+                }},
+                { label: 'Cancel' }
+            ]
         });
+        setTimeout(() => {
+            const input = dlg.el.querySelector('.np-saveas');
+            if (input) { input.focus(); input.select(); }
+        }, 40);
     }
 
-    // Clean up the global listener when the window closes
-    const prevCleanup = win._cleanup;
-    win._cleanup = () => {
-        document.removeEventListener('click', closeDropdowns);
-        if (prevCleanup) prevCleanup();
+    // Ctrl+S saves without touching the menu
+    const onSaveKey = (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's' && win.classList.contains('active-window')) {
+            e.preventDefault();
+            saveNotepad(false);
+        }
     };
+    document.addEventListener('keydown', onSaveKey);
+    addCleanup(win, () => document.removeEventListener('keydown', onSaveKey));
+}
+
+// Paint app - handles menu functionality for the Paint application
+function setupPaint(win) {
+    // Menu bar dropdown behaviour (shared logic)
+    setupMenubar(win, 'paint-menu-item', 'paint-dropdown');
+
+    // Dropdown menu actions (File / Edit / Image / Colors / Help)
+    setupDropdownActions(win, 'paint-dropdown-item', {
+        // File
+        new: () => showNotImplemented('New'),
+        open: () => showNotImplemented('Open'),
+        save: () => showNotImplemented('Save'),
+        saveas: () => showNotImplemented('Save As'),
+        printsetup: () => showNotImplemented('Print Setup'),
+        print: () => showNotImplemented('Print'),
+        exit: () => closeWindow(win),
+        // Edit
+        undo: () => showNotImplemented('Undo'),
+        redo: () => showNotImplemented('Redo'),
+        cut: () => showNotImplemented('Cut'),
+        copy: () => showNotImplemented('Copy'),
+        paste: () => showNotImplemented('Paste'),
+        pastetransparent: () => showNotImplemented('Paste Transparent'),
+        selectall: () => showNotImplemented('Select All'),
+        invertselection: () => showNotImplemented('Invert Selection'),
+        // Image
+        fliprotate: () => showNotImplemented('Flip/Rotate'),
+        stretchandskew: () => showNotImplemented('Stretch and Skew'),
+        invertcolors: () => showNotImplemented('Invert Colors'),
+        attributes: () => showNotImplemented('Attributes'),
+        clearimage: () => showNotImplemented('Clear Image'),
+        drawopaque: () => showNotImplemented('Draw Opaque'),
+        // Colors
+        editcolors: () => showNotImplemented('Edit Colors'),
+        // Help
+        viewhelp: () => showNotImplemented('Help'),
+        about: () => showInfoDialog('About Paint', 'assets/paint-icon.png',
+            'Paint<br><br>Part of the Windows XP Portfolio desktop recreation.')
+    });
 }
 
 // Snake game - a small playable app window.
@@ -4113,13 +5234,13 @@ function setupSnake(win) {
     reset();
 
     // Stop the game loop and release keys when the window closes
-    win._cleanup = () => {
+    addCleanup(win, () => {
         stopTimer();
         document.removeEventListener('keydown', onKey);
         document.removeEventListener('keyup', onKeyUp);
         // Clear any stuck D-pad highlight
         ['up', 'down', 'left', 'right'].forEach(dir => highlightDir(dir, false));
-    };
+    });
 }
 
 // ---- Outlook Express mailbox ----
@@ -4191,7 +5312,7 @@ function setupTerminal(win) {
                 const list = Object.entries(commands)
                     .map(([name, c]) => `  <span class="cmd-cmd">${name.padEnd(12)}</span> ${c.desc}`)
                     .join('\n');
-                return `Available commands:\n${list}\n\nType a command followed by /? for usage info.`;
+                return { html: `Available commands:\n${list}\n\nType a command followed by /? for usage info.` };
             }
         },
         dir: {
@@ -4204,7 +5325,7 @@ function setupTerminal(win) {
                 const h12 = h % 12 || 12;
                 const timeStr = `${pad(h12)}:${pad(m)} ${ampm}`;
                 const dateStr = `${pad(now.getMonth()+1)}/${pad(now.getDate())}/${now.getFullYear()}`;
-                return ` Volume in drive C has no label.\n Volume Serial Number is 7C2A-1F8E\n\n Directory of ${cwd}\n\n`
+                return { html: ` Volume in drive C has no label.\n Volume Serial Number is 7C2A-1F8E\n\n Directory of ${escHtml(cwd)}\n\n`
                     + `${dateStr}  ${timeStr}    <span class="cmd-dir">.</span>\n`
                     + `${dateStr}  ${timeStr}    <span class="cmd-dir">..</span>\n`
                     + `${dateStr}  ${timeStr}    <span class="cmd-dir">Desktop</span>\n`
@@ -4214,7 +5335,7 @@ function setupTerminal(win) {
                     + `${dateStr}  ${timeStr}             2,048 readme.txt\n`
                     + `${dateStr}  ${timeStr}               512 config.sys\n`
                     + `               8 File(s)              2,560 bytes\n`
-                    + `               5 Dir(s)  127,482,953,728 bytes free`;
+                    + `               5 Dir(s)  127,482,953,728 bytes free` };
             }
         },
         cls: {
@@ -4327,11 +5448,16 @@ function setupTerminal(win) {
         }
     };
 
-    function print(text) {
-        if (!text) return;
+    // Commands return either a plain string (escaped) or { html } for the few
+    // that colourise their own output (dir, help). Never inject raw user text.
+    function print(result) {
+        if (!result) return;
+        const html = (typeof result === 'object' && result.html != null)
+            ? String(result.html)
+            : escHtml(String(result));
         const line = document.createElement('div');
         line.className = 'cmd-line';
-        line.innerHTML = text.replace(/\n/g, '<br>').replace(/  /g, '&nbsp;&nbsp;');
+        line.innerHTML = html.replace(/\n/g, '<br>').replace(/ {2}/g, '&nbsp;&nbsp;');
         outputEl.appendChild(line);
         outputEl.scrollTop = outputEl.scrollHeight;
     }
@@ -4357,7 +5483,7 @@ function setupTerminal(win) {
             const result = cmd.fn(args);
             if (result) print(result);
         } else {
-            print(`'${escHtml(cmdName)}' is not recognized as an internal or external command,\noperable program or batch file.`);
+            print(`'${cmdName}' is not recognized as an internal or external command,\noperable program or batch file.`);
         }
         if (cmdName !== 'cls') printPrompt();
     }
@@ -4410,7 +5536,7 @@ function setupTerminal(win) {
             if (matches.length === 1) {
                 inputEl.value = matches[0];
             } else if (matches.length > 1) {
-                print(matches.join('  '));
+                print(matches.join('   '));
                 printPrompt();
             }
         }
@@ -4440,11 +5566,7 @@ function setupTerminal(win) {
     setTimeout(() => inputEl.focus(), 100);
 
     // Cleanup
-    const prevCleanup = win._cleanup;
-    win._cleanup = () => {
-        observer.disconnect();
-        if (prevCleanup) prevCleanup();
-    };
+    addCleanup(win, () => observer.disconnect());
 }
 
 // ── Minesweeper ──
@@ -4655,11 +5777,7 @@ function setupMinesweeper(win) {
     faceEl.addEventListener('click', () => initGrid());
 
     // Cleanup
-    const prevCleanup = win._cleanup;
-    win._cleanup = () => {
-        stopTimer();
-        if (prevCleanup) prevCleanup();
-    };
+    addCleanup(win, stopTimer);
 
     initGrid();
     render();
@@ -4843,8 +5961,14 @@ function setupBlog(win) {
         statusBar.textContent = `${posts.length} post${posts.length === 1 ? '' : 's'}`;
     }
 
+    // Turn a plain-text post into well-formed paragraphs (blank line = new <p>)
     function escHtmlWithBreaks(text) {
-        return escHtml(text).replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>').replace(/<p><\/p>/g, '');
+        return String(text || '')
+            .split(/\n{2,}/)
+            .map(par => par.trim())
+            .filter(Boolean)
+            .map(par => `<p>${escHtml(par).replace(/\n/g, '<br>')}</p>`)
+            .join('');
     }
 
     // Initial render
@@ -5012,7 +6136,6 @@ function setupMail(win) {
     });
 
     win._refreshFolder = refresh;
-    win._cleanup = () => { /* no global listeners to remove */ };
     refresh('inbox');
 }
 
@@ -5169,9 +6292,7 @@ function setupMailCompose(win, prefill = {}) {
         }
     });
 
-    win._cleanup = () => {
-        editor.removeEventListener('keydown', onKey);
-    };
+    addCleanup(win, () => editor.removeEventListener('keydown', onKey));
 }
 
 // A read-only window for double-clicked messages
@@ -5214,23 +6335,10 @@ function setupMailRead(win, message) {
         closeWindow(win);
     });
 
-    win._cleanup = () => { /* nothing to release */ };
 }
 
 // Start menu
 // Apps available on this desktop (opened from the Start menu)
-const startAppTargets = {
-    internet: 'icon2',
-    email: 'icon10',
-    notepad: 'icon5',
-    paint: 'icon4',
-    snake: 'icon9',
-    cmd: 'icon11',
-    blog: 'icon12',
-    minesweeper: 'icon13',
-    mydocuments: 'icon3'
-};
-
 // Friendly names for the "Application not found" dialog
 const startAppNames = {
     internet: 'Internet Explorer', email: 'Outlook Express', minesweeper: 'Minesweeper',
@@ -5248,12 +6356,29 @@ function setupStartMenu() {
 
     startButton.addEventListener('click', (e) => {
         e.stopPropagation();
+        XPAudio.unlock();
+        XPAudio.play('menu');
         startMenu.classList.toggle('hidden');
+        startButton.classList.toggle('start-open', !startMenu.classList.contains('hidden'));
+    });
+
+    // The Windows key (and Ctrl+Esc) toggles the Start menu, like the real one
+    document.addEventListener('keydown', (e) => {
+        const isWinKey = e.key === 'Meta' || e.key === 'OS';
+        const isCtrlEsc = e.ctrlKey && e.key === 'Escape' && !e.shiftKey;
+        if (!isWinKey && !isCtrlEsc) return;
+        if (e.target.closest('input, textarea, [contenteditable="true"]')) return;
+        e.preventDefault();
+        startMenu.classList.toggle('hidden');
+        startButton.classList.toggle('start-open', !startMenu.classList.contains('hidden'));
     });
 
     document.body.addEventListener('click', (e) => {
-        if (!e.target.closest('#start-menu') && !e.target.closest('#start-button')) {
+        if (!e.target.closest('#start-menu') && !e.target.closest('#start-button') &&
+            !e.target.closest('.start-flyout')) {
             startMenu.classList.add('hidden');
+            startButton.classList.remove('start-open');
+            hideAllPrograms();
         }
     });
 
@@ -5261,20 +6386,15 @@ function setupStartMenu() {
         item.addEventListener('click', (e) => {
             e.stopPropagation();
             const app = item.dataset.app;
+            if (app === 'allprograms') return;      // handled by the flyout
             startMenu.classList.add('hidden');
-            const targetId = startAppTargets[app];
-            if (targetId) {
-                let icon = document.getElementById(targetId);
-                // If the desktop icon was removed, create a virtual one on the fly
-                if (!icon) {
-                    icon = document.createElement('div');
-                    icon.className = 'icon';
-                    icon.id = targetId;
-                }
-                openWindow(icon);
-            } else {
-                showAppNotFound(startAppNames[app] || app);
-            }
+            startButton.classList.remove('start-open');
+            hideAllPrograms();
+            XPAudio.play('click');
+            const route = START_ROUTES[app];
+            if (typeof route === 'function') route();
+            else if (route) launchApp(route);
+            else showAppNotFound(startAppNames[app] || app);
         });
     });
 
@@ -5285,27 +6405,16 @@ function setupStartMenu() {
         logoffBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             startMenu.classList.add('hidden');
-            location.reload();
+            startButton.classList.remove('start-open');
+            showLogOffDialog();
         });
     }
     if (shutdownBtn) {
         shutdownBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             startMenu.classList.add('hidden');
-            // Show shutdown overlay
-            let overlay = document.getElementById('shutdown-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'shutdown-overlay';
-                overlay.style.cssText = 'position:fixed;inset:0;background:#000;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;cursor:default;';
-                overlay.innerHTML = '<img src="assets/xp-loading-screen.png" alt="" style="width:128px;opacity:0.6;">' +
-                    '<span style="color:#fff;font-family:Tahoma,sans-serif;font-size:13px;">It is now safe to turn off your computer.</span>' +
-                    '<span style="color:#aaa;font-family:Tahoma,sans-serif;font-size:10px;">(Click anywhere to wake up)</span>';
-                document.body.appendChild(overlay);
-                overlay.addEventListener('click', () => overlay.remove());
-            } else {
-                overlay.remove();
-            }
+            startButton.classList.remove('start-open');
+            showTurnOffDialog();
         });
     }
 }
@@ -5356,7 +6465,7 @@ function showAppNotFound(appName) {
             <div>
                 <p style="color:#666;">C:\\</p>
                 <p><strong>Application not found</strong></p>
-                <p style="color:#888; font-size:11px;">${appName}</p>
+                <p style="color:#888; font-size:11px;">${escHtml(appName)}</p>
             </div>
         </div>
         <div class="error-dialog-buttons">
@@ -5536,3 +6645,5124 @@ function setupClock() {
         if (e.key === 'Escape') closeCalendar();
     });
 }
+
+/* ==========================================================================
+   ==  DESKTOP DEPTH LAYER                                                 ==
+   ==  Everything below turns the desktop from "a page with windows" into  ==
+   ==  something that behaves like a real Windows XP session: sound, a     ==
+   ==  virtual file system, a proper window manager, a system tray, the    ==
+   ==  Start menu apps, and a boot/logon/shutdown lifecycle.               ==
+   ========================================================================== */
+
+
+/* ===== 1. Sound =============================================================
+   Every sound is synthesised with the Web Audio API instead of shipping WAV
+   files: it keeps the repo tiny, avoids using Microsoft's copyrighted audio,
+   and still gives the desktop the audible feedback that makes it feel real.
+   The context is created lazily on the first gesture because browsers refuse
+   to start audio before the user interacts with the page.
+   ========================================================================= */
+const XPAudio = (() => {
+    const VOL_KEY = 'xpVolume';
+    const MUTE_KEY = 'xpMuted';
+
+    let ctx = null;
+    let master = null;
+    let volume = Math.min(1, Math.max(0, Number(Store.get(VOL_KEY, 0.4)) || 0));
+    let muted = Store.get(MUTE_KEY, false) === true;
+
+    function ensure() {
+        if (ctx) {
+            if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+            return ctx;
+        }
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return null;
+        try {
+            ctx = new Ctx();
+            master = ctx.createGain();
+            master.gain.value = muted ? 0 : volume;
+            master.connect(ctx.destination);
+        } catch (e) { ctx = null; }
+        return ctx;
+    }
+
+    function applyGain() {
+        if (master) master.gain.setTargetAtTime(muted ? 0 : volume, ctx.currentTime, 0.01);
+    }
+
+    // A single struck-bell voice: sine carrier with an exponential decay.
+    function bell(freq, when, dur, gain, type) {
+        const c = ensure();
+        if (!c) return;
+        const t = c.currentTime + when;
+        const osc = c.createOscillator();
+        const g = c.createGain();
+        osc.type = type || 'sine';
+        osc.frequency.setValueAtTime(freq, t);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(Math.max(0.0002, gain), t + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        osc.connect(g).connect(master);
+        osc.start(t);
+        osc.stop(t + dur + 0.02);
+    }
+
+    // A short burst of filtered noise — the basis of clicks and whooshes.
+    function noise(when, dur, gain, filterType, startHz, endHz) {
+        const c = ensure();
+        if (!c) return;
+        const t = c.currentTime + when;
+        const frames = Math.max(1, Math.floor(c.sampleRate * dur));
+        const buf = c.createBuffer(1, frames, c.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < frames; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / frames);
+        const src = c.createBufferSource();
+        src.buffer = buf;
+        const filt = c.createBiquadFilter();
+        filt.type = filterType || 'bandpass';
+        filt.frequency.setValueAtTime(startHz, t);
+        filt.frequency.exponentialRampToValueAtTime(Math.max(40, endHz), t + dur);
+        filt.Q.value = 1.2;
+        const g = c.createGain();
+        g.gain.setValueAtTime(gain, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        src.connect(filt).connect(g).connect(master);
+        src.start(t);
+        src.stop(t + dur + 0.02);
+    }
+
+    const sounds = {
+        // The logon chime: a rising bell arpeggio over a soft low pad.
+        startup() {
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                bell(f, i * 0.13, 1.9 - i * 0.15, 0.16);
+                bell(f * 2, i * 0.13, 0.7, 0.035);
+            });
+            bell(130.81, 0, 2.4, 0.07, 'triangle');
+        },
+        // Shutting down: the same shape, falling instead of rising.
+        shutdown() {
+            [783.99, 659.25, 523.25, 392.00].forEach((f, i) => {
+                bell(f, i * 0.15, 1.6, 0.14);
+            });
+            bell(98, 0.1, 2.0, 0.06, 'triangle');
+        },
+        logoff() {
+            [659.25, 523.25, 392.00].forEach((f, i) => bell(f, i * 0.11, 1.1, 0.12));
+        },
+        // The classic notification "ding".
+        ding() {
+            bell(1046.50, 0, 0.9, 0.18);
+            bell(1567.98, 0.005, 0.55, 0.07);
+        },
+        // Critical stop: two descending square tones.
+        error() {
+            bell(880, 0, 0.22, 0.18, 'square');
+            bell(660, 0.16, 0.26, 0.18, 'square');
+        },
+        // Menus and buttons: a dry, almost subliminal tick.
+        click() { noise(0, 0.035, 0.05, 'highpass', 2600, 1400); },
+        menu()  { noise(0, 0.028, 0.035, 'highpass', 3200, 2000); },
+        minimize() { noise(0, 0.16, 0.06, 'bandpass', 1800, 320); },
+        maximize() { noise(0, 0.16, 0.06, 'bandpass', 320, 1800); },
+        restore()  { noise(0, 0.14, 0.055, 'bandpass', 500, 1600); },
+        close()    { noise(0, 0.12, 0.05, 'bandpass', 1400, 400); },
+        // Emptying the Recycle Bin: paper being crushed.
+        recycle() {
+            for (let i = 0; i < 5; i++) noise(i * 0.045, 0.09, 0.07, 'bandpass', 2400 + Math.random() * 1800, 900);
+        },
+        // A small fanfare for wins.
+        tada() {
+            [523.25, 659.25, 783.99].forEach(f => bell(f, 0, 0.5, 0.12));
+            [659.25, 783.99, 1046.50].forEach(f => bell(f, 0.16, 1.1, 0.13));
+        },
+        navigate() { noise(0, 0.06, 0.04, 'bandpass', 900, 2200); }
+    };
+
+    return {
+        play(name) {
+            if (muted || volume <= 0) return;
+            const fn = sounds[name];
+            if (fn) { try { fn(); } catch (e) { /* audio unavailable */ } }
+        },
+        get volume() { return volume; },
+        set volume(v) {
+            volume = Math.min(1, Math.max(0, Number(v) || 0));
+            Store.set(VOL_KEY, volume);
+            ensure(); applyGain();
+        },
+        get muted() { return muted; },
+        set muted(m) {
+            muted = !!m;
+            Store.set(MUTE_KEY, muted);
+            ensure(); applyGain();
+        },
+        // Called from the first real user gesture so the context can start.
+        unlock() { ensure(); }
+    };
+})();
+
+// Keep the old helper working — it is called from showAppNotFound.
+function playErrorSound() { XPAudio.play('error'); }
+
+
+/* ---- generated system icons ----------------------------------------------
+   The information and network glyphs the shell needs are drawn on a canvas
+   rather than shipped as files, so the repo carries no unused art and the
+   icons can never 404. */
+const SysIcons = (() => {
+    const cache = {};
+
+    function make(key, draw) {
+        if (cache[key]) return cache[key];
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        draw(canvas.getContext('2d'));
+        cache[key] = canvas.toDataURL();
+        return cache[key];
+    }
+
+    function orb(ctx, from, to, stroke) {
+        const g = ctx.createRadialGradient(11, 9, 2, 16, 16, 17);
+        g.addColorStop(0, from);
+        g.addColorStop(1, to);
+        ctx.beginPath();
+        ctx.arc(16, 16, 14, 0, Math.PI * 2);
+        ctx.fillStyle = g;
+        ctx.fill();
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+    }
+
+    return {
+        // Blue circle with a white "i" — the classic information balloon
+        get info() {
+            return make('info', ctx => {
+                orb(ctx, '#a9d4ff', '#1b62c4', '#0d3f8a');
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold italic 19px Georgia, "Times New Roman", serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('i', 16, 17);
+            });
+        },
+        // Yellow triangle with an exclamation mark
+        get warning() {
+            return make('warning', ctx => {
+                ctx.beginPath();
+                ctx.moveTo(16, 3); ctx.lineTo(30, 28); ctx.lineTo(2, 28);
+                ctx.closePath();
+                const g = ctx.createLinearGradient(0, 0, 0, 32);
+                g.addColorStop(0, '#ffe66a');
+                g.addColorStop(1, '#e8a800');
+                ctx.fillStyle = g;
+                ctx.fill();
+                ctx.strokeStyle = '#8a6400';
+                ctx.lineWidth = 1.4;
+                ctx.stroke();
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 15px Tahoma, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('!', 16, 20);
+            });
+        },
+        // Two little monitors, for network notifications
+        get network() {
+            return make('network', ctx => {
+                const screen = (x, y, w, h) => {
+                    ctx.fillStyle = '#c9c9c9';
+                    ctx.fillRect(x, y, w, h);
+                    ctx.strokeStyle = '#6b6b6b';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(x + .5, y + .5, w - 1, h - 1);
+                    const g = ctx.createLinearGradient(x, y, x + w, y + h);
+                    g.addColorStop(0, '#7fc0ff');
+                    g.addColorStop(1, '#1c5fbe');
+                    ctx.fillStyle = g;
+                    ctx.fillRect(x + 2, y + 2, w - 4, h - 4);
+                };
+                ctx.strokeStyle = '#8a8a8a';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(9, 22); ctx.lineTo(9, 15); ctx.lineTo(23, 15); ctx.lineTo(23, 11);
+                ctx.stroke();
+                screen(15, 3, 15, 12);
+                screen(2, 17, 15, 12);
+            });
+        }
+    };
+})();
+
+
+/* ===== 2. Tooltips ========================================================
+   The yellow XP tooltip. Any element with a `data-tip` attribute gets one
+   after a short hover delay, positioned below-right of the cursor and kept
+   inside the viewport.
+   ========================================================================= */
+const Tooltip = (() => {
+    let el = null;
+    let timer = null;
+    let current = null;
+
+    function hide() {
+        clearTimeout(timer);
+        timer = null;
+        current = null;
+        if (el) { el.remove(); el = null; }
+    }
+
+    function show(target, x, y) {
+        const text = target.dataset.tip;
+        if (!text) return;
+        hide();
+        current = target;
+        el = document.createElement('div');
+        el.className = 'xp-tooltip';
+        el.textContent = text;
+        document.body.appendChild(el);
+        const r = el.getBoundingClientRect();
+        let left = x + 14;
+        let top = y + 20;
+        if (left + r.width > window.innerWidth - 4) left = window.innerWidth - r.width - 4;
+        if (top + r.height > window.innerHeight - 4) top = y - r.height - 8;
+        el.style.left = Math.max(2, left) + 'px';
+        el.style.top = Math.max(2, top) + 'px';
+    }
+
+    function init() {
+        document.addEventListener('mouseover', (e) => {
+            const target = e.target.closest('[data-tip]');
+            if (!target || target === current) return;
+            hide();
+            const { clientX, clientY } = e;
+            timer = setTimeout(() => show(target, clientX, clientY), 600);
+        });
+        document.addEventListener('mouseout', (e) => {
+            const target = e.target.closest('[data-tip]');
+            if (target && target === current) hide();
+            else if (target) clearTimeout(timer);
+        });
+        ['mousedown', 'wheel', 'keydown'].forEach(evt =>
+            document.addEventListener(evt, hide, { passive: true }));
+    }
+
+    return { init, hide };
+})();
+
+
+/* ===== 3. Tray balloon notifications ======================================
+   The little pop-up that rises out of the notification area. Used for
+   "Your files are ready", low disk space jokes, send confirmations, etc.
+   ========================================================================= */
+function notify({ title, text, icon, timeout = 7000, onClick }) {
+    document.querySelectorAll('.xp-balloon').forEach(b => b.remove());
+    const balloon = document.createElement('div');
+    balloon.className = 'xp-balloon';
+    balloon.innerHTML = `
+        <button class="xp-balloon-close" title="Close" aria-label="Close">&#10005;</button>
+        <div class="xp-balloon-head">
+            <img class="xp-balloon-icon" src="${escAttr(icon || SysIcons.info)}" alt="">
+            <span class="xp-balloon-title">${escHtml(title || '')}</span>
+        </div>
+        <div class="xp-balloon-text">${escHtml(text || '')}</div>`;
+    document.body.appendChild(balloon);
+
+    // Point the tail at the notification area
+    const tray = document.querySelector('.taskbar-tray') || document.querySelector('.taskbar-clock');
+    if (tray) {
+        const r = tray.getBoundingClientRect();
+        const width = balloon.offsetWidth;
+        balloon.style.left = Math.max(6, Math.min(r.left + r.width / 2 - width + 30,
+            window.innerWidth - width - 6)) + 'px';
+    }
+    balloon.style.bottom = (getTaskbarHeight() + 12) + 'px';
+    requestAnimationFrame(() => balloon.classList.add('xp-balloon-in'));
+
+    let closed = false;
+    const close = () => {
+        if (closed) return;
+        closed = true;
+        clearTimeout(timerId);
+        balloon.classList.remove('xp-balloon-in');
+        setTimeout(() => balloon.remove(), 220);
+    };
+    const timerId = setTimeout(close, timeout);
+    balloon.querySelector('.xp-balloon-close').addEventListener('click', (e) => {
+        e.stopPropagation();
+        close();
+    });
+    if (onClick) {
+        balloon.classList.add('xp-balloon-clickable');
+        balloon.addEventListener('click', () => { close(); onClick(); });
+    }
+    XPAudio.play('ding');
+    return close;
+}
+
+
+/* ===== 4. Reusable dialog chrome ==========================================
+   `showDialog` builds a real XP dialog: title bar, optional icon, body HTML
+   and a row of buttons. Every modal in the desktop (Run, Shut Down, Delete
+   confirmations, Properties) is built on top of it, so they all drag, focus
+   and close the same way.
+   ========================================================================= */
+let dialogZ = 500000;
+
+function showDialog({ title, icon, bodyHtml, buttons = [], width, className = '', modal = false, onClose, sound }) {
+    const backdrop = modal ? document.createElement('div') : null;
+    if (backdrop) {
+        backdrop.className = 'xp-modal-backdrop';
+        backdrop.style.zIndex = String(++dialogZ);
+        document.body.appendChild(backdrop);
+    }
+
+    const dlg = document.createElement('div');
+    dlg.className = 'xp-dialog ' + className;
+    dlg.style.zIndex = String(++dialogZ);
+    if (width) dlg.style.width = typeof width === 'number' ? width + 'px' : width;
+    dlg.innerHTML = `
+        <div class="popup-header xp-dialog-header">
+            ${icon ? `<img class="popup-icon" src="${escAttr(icon)}" alt="" draggable="false">` : ''}
+            <span class="popup-title">${escHtml(title || '')}</span>
+            <div class="popup-controls">
+                <button class="win-btn win-btn-close xp-dialog-x" aria-label="Close">
+                    <svg viewBox="0 0 10 10"><path d="M1 0L0 1l4 4-4 4 1 1 4-4 4 4 1-1-4-4 4-4-1-1-4 4z"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="xp-dialog-body">${bodyHtml || ''}</div>
+        ${buttons.length ? '<div class="xp-dialog-buttons"></div>' : ''}`;
+    document.body.appendChild(dlg);
+
+    let closed = false;
+    const close = (result) => {
+        if (closed) return;
+        closed = true;
+        document.removeEventListener('keydown', onKey, true);
+        dlg.remove();
+        if (backdrop) backdrop.remove();
+        if (onClose) onClose(result);
+    };
+
+    const btnRow = dlg.querySelector('.xp-dialog-buttons');
+    if (btnRow) {
+        buttons.forEach(b => {
+            const btn = document.createElement('button');
+            btn.className = 'xp-btn' + (b.primary ? ' xp-btn-default' : '');
+            btn.textContent = b.label;
+            if (b.disabled) btn.disabled = true;
+            btn.addEventListener('click', () => {
+                XPAudio.play('click');
+                // A handler returning `false` keeps the dialog open
+                const keep = b.action ? b.action(dlg) === false : false;
+                if (!keep) close(b.value != null ? b.value : b.label);
+            });
+            btnRow.appendChild(btn);
+            if (b.primary) setTimeout(() => btn.focus(), 30);
+        });
+    }
+
+    dlg.querySelector('.xp-dialog-x').addEventListener('click', () => close(null));
+
+    // Centre it, then make the title bar draggable
+    const r = dlg.getBoundingClientRect();
+    dlg.style.left = Math.max(8, Math.round((window.innerWidth - r.width) / 2)) + 'px';
+    dlg.style.top = Math.max(8, Math.round((workAreaHeight() - r.height) / 2)) + 'px';
+    makeDraggable(dlg, dlg.querySelector('.xp-dialog-header'));
+
+    dlg.addEventListener('mousedown', () => { dlg.style.zIndex = String(++dialogZ); });
+
+    function onKey(e) {
+        if (e.key === 'Escape') { e.stopPropagation(); close(null); }
+        else if (e.key === 'Enter' && !e.target.closest('textarea')) {
+            const primary = buttons.find(b => b.primary);
+            if (primary && !primary.disabled) {
+                e.preventDefault();
+                e.stopPropagation();
+                const keep = primary.action ? primary.action(dlg) === false : false;
+                if (!keep) close(primary.value != null ? primary.value : primary.label);
+            }
+        }
+    }
+    document.addEventListener('keydown', onKey, true);
+
+    if (sound !== false) XPAudio.play(sound || 'ding');
+    return { el: dlg, close };
+}
+
+// Make any element draggable by a handle, clamped to the work area.
+function makeDraggable(el, handle) {
+    if (!handle) return;
+    let sx = 0, sy = 0;
+    const onMove = (e) => {
+        const x = Math.max(-el.offsetWidth + 90, Math.min(e.clientX - sx, window.innerWidth - 90));
+        const y = Math.max(0, Math.min(e.clientY - sy, workAreaHeight() - 24));
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+    };
+    const onUp = () => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+    };
+    handle.addEventListener('mousedown', (e) => {
+        if (e.target.closest('button, input, select, textarea')) return;
+        e.preventDefault();
+        sx = e.clientX - el.offsetLeft;
+        sy = e.clientY - el.offsetTop;
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+    });
+}
+
+
+/* ===== 5. Virtual file system =============================================
+   A real tree of folders and files behind `C:\`, so Explorer, My Computer,
+   the Run box and the command prompt all talk about the same thing. Paths
+   use Windows separators; every node carries the metadata the UI needs to
+   render a listing (icon, type label, size, modified date).
+
+   Node shape:
+     { name, type: 'folder' | 'file', kind, icon, mtime, children[], ... }
+   `kind` decides what double-clicking does:
+     folder | image | text | link | app | system
+   ========================================================================= */
+const VFS = (() => {
+    const KEY = 'xpFileSystem';
+    const SEED_VERSION = 3;   // bump to re-seed everyone's tree after edits
+
+    const USER = 'Marco';
+    const PROFILE = `C:\\Documents and Settings\\${USER}`;
+    const DESKTOP = `${PROFILE}\\Desktop`;
+    const DOCS = `${PROFILE}\\My Documents`;
+    const PICTURES = `${DOCS}\\My Pictures`;
+    const MUSIC = `${DOCS}\\My Music`;
+
+    const now = Date.now();
+    const day = 86400000;
+
+    function folder(name, children, extra) {
+        return Object.assign({
+            name, type: 'folder', kind: 'folder',
+            icon: 'assets/folder-icon.png',
+            mtime: now - day, children: children || []
+        }, extra || {});
+    }
+    function file(name, extra) {
+        return Object.assign({ name, type: 'file', kind: 'text', mtime: now - day }, extra || {});
+    }
+
+    // ---- The shipped tree -------------------------------------------------
+    function seed() {
+        const pictures = folder('My Pictures', [
+            file('Kira at the Beach.jpg', {
+                kind: 'image', src: 'assets/doggo_at_the_beach.jpg',
+                icon: 'assets/image-file-icon.png', mtime: now - day * 12
+            }),
+            file('Kira 1.jpeg', {
+                kind: 'image', src: 'assets/Kira_1.jpeg',
+                icon: 'assets/image-file-icon.png', mtime: now - day * 9
+            }),
+            file('Kira 2.jpeg', {
+                kind: 'image', src: 'assets/Kira_2.jpeg',
+                icon: 'assets/image-file-icon.png', mtime: now - day * 9
+            }),
+            folder('Screenshots', folderFiles
+                .filter(p => p.screenshot)
+                .map(p => file(p.name + '.png', {
+                    kind: 'image', src: p.screenshot,
+                    icon: 'assets/image-file-icon.png', mtime: now - day * 20
+                })), { mtime: now - day * 20 }),
+            folder('Wallpapers', [...WALLPAPERS, { src: DEFAULT_WALLPAPER, label: 'Bliss (default)' }]
+                .map(w => file(w.label + '.jpg', {
+                    kind: 'image', src: w.src,
+                    icon: 'assets/image-file-icon.png', mtime: now - day * 40
+                })), { mtime: now - day * 40 })
+        ], { icon: 'assets/start-mypictures.png', mtime: now - day * 9 });
+
+        const music = folder('My Music', [
+            file('Sample Music.txt', {
+                kind: 'text', icon: 'assets/notepad-icon.png',
+                content: 'No music files here yet.\r\n\r\nThe Winamp entry in the Start menu is a placeholder — ' +
+                    'audio playback is on the list of things to build next.'
+            })
+        ], { icon: 'assets/start-mymusic.png' });
+
+        const projects = folder('Projects', folderFiles
+            .filter(p => p.kind === 'project')
+            .map(p => file(p.name, {
+                kind: 'link', url: p.url, icon: 'assets/folder-icon.png',
+                typeLabel: p.type + ' project', summary: p.summary,
+                screenshot: p.screenshot, mtime: now - day * (10 + Math.floor(Math.random() * 300))
+            })), { mtime: now - day * 10 });
+
+        const docs = folder('My Documents', [
+            pictures, music, projects,
+            file('About Me.txt', {
+                kind: 'text', icon: 'assets/notepad-icon.png', mtime: now - day * 3,
+                content: "Marco Tancredi — front-end developer\r\n" +
+                    "=====================================\r\n\r\n" +
+                    "I build things for the web with HTML, CSS and JavaScript.\r\n" +
+                    "This whole desktop is one of them: no framework, no build step,\r\n" +
+                    "just three files and a lot of attention to detail.\r\n\r\n" +
+                    "Open the Projects folder to see what else I've made, or use\r\n" +
+                    "Outlook Express in the Start menu to send me a message."
+            }),
+            file('Resume.txt', {
+                kind: 'text', icon: 'assets/notepad-icon.png', mtime: now - day * 30,
+                content: "MARCO TANCREDI\r\n" +
+                    "--------------\r\n\r\n" +
+                    "SKILLS\r\n" +
+                    "  HTML5, CSS3, JavaScript (ES2020+)\r\n" +
+                    "  Responsive layout, accessibility, DOM APIs\r\n" +
+                    "  Canvas, Web Audio, Web Storage\r\n" +
+                    "  Git, GitHub Pages\r\n\r\n" +
+                    "SELECTED WORK\r\n" +
+                    "  XP-Portfolio ......... this desktop, in vanilla JS\r\n" +
+                    "  Images-Converter ..... client-side image conversion\r\n" +
+                    "  Snake-game ........... canvas game with score tracking\r\n" +
+                    "  Password-Generator ... configurable password tool\r\n\r\n" +
+                    "CONTACT\r\n" +
+                    "  " + MAILBOX_EMAIL + "\r\n" +
+                    "  github.com/Marc0GitHub"
+            })
+        ], { icon: 'assets/start-mydocuments.png' });
+
+        const desktop = folder('Desktop', [], { icon: 'assets/folder-icon.png' });
+
+        const windows = folder('WINDOWS', [
+            folder('system32', [
+                file('cmd.exe', { kind: 'app', app: 'cmd', typeLabel: 'Application' }),
+                file('notepad.exe', { kind: 'app', app: 'notepad', icon: 'assets/notepad-icon.png', typeLabel: 'Application' }),
+                file('calc.exe', { kind: 'app', app: 'calc', typeLabel: 'Application' }),
+                file('taskmgr.exe', { kind: 'app', app: 'taskmgr', typeLabel: 'Application' }),
+                file('winmine.exe', { kind: 'app', app: 'minesweeper', icon: 'assets/start-minesweeper.png', typeLabel: 'Application' })
+            ]),
+            folder('Web', [folder('Wallpaper', WALLPAPERS.map(w => file(w.label + '.jpg', {
+                kind: 'image', src: w.src, icon: 'assets/image-file-icon.png'
+            })))]),
+            folder('Media', [])
+        ], { locked: true });
+
+        const programFiles = folder('Program Files', [
+            folder('Internet Explorer', [
+                file('iexplore.exe', { kind: 'app', app: 'internet', icon: 'assets/internet-explorer-2-icon.png', typeLabel: 'Application' })
+            ]),
+            folder('Outlook Express', [
+                file('msimn.exe', { kind: 'app', app: 'email', icon: 'assets/start-email.png', typeLabel: 'Application' })
+            ]),
+            folder('Accessories', [
+                file('mspaint.exe', { kind: 'app', app: 'paint', icon: 'assets/paint-icon.png', typeLabel: 'Application' })
+            ])
+        ], { locked: true });
+
+        return {
+            version: SEED_VERSION,
+            root: folder('Local Disk (C:)', [
+                folder('Documents and Settings', [
+                    folder(USER, [desktop, docs, folder('Favorites', [])], { icon: 'assets/start-avatar.png' })
+                ]),
+                programFiles,
+                windows
+            ], { icon: 'assets/start-mycomputer.png', locked: true })
+        };
+    }
+
+    // ---- Load / persist ---------------------------------------------------
+    let state = Store.get(KEY, null);
+    if (!state || state.version !== SEED_VERSION || !state.root) state = seed();
+
+    let saveTimer = null;
+    function save() {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => {
+            // Anything huge (pasted data-URL images) is dropped rather than
+            // blowing the 5 MB storage quota and losing the whole tree.
+            const ok = Store.set(KEY, state);
+            if (!ok) console.warn('XP: could not persist the file system (storage full).');
+        }, 250);
+    }
+
+    // ---- Path helpers -----------------------------------------------------
+    function splitPath(path) {
+        return String(path || '').replace(/^[A-Za-z]:\\?/, '').split('\\').filter(Boolean);
+    }
+    function join(path, name) {
+        return path.replace(/\\+$/, '') + '\\' + name;
+    }
+    function parentOf(path) {
+        const parts = String(path).split('\\');
+        parts.pop();
+        return parts.join('\\') || 'C:';
+    }
+    function basename(path) {
+        const parts = String(path).split('\\').filter(Boolean);
+        return parts[parts.length - 1] || path;
+    }
+
+    // Resolve a path to its node. 'C:' / 'C:\' is the drive root.
+    function get(path) {
+        const p = String(path || '').replace(/\\+$/, '');
+        if (/^[A-Za-z]:$/i.test(p) || p === '') return state.root;
+        let node = state.root;
+        for (const part of splitPath(p)) {
+            if (!node || node.type !== 'folder') return null;
+            const next = (node.children || []).find(c => c.name.toLowerCase() === part.toLowerCase());
+            if (!next) return null;
+            node = next;
+        }
+        return node;
+    }
+
+    function list(path) {
+        const node = get(path);
+        if (!node || node.type !== 'folder') return [];
+        return [...(node.children || [])];
+    }
+
+    function exists(path) { return !!get(path); }
+
+    // A name that doesn't collide inside `parentPath` ("New Folder (2)").
+    function uniqueName(parentPath, base) {
+        const taken = new Set(list(parentPath).map(c => c.name.toLowerCase()));
+        if (!taken.has(base.toLowerCase())) return base;
+        const dot = base.lastIndexOf('.');
+        const stem = dot > 0 ? base.slice(0, dot) : base;
+        const ext = dot > 0 ? base.slice(dot) : '';
+        let n = 2;
+        while (taken.has(`${stem} (${n})${ext}`.toLowerCase())) n++;
+        return `${stem} (${n})${ext}`;
+    }
+
+    function add(parentPath, node) {
+        const parent = get(parentPath);
+        if (!parent || parent.type !== 'folder') return null;
+        node.name = uniqueName(parentPath, node.name);
+        node.mtime = node.mtime || Date.now();
+        parent.children = parent.children || [];
+        parent.children.push(node);
+        save();
+        return node;
+    }
+
+    function remove(path) {
+        const parent = get(parentOf(path));
+        const name = basename(path);
+        if (!parent || !parent.children) return null;
+        const idx = parent.children.findIndex(c => c.name.toLowerCase() === name.toLowerCase());
+        if (idx === -1) return null;
+        const [node] = parent.children.splice(idx, 1);
+        save();
+        return node;
+    }
+
+    function rename(path, newName) {
+        const node = get(path);
+        if (!node || node.locked) return false;
+        const parent = parentOf(path);
+        const clean = String(newName).replace(/[\\/:*?"<>|]/g, '').trim();
+        if (!clean) return false;
+        if (clean.toLowerCase() !== node.name.toLowerCase() && exists(join(parent, clean))) return false;
+        node.name = clean;
+        node.mtime = Date.now();
+        save();
+        return true;
+    }
+
+    function move(fromPath, toFolderPath) {
+        const node = get(fromPath);
+        const dest = get(toFolderPath);
+        if (!node || !dest || dest.type !== 'folder' || node.locked) return false;
+        if (toFolderPath.toLowerCase().startsWith(fromPath.toLowerCase() + '\\')) return false; // into itself
+        remove(fromPath);
+        add(toFolderPath, node);
+        return true;
+    }
+
+    function writeFile(path, content) {
+        const node = get(path);
+        if (node && node.type === 'file') {
+            node.content = content;
+            node.mtime = Date.now();
+            save();
+            return node;
+        }
+        return add(parentOf(path), file(basename(path), {
+            kind: 'text', icon: 'assets/notepad-icon.png', content
+        }));
+    }
+
+    // ---- Presentation metadata -------------------------------------------
+    const EXT_TYPES = {
+        txt: 'Text Document', log: 'Text Document', ini: 'Configuration Settings',
+        jpg: 'JPEG Image', jpeg: 'JPEG Image', png: 'PNG Image', gif: 'GIF Image',
+        bmp: 'Bitmap Image', webp: 'WebP Image', svg: 'SVG Image',
+        exe: 'Application', lnk: 'Shortcut', mp3: 'MP3 Audio', mp4: 'Video Clip',
+        pdf: 'PDF Document', html: 'HTML Document', js: 'JScript Script File',
+        css: 'Cascading Style Sheet', json: 'JSON File', md: 'Markdown Document'
+    };
+
+    function extOf(name) {
+        const m = /\.([A-Za-z0-9]+)$/.exec(name || '');
+        return m ? m[1].toLowerCase() : '';
+    }
+
+    function typeLabel(node) {
+        if (!node) return '';
+        if (node.typeLabel) return node.typeLabel;
+        if (node.type === 'folder') return 'File Folder';
+        if (node.kind === 'link') return 'Internet Shortcut';
+        if (node.kind === 'app') return 'Application';
+        return EXT_TYPES[extOf(node.name)] || ((extOf(node.name) || 'File').toUpperCase() + ' File');
+    }
+
+    function iconFor(node) {
+        if (!node) return 'assets/image-file-icon.png';
+        if (node.icon) return node.icon;
+        if (node.type === 'folder') return 'assets/folder-icon.png';
+        switch (node.kind) {
+            case 'image': return 'assets/image-file-icon.png';
+            case 'text': return 'assets/notepad-icon.png';
+            case 'link': return 'assets/internet-explorer-2-icon.png';
+            case 'app': return 'assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png';
+            default: return 'assets/image-file-icon.png';
+        }
+    }
+
+    // Byte size for the listing. Folders report their child count instead.
+    function sizeOf(node) {
+        if (!node) return 0;
+        if (node.type === 'folder') return null;
+        if (typeof node.size === 'number') return node.size;
+        if (node.content != null) return new Blob([node.content]).size;
+        if (node.src && node.src.startsWith('data:')) {
+            const b64 = node.src.slice(node.src.indexOf(',') + 1);
+            return Math.max(0, Math.floor(b64.length * 3 / 4));
+        }
+        const info = node.src ? getImageInfo(node.src) : null;
+        if (info && info.bytes) return info.bytes;
+        // A believable, stable stand-in derived from the name
+        let h = 0;
+        for (let i = 0; i < node.name.length; i++) h = (h * 31 + node.name.charCodeAt(i)) >>> 0;
+        return 1024 + (h % 240000);
+    }
+
+    function reset() {
+        state = seed();
+        save();
+    }
+
+    return {
+        USER, PROFILE, DESKTOP, DOCS, PICTURES, MUSIC,
+        get, list, exists, add, remove, rename, move, writeFile,
+        join, parentOf, basename, uniqueName, typeLabel, iconFor, sizeOf, extOf,
+        folder, file, save, reset,
+        get root() { return state.root; }
+    };
+})();
+
+
+/* ===== 6. App registry & launcher =========================================
+   One place that knows how to start every program on this desktop. The Start
+   menu, Quick Launch, the Run box, Explorer double-clicks, the command
+   prompt and desktop shortcuts all go through `launchApp`, so a program
+   behaves identically no matter where it was started from.
+   ========================================================================= */
+
+// Programs that already have a desktop icon / iconContent entry.
+const LEGACY_APPS = {
+    bin: 'icon1', recyclebin: 'icon1',
+    internet: 'icon2', iexplore: 'icon2', ie: 'icon2',
+    projects: 'icon3', folder: 'icon3',
+    paint: 'icon4', mspaint: 'icon4',
+    notepad: 'icon5',
+    snake: 'icon9',
+    email: 'icon10', msimn: 'icon10', outlook: 'icon10',
+    cmd: 'icon11', command: 'icon11',
+    blog: 'icon12',
+    minesweeper: 'icon13', winmine: 'icon13'
+};
+
+// Friendly display names, used by the taskbar, Task Manager and error boxes.
+const APP_TITLES = {
+    icon1: 'Recycle Bin', icon2: 'Internet Explorer', icon3: 'Projects',
+    icon4: 'Paint', icon5: 'Notepad', icon9: 'Snake', icon10: 'Outlook Express',
+    icon11: 'Command Prompt', icon12: "Marco's Blog", icon13: 'Minesweeper'
+};
+
+let virtualWindowSeq = 0;
+
+// Build a throwaway icon element that carries a full window definition.
+function makeVirtualIcon(id, spec) {
+    const icon = document.createElement('div');
+    icon.className = 'icon virtual-icon';
+    icon.id = id;
+    icon._windowSpec = spec;
+    return icon;
+}
+
+// Open a window from a spec. Passing the same `id` twice focuses the window
+// that is already open instead of stacking duplicates.
+function openAppWindow(id, spec) {
+    const existing = openWindows[id];
+    if (existing) {
+        if (existing.style.display === 'none') restoreWindow(existing);
+        else { existing.style.display = 'flex'; bringToFront(existing); updateTaskbarItemState(existing); }
+        return existing;
+    }
+    openWindow(makeVirtualIcon(id, spec));
+    return openWindows[id];
+}
+
+// Open a window that can have several instances at once (Explorer, Notepad).
+function openAppInstance(prefix, spec) {
+    return openAppWindow(`${prefix}-${++virtualWindowSeq}`, spec);
+}
+
+function launchApp(appId, opts = {}) {
+    XPAudio.unlock();
+    const key = String(appId || '').toLowerCase().replace(/\.exe$/, '');
+
+    const legacy = LEGACY_APPS[key];
+    if (legacy) {
+        let icon = document.getElementById(legacy);
+        if (!icon) {
+            // The desktop icon was deleted — start it from a virtual one
+            icon = document.createElement('div');
+            icon.className = 'icon virtual-icon';
+            icon.id = legacy;
+        }
+        openWindow(icon);
+        return openWindows[legacy];
+    }
+
+    switch (key) {
+        case 'explorer':      return openExplorer(opts.path || VFS.DOCS);
+        case 'mycomputer':    return openMyComputer();
+        case 'mydocuments':   return openExplorer(VFS.DOCS);
+        case 'mypictures':    return openExplorer(VFS.PICTURES, { view: 'thumbnails' });
+        case 'mymusic':       return openExplorer(VFS.MUSIC);
+        case 'desktopfolder': return openExplorer(VFS.DESKTOP);
+        case 'controlpanel':
+        case 'control':       return openControlPanel();
+        case 'taskmgr':
+        case 'taskmanager':   return openTaskManager();
+        case 'calc':
+        case 'calculator':    return openCalculator();
+        case 'search':        return openSearch();
+        case 'help':          return openHelpCenter();
+        case 'display':
+        case 'desk.cpl':      showDisplayProperties(opts.tab); return null;
+        case 'run':           showRunDialog(); return null;
+        case 'sysinfo':
+        case 'winver':        showAboutWindows(); return null;
+        default:
+            showAppNotFound(startAppNames[key] || appId);
+            return null;
+    }
+}
+
+
+/* ===== 7. Windows Explorer =================================================
+   The real thing: Back/Forward/Up history, an editable address bar, the five
+   XP view modes, sortable Details columns, multi-select, rename in place,
+   delete to the Recycle Bin, and the left-hand task panes that change with
+   the selection.
+   ========================================================================= */
+
+const MY_COMPUTER = 'My Computer';
+
+// The drives and shell folders shown inside My Computer.
+function myComputerEntries() {
+    return [
+        { name: 'Local Disk (C:)', path: 'C:', icon: 'assets/start-mycomputer.png',
+          type: 'folder', kind: 'drive', typeLabel: 'Local Disk',
+          total: 80 * 1024 * 1024 * 1024, free: 62 * 1024 * 1024 * 1024, group: 'Hard Disk Drives' },
+        { name: '3½ Floppy (A:)', path: 'A:', icon: 'assets/start-mycomputer.png',
+          type: 'folder', kind: 'removable', typeLabel: '3½-Inch Floppy Disk',
+          group: 'Devices with Removable Storage', empty: true },
+        { name: 'CD Drive (D:)', path: 'D:', icon: 'assets/start-mediaplayer.png',
+          type: 'folder', kind: 'removable', typeLabel: 'CD Drive',
+          group: 'Devices with Removable Storage', empty: true },
+        { name: 'My Documents', path: VFS.DOCS, icon: 'assets/start-mydocuments.png',
+          type: 'folder', kind: 'folder', typeLabel: 'File Folder', group: 'Files Stored on This Computer' },
+        { name: 'Shared Documents', path: `C:\\Documents and Settings\\All Users\\Documents`,
+          icon: 'assets/start-mydocuments.png', type: 'folder', kind: 'shared',
+          typeLabel: 'File Folder', group: 'Files Stored on This Computer', empty: true },
+        { name: 'Control Panel', path: 'Control Panel', icon: 'assets/start-controlpanel.png',
+          type: 'folder', kind: 'controlpanel', typeLabel: 'System Folder', group: 'Other' }
+    ];
+}
+
+// Friendly title for the window / address bar.
+function displayPathName(path) {
+    if (path === MY_COMPUTER) return 'My Computer';
+    if (/^[A-Za-z]:$/.test(path)) return VFS.root.name;
+    return VFS.basename(path);
+}
+
+const EXPLORER_HTML = `
+  <div class="exp2">
+    <div class="exp2-menubar">
+      <span class="exp2-menu-item" data-menu="file">File</span>
+      <span class="exp2-menu-item" data-menu="edit">Edit</span>
+      <span class="exp2-menu-item" data-menu="view">View</span>
+      <span class="exp2-menu-item" data-menu="favorites">Favorites</span>
+      <span class="exp2-menu-item" data-menu="tools">Tools</span>
+      <span class="exp2-menu-item" data-menu="help">Help</span>
+    </div>
+    <div class="exp2-dropdown hidden" data-dropdown="file">
+      <div class="exp2-dropdown-item" data-action="newfolder">New Folder</div>
+      <div class="exp2-dropdown-item" data-action="newtext">New Text Document</div>
+      <div class="exp2-dropdown-divider"></div>
+      <div class="exp2-dropdown-item" data-action="open">Open</div>
+      <div class="exp2-dropdown-item" data-action="rename">Rename</div>
+      <div class="exp2-dropdown-item" data-action="delete">Delete</div>
+      <div class="exp2-dropdown-item" data-action="properties">Properties</div>
+      <div class="exp2-dropdown-divider"></div>
+      <div class="exp2-dropdown-item" data-action="close">Close</div>
+    </div>
+    <div class="exp2-dropdown hidden" data-dropdown="edit">
+      <div class="exp2-dropdown-item" data-action="cut">Cut<span class="exp2-accel">Ctrl+X</span></div>
+      <div class="exp2-dropdown-item" data-action="copy">Copy<span class="exp2-accel">Ctrl+C</span></div>
+      <div class="exp2-dropdown-item" data-action="paste">Paste<span class="exp2-accel">Ctrl+V</span></div>
+      <div class="exp2-dropdown-divider"></div>
+      <div class="exp2-dropdown-item" data-action="selectall">Select All<span class="exp2-accel">Ctrl+A</span></div>
+      <div class="exp2-dropdown-item" data-action="invertselection">Invert Selection</div>
+    </div>
+    <div class="exp2-dropdown hidden" data-dropdown="view">
+      <div class="exp2-dropdown-item" data-action="view-thumbnails">Thumbnails</div>
+      <div class="exp2-dropdown-item" data-action="view-tiles">Tiles</div>
+      <div class="exp2-dropdown-item" data-action="view-icons">Icons</div>
+      <div class="exp2-dropdown-item" data-action="view-list">List</div>
+      <div class="exp2-dropdown-item" data-action="view-details">Details</div>
+      <div class="exp2-dropdown-divider"></div>
+      <div class="exp2-dropdown-item" data-action="sort-name">Arrange Icons by Name</div>
+      <div class="exp2-dropdown-item" data-action="sort-size">Arrange Icons by Size</div>
+      <div class="exp2-dropdown-item" data-action="sort-type">Arrange Icons by Type</div>
+      <div class="exp2-dropdown-item" data-action="sort-mtime">Arrange Icons by Modified</div>
+      <div class="exp2-dropdown-divider"></div>
+      <div class="exp2-dropdown-item" data-action="refresh">Refresh<span class="exp2-accel">F5</span></div>
+    </div>
+    <div class="exp2-dropdown hidden" data-dropdown="favorites">
+      <div class="exp2-dropdown-item" data-action="fav-docs">My Documents</div>
+      <div class="exp2-dropdown-item" data-action="fav-pics">My Pictures</div>
+      <div class="exp2-dropdown-item" data-action="fav-projects">Projects</div>
+      <div class="exp2-dropdown-item" data-action="fav-desktop">Desktop</div>
+    </div>
+    <div class="exp2-dropdown hidden" data-dropdown="tools">
+      <div class="exp2-dropdown-item" data-action="mapdrive">Map Network Drive...</div>
+      <div class="exp2-dropdown-item" data-action="synchronize">Synchronize...</div>
+      <div class="exp2-dropdown-divider"></div>
+      <div class="exp2-dropdown-item" data-action="folderoptions">Folder Options...</div>
+    </div>
+    <div class="exp2-dropdown hidden" data-dropdown="help">
+      <div class="exp2-dropdown-item" data-action="helptopics">Help Topics</div>
+      <div class="exp2-dropdown-divider"></div>
+      <div class="exp2-dropdown-item" data-action="about">About Windows</div>
+    </div>
+
+    <div class="exp2-toolbar">
+      <button class="exp2-tbtn exp2-back" data-tip="Back" disabled><span class="exp2-tico exp2-tico-back">&#10094;</span>Back</button>
+      <button class="exp2-tbtn exp2-fwd exp2-icon-only" data-tip="Forward" disabled><span class="exp2-tico exp2-tico-fwd">&#10095;</span></button>
+      <button class="exp2-tbtn exp2-up exp2-icon-only" data-tip="Up One Level"><span class="exp2-tico">&#8593;</span></button>
+      <span class="exp2-tsep"></span>
+      <button class="exp2-tbtn exp2-search-btn" data-tip="Search"><span class="exp2-tico">&#128269;</span>Search</button>
+      <button class="exp2-tbtn exp2-folders-btn" data-tip="Show the folder tree"><span class="exp2-tico">&#128193;</span>Folders</button>
+      <span class="exp2-tsep"></span>
+      <button class="exp2-tbtn exp2-views-btn exp2-icon-only" data-tip="Views"><span class="exp2-tico">&#9783;</span><span class="exp2-caret">&#9662;</span></button>
+      <div class="exp2-views-menu hidden">
+        <div class="exp2-views-item" data-view="thumbnails">Thumbnails</div>
+        <div class="exp2-views-item" data-view="tiles">Tiles</div>
+        <div class="exp2-views-item" data-view="icons">Icons</div>
+        <div class="exp2-views-item" data-view="list">List</div>
+        <div class="exp2-views-item" data-view="details">Details</div>
+      </div>
+    </div>
+
+    <div class="exp2-addressbar">
+      <span class="exp2-address-label">Address</span>
+      <div class="exp2-address-field">
+        <img class="exp2-address-icon" src="assets/folder-icon.png" alt="">
+        <input class="exp2-address-input" type="text" spellcheck="false" autocomplete="off">
+      </div>
+      <button class="exp2-go">&#10142; Go</button>
+    </div>
+
+    <div class="exp2-body">
+      <div class="exp2-tree hidden"></div>
+      <div class="exp2-sidebar"></div>
+      <div class="exp2-files" tabindex="0">
+        <div class="exp2-details-head hidden">
+          <button class="exp2-col" data-sort="name" style="flex:2 1 40%">Name</button>
+          <button class="exp2-col" data-sort="size" style="flex:0 0 90px">Size</button>
+          <button class="exp2-col" data-sort="type" style="flex:1 1 22%">Type</button>
+          <button class="exp2-col" data-sort="mtime" style="flex:1 1 24%">Date Modified</button>
+        </div>
+        <div class="exp2-items"></div>
+        <div class="exp2-marquee"></div>
+      </div>
+    </div>
+
+    <div class="exp2-statusbar">
+      <span class="exp2-status-main"></span>
+      <span class="exp2-status-size"></span>
+      <span class="exp2-status-zone">My Computer</span>
+    </div>
+  </div>`;
+
+function openExplorer(path, opts = {}) {
+    return openAppInstance('explorer', {
+        appId: 'explorer',
+        title: displayPathName(path),
+        icon: path === MY_COMPUTER ? 'assets/start-mycomputer.png' : 'assets/folder-icon.png',
+        content: EXPLORER_HTML,
+        width: Math.min(760, Math.max(560, window.innerWidth - 80)),
+        height: Math.min(520, Math.max(400, workAreaHeight() - 80)),
+        minW: 480, minH: 320,
+        setup: (win) => setupExplorer(win, path, opts)
+    });
+}
+
+function openMyComputer() {
+    return openExplorer(MY_COMPUTER);
+}
+
+function setupExplorer(win, startPath, opts = {}) {
+    const root = win.querySelector('.exp2');
+    const itemsEl = win.querySelector('.exp2-items');
+    const filesEl = win.querySelector('.exp2-files');
+    const sidebarEl = win.querySelector('.exp2-sidebar');
+    const treeEl = win.querySelector('.exp2-tree');
+    const addressInput = win.querySelector('.exp2-address-input');
+    const addressIcon = win.querySelector('.exp2-address-icon');
+    const detailsHead = win.querySelector('.exp2-details-head');
+    const marqueeEl = win.querySelector('.exp2-marquee');
+    const statusMain = win.querySelector('.exp2-status-main');
+    const statusSize = win.querySelector('.exp2-status-size');
+    const titleEl = win.querySelector('.popup-title');
+    const winIcon = win.querySelector('.popup-icon');
+
+    const backBtn = win.querySelector('.exp2-back');
+    const fwdBtn = win.querySelector('.exp2-fwd');
+    const upBtn = win.querySelector('.exp2-up');
+    const viewsBtn = win.querySelector('.exp2-views-btn');
+    const viewsMenu = win.querySelector('.exp2-views-menu');
+
+    let cwd = startPath;
+    let history = [startPath];
+    let historyIndex = 0;
+    let view = opts.view || Store.get('xpExplorerView', 'tiles');
+    let sortKey = 'name';
+    let sortDir = 1;
+    let entries = [];
+    let selection = new Set();   // names of selected entries
+    let lastAnchor = null;
+
+    /* ---- reading the current folder ---- */
+    function readEntries() {
+        if (cwd === MY_COMPUTER) return myComputerEntries();
+        if (cwd === VFS.DESKTOP) return desktopVfsEntries();
+        const node = VFS.get(cwd);
+        if (!node) return null;
+        if (node.type !== 'folder') return [];
+        return (node.children || []).map(child => ({
+            name: child.name,
+            path: VFS.join(cwd, child.name),
+            node: child,
+            type: child.type,
+            kind: child.kind,
+            icon: VFS.iconFor(child),
+            typeLabel: VFS.typeLabel(child),
+            mtime: child.mtime || 0,
+            size: VFS.sizeOf(child),
+            src: child.src,
+            screenshot: child.screenshot,
+            summary: child.summary
+        }));
+    }
+
+    function sortEntries(list) {
+        const dirFirst = (a, b) => (b.type === 'folder') - (a.type === 'folder');
+        return [...list].sort((a, b) => {
+            const d = dirFirst(a, b);
+            if (d) return d;
+            let r = 0;
+            if (sortKey === 'name') r = a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
+            else if (sortKey === 'size') r = (a.size || 0) - (b.size || 0);
+            else if (sortKey === 'type') r = String(a.typeLabel).localeCompare(String(b.typeLabel));
+            else if (sortKey === 'mtime') r = (a.mtime || 0) - (b.mtime || 0);
+            return r * sortDir;
+        });
+    }
+
+    /* ---- rendering ---- */
+    function render() {
+        const read = readEntries();
+        if (read === null) {
+            itemsEl.innerHTML = `<div class="exp2-missing">
+                <b>${escHtml(displayPathName(cwd))} is not accessible.</b>
+                <p>The folder does not exist or has been moved.</p></div>`;
+            entries = [];
+            renderSidebar();
+            updateStatus();
+            return;
+        }
+        entries = sortEntries(read);
+
+        root.className = 'exp2 exp2-view-' + view;
+        detailsHead.classList.toggle('hidden', view !== 'details');
+        detailsHead.querySelectorAll('.exp2-col').forEach(c => {
+            c.classList.toggle('exp2-col-sorted', c.dataset.sort === sortKey);
+            c.dataset.dir = sortDir > 0 ? 'asc' : 'desc';
+        });
+
+        if (!entries.length) {
+            itemsEl.innerHTML = `<div class="exp2-empty">This folder is empty.</div>`;
+        } else if (cwd === MY_COMPUTER) {
+            renderGrouped();
+        } else {
+            itemsEl.innerHTML = entries.map(itemHtml).join('');
+        }
+        applySelectionClasses();
+        updateStatus();
+        renderSidebar();
+    }
+
+    // My Computer groups its contents under headings, like the real shell.
+    const MY_COMPUTER_GROUPS = ['Hard Disk Drives', 'Devices with Removable Storage',
+        'Files Stored on This Computer', 'Other'];
+
+    function renderGrouped() {
+        const groups = [];
+        entries.forEach(e => {
+            let g = groups.find(x => x.name === e.group);
+            if (!g) { g = { name: e.group, items: [] }; groups.push(g); }
+            g.items.push(e);
+        });
+        groups.sort((a, b) => MY_COMPUTER_GROUPS.indexOf(a.name) - MY_COMPUTER_GROUPS.indexOf(b.name));
+        itemsEl.innerHTML = groups.map(g => `
+            <div class="exp2-group">
+                <div class="exp2-group-title">${escHtml(g.name)}</div>
+                <div class="exp2-group-items">${g.items.map(itemHtml).join('')}</div>
+            </div>`).join('');
+    }
+
+    function subtitleFor(e) {
+        if (e.kind === 'drive') return `${formatBytes(e.free)} free of ${formatBytes(e.total)}`;
+        if (e.type === 'folder') return e.typeLabel;
+        if (e.kind === 'link') return e.typeLabel;
+        return e.typeLabel + (e.size ? ' &nbsp;' + formatBytes(e.size) : '');
+    }
+
+    function itemHtml(e) {
+        const thumb = (view === 'thumbnails' && (e.kind === 'image' || e.screenshot))
+            ? `<div class="exp2-thumb"><img src="${escAttr(e.src || e.screenshot)}" alt="" loading="lazy"></div>`
+            : `<img class="exp2-ico" src="${escAttr(e.icon)}" alt="">`;
+        const driveBar = e.kind === 'drive'
+            ? `<div class="exp2-drivebar"><i style="width:${Math.round((1 - e.free / e.total) * 100)}%"></i></div>`
+            : '';
+        return `
+          <div class="exp2-item" data-name="${escAttr(e.name)}" title="${escAttr(e.name)}">
+            ${thumb}
+            <div class="exp2-meta">
+              <span class="exp2-name">${escHtml(e.name)}</span>
+              <span class="exp2-sub">${subtitleFor(e)}</span>
+              ${driveBar}
+            </div>
+            <span class="exp2-cell exp2-cell-size">${e.type === 'folder' ? '' : formatBytes(e.size)}</span>
+            <span class="exp2-cell exp2-cell-type">${escHtml(e.typeLabel)}</span>
+            <span class="exp2-cell exp2-cell-date">${e.mtime ? formatDate(e.mtime) : ''}</span>
+          </div>`;
+    }
+
+    function applySelectionClasses() {
+        itemsEl.querySelectorAll('.exp2-item').forEach(el => {
+            el.classList.toggle('selected', selection.has(el.dataset.name));
+        });
+    }
+
+    function updateStatus() {
+        const sel = selectedEntries();
+        if (sel.length === 1) {
+            const e = sel[0];
+            statusMain.textContent = `${e.name}`;
+            statusSize.textContent = e.type === 'folder' ? e.typeLabel : formatBytes(e.size);
+        } else if (sel.length > 1) {
+            const bytes = sel.reduce((n, e) => n + (e.size || 0), 0);
+            statusMain.textContent = `${sel.length} objects selected`;
+            statusSize.textContent = formatBytes(bytes);
+        } else {
+            statusMain.textContent = `${entries.length} object${entries.length === 1 ? '' : 's'}`;
+            const bytes = entries.reduce((n, e) => n + (e.size || 0), 0);
+            statusSize.textContent = bytes ? formatBytes(bytes) : '';
+        }
+        addressInput.value = cwd === MY_COMPUTER ? 'My Computer' : cwd;
+        const icon = cwd === MY_COMPUTER ? 'assets/start-mycomputer.png'
+            : (VFS.get(cwd) ? VFS.iconFor(VFS.get(cwd)) : 'assets/folder-icon.png');
+        addressIcon.src = icon;
+        if (winIcon) winIcon.src = icon;
+        const label = displayPathName(cwd);
+        if (titleEl) titleEl.textContent = label;
+        const tbItem = document.querySelector(`.taskbar-item[data-owner="${win.dataset.owner}"] span`);
+        if (tbItem) tbItem.textContent = label;
+        backBtn.disabled = historyIndex <= 0;
+        fwdBtn.disabled = historyIndex >= history.length - 1;
+        upBtn.disabled = cwd === MY_COMPUTER;
+    }
+
+    /* ---- the XP task panes on the left ---- */
+    function renderSidebar() {
+        const sel = selectedEntries();
+        const one = sel.length === 1 ? sel[0] : null;
+        const panes = [];
+
+        if (cwd !== MY_COMPUTER) {
+            const tasks = one
+                ? [
+                    one.type === 'folder'
+                        ? { label: 'Open this folder', act: () => openEntry(one) }
+                        : { label: 'Open this file', act: () => openEntry(one) },
+                    { label: 'Rename this item', act: () => beginRename(one.name) },
+                    { label: 'Move this item', act: () => showNotImplemented('Move') },
+                    { label: 'Copy this item', act: () => copySelection() },
+                    { label: 'Delete this item', act: () => deleteSelection() }
+                ]
+                : [
+                    { label: 'Make a new folder', act: () => newFolderHere() },
+                    { label: 'Make a new text document', act: () => newTextHere() },
+                    { label: 'View this folder as a slide show', act: () => slideshowHere(), only: 'images' },
+                    { label: 'Publish this folder to the Web', act: () => showNotImplemented('Web Publishing Wizard') }
+                ];
+            panes.push({ title: one ? 'File and Folder Tasks' : 'File and Folder Tasks', items: tasks.filter(t => {
+                if (t.only === 'images') return entries.some(e => e.kind === 'image');
+                return true;
+            }) });
+        } else {
+            panes.push({ title: 'System Tasks', items: [
+                { label: 'View system information', act: () => showAboutWindows() },
+                { label: 'Add or remove programs', act: () => openControlPanel('Add or Remove Programs') },
+                { label: 'Change a setting', act: () => openControlPanel() }
+            ]});
+        }
+
+        // Other Places: the parent folder first, then the usual shortcuts,
+        // skipping anything that is the folder we are already looking at.
+        const others = [];
+        const seen = new Set();
+        const addPlace = (label, path, act) => {
+            const key = (path || label).toLowerCase();
+            if (seen.has(key) || (path && path.toLowerCase() === cwd.toLowerCase())) return;
+            seen.add(key);
+            others.push({ label, act: act || (() => navigate(path)) });
+        };
+        if (cwd !== MY_COMPUTER) {
+            const parent = VFS.parentOf(cwd);
+            if (/^[A-Za-z]:$/.test(cwd)) addPlace('My Computer', MY_COMPUTER);
+            else addPlace(displayPathName(parent), parent);
+        }
+        addPlace('My Documents', VFS.DOCS);
+        addPlace('My Pictures', VFS.PICTURES);
+        addPlace('My Computer', MY_COMPUTER);
+        addPlace('My Network Places', null, () => showNotImplemented('My Network Places'));
+        panes.push({ title: 'Other Places', items: others });
+
+        const detailRows = one
+            ? [['', `<b>${escHtml(one.name)}</b>`], ['', escHtml(one.typeLabel)],
+               one.type === 'folder' ? null : ['Size', formatBytes(one.size)],
+               one.mtime ? ['Modified', formatDate(one.mtime)] : null].filter(Boolean)
+            : [['', `<b>${escHtml(displayPathName(cwd))}</b>`], ['', 'File Folder'],
+               ['Contains', `${entries.length} item${entries.length === 1 ? '' : 's'}`]];
+
+        sidebarEl.innerHTML = panes.map(p => `
+            <div class="exp2-pane">
+                <div class="exp2-pane-title">${escHtml(p.title)}</div>
+                <div class="exp2-pane-body">
+                    ${p.items.map((it, i) => `<button class="exp2-pane-item" data-pane="${escAttr(p.title)}" data-i="${i}">${escHtml(it.label)}</button>`).join('')}
+                </div>
+            </div>`).join('') + `
+            <div class="exp2-pane">
+                <div class="exp2-pane-title">Details</div>
+                <div class="exp2-pane-body exp2-details-pane">
+                    ${detailRows.map(([k, v]) => `<div>${k ? `<span class="exp2-dk">${escHtml(k)}:</span> ` : ''}${v}</div>`).join('')}
+                </div>
+            </div>`;
+
+        sidebarEl.querySelectorAll('.exp2-pane-item').forEach(btn => {
+            const pane = panes.find(p => p.title === btn.dataset.pane);
+            const item = pane && pane.items[+btn.dataset.i];
+            if (item) btn.addEventListener('click', () => { XPAudio.play('click'); item.act(); });
+        });
+    }
+
+    /* ---- selection ---- */
+    function selectedEntries() {
+        return entries.filter(e => selection.has(e.name));
+    }
+    function selectOnly(name) {
+        selection = new Set(name ? [name] : []);
+        lastAnchor = name;
+        applySelectionClasses();
+        updateStatus();
+        renderSidebar();
+    }
+    function selectAll() {
+        selection = new Set(entries.map(e => e.name));
+        applySelectionClasses();
+        updateStatus();
+        renderSidebar();
+    }
+    function selectRange(toName) {
+        const from = entries.findIndex(e => e.name === lastAnchor);
+        const to = entries.findIndex(e => e.name === toName);
+        if (from === -1 || to === -1) return selectOnly(toName);
+        const [a, b] = from < to ? [from, to] : [to, from];
+        selection = new Set(entries.slice(a, b + 1).map(e => e.name));
+        applySelectionClasses();
+        updateStatus();
+        renderSidebar();
+    }
+
+    /* ---- navigation ---- */
+    function navigate(path, addToHistory = true) {
+        if (!path) return;
+        if (path !== MY_COMPUTER && path !== 'Control Panel' && !/^[A-Za-z]:$/.test(path) && !VFS.exists(path)) {
+            showInfoDialog('Explorer', 'assets/error-icon.png',
+                `Windows cannot find <b>${escHtml(path)}</b>.<br><br>Check the spelling and try again.`);
+            return;
+        }
+        if (path === 'Control Panel') { openControlPanel(); return; }
+        cwd = path;
+        selection.clear();
+        lastAnchor = null;
+        if (addToHistory) {
+            history = history.slice(0, historyIndex + 1);
+            history.push(path);
+            historyIndex = history.length - 1;
+        }
+        XPAudio.play('navigate');
+        render();
+        filesEl.scrollTop = 0;
+    }
+
+    function goUp() {
+        if (cwd === MY_COMPUTER) return;
+        if (/^[A-Za-z]:$/.test(cwd)) return navigate(MY_COMPUTER);
+        const parent = VFS.parentOf(cwd);
+        navigate(/^[A-Za-z]:$/.test(parent) ? parent : parent);
+    }
+
+    // The Desktop folder is a live view of the icons on screen, so every
+    // operation there has to go through the desktop instead of the tree.
+    const isDesktop = () => cwd === VFS.DESKTOP;
+
+    /* ---- opening items ---- */
+    function openEntry(e) {
+        if (!e) return;
+        if (e.desktopIcon) { openIconWindow(e.desktopIcon); return; }
+        if (e.kind === 'controlpanel') return openControlPanel();
+        if (e.kind === 'removable') {
+            XPAudio.play('error');
+            return showInfoDialog(displayPathName(cwd), 'assets/error-icon.png',
+                `<b>${escHtml(e.name)}</b> is not accessible.<br><br>The device is not ready.`);
+        }
+        if (e.kind === 'shared') {
+            return showInfoDialog('Shared Documents', 'assets/folder-icon.png', 'This folder is empty.');
+        }
+        if (e.type === 'folder' || e.kind === 'drive') return navigate(e.path);
+        openVfsFile(e.node || e, e.path);
+    }
+
+    /* ---- file operations ---- */
+    function newFolderHere() {
+        if (cwd === MY_COMPUTER) return;
+        if (isDesktop()) {
+            newFolderOnDesktop();
+            render();
+            return;
+        }
+        const node = VFS.add(cwd, VFS.folder(VFS.uniqueName(cwd, 'New Folder'), []));
+        if (!node) return;
+        syncDesktopFromVfs(cwd);
+        render();
+        beginRename(node.name);
+    }
+    function newTextHere() {
+        if (cwd === MY_COMPUTER) return;
+        if (isDesktop()) {
+            newTextFileOnDesktop();
+            render();
+            return;
+        }
+        const node = VFS.add(cwd, VFS.file(VFS.uniqueName(cwd, 'New Text Document.txt'), {
+            kind: 'text', icon: 'assets/notepad-icon.png', content: ''
+        }));
+        if (!node) return;
+        syncDesktopFromVfs(cwd);
+        render();
+        beginRename(node.name);
+    }
+    function copySelection() {
+        const sel = selectedEntries();
+        if (!sel.length || isDesktop()) return;
+        clipboard = { mode: 'copy', from: cwd, names: sel.map(e => e.name) };
+        statusMain.textContent = `${sel.length} item${sel.length === 1 ? '' : 's'} copied`;
+    }
+    function cutSelection() {
+        const sel = selectedEntries();
+        if (!sel.length || isDesktop()) return;
+        clipboard = { mode: 'cut', from: cwd, names: sel.map(e => e.name) };
+        statusMain.textContent = `${sel.length} item${sel.length === 1 ? '' : 's'} ready to move`;
+    }
+    function pasteHere() {
+        if (!clipboard || cwd === MY_COMPUTER) return;
+        if (isDesktop()) { pasteClipboardToDesktop(); render(); return; }
+        clipboard.names.forEach(name => {
+            const src = VFS.join(clipboard.from, name);
+            const node = VFS.get(src);
+            if (!node) return;
+            if (clipboard.mode === 'cut') VFS.move(src, cwd);
+            else VFS.add(cwd, JSON.parse(JSON.stringify(node)));
+        });
+        if (clipboard.mode === 'cut') { syncDesktopFromVfs(clipboard.from); clipboard = null; }
+        syncDesktopFromVfs(cwd);
+        refreshExplorerWindows();
+    }
+    function deleteSelection() {
+        const sel = selectedEntries();
+        if (!sel.length || cwd === MY_COMPUTER) return;
+        const removable = isDesktop()
+            ? sel.filter(e => isDeletable(e.desktopIcon))
+            : sel.filter(e => !(e.node && e.node.locked));
+        if (!removable.length) {
+            XPAudio.play('error');
+            showInfoDialog('Delete', 'assets/error-icon.png',
+                sel.length === 1
+                    ? `<b>${escHtml(sel[0].name)}</b> is a system item and cannot be deleted.`
+                    : 'These are system items and cannot be deleted.');
+            return;
+        }
+        const label = removable.length === 1 ? `"${removable[0].name}"` : `these ${removable.length} items`;
+        showConfirmDialog('Confirm Delete', 'assets/bin-icon.png',
+            `Are you sure you want to send ${escHtml(label)} to the Recycle Bin?`, () => {
+                if (isDesktop()) moveIconsToBin(removable.map(e => e.desktopIcon));
+                else {
+                    removable.forEach(e => recycleVfsPath(VFS.join(cwd, e.name)));
+                    XPAudio.play('recycle');
+                }
+                selection.clear();
+                refreshExplorerWindows();
+            });
+    }
+    function slideshowHere() {
+        const images = entries.filter(e => e.kind === 'image');
+        if (!images.length) return;
+        openImageFileWindow(images[0].src, images[0].name,
+            images.map(i => ({ src: i.src, name: i.name })));
+    }
+    function propertiesForSelection() {
+        const sel = selectedEntries();
+        if (!sel.length) {
+            const n = VFS.get(cwd);
+            return showPropertiesDialog(displayPathName(cwd), addressIcon.src, [
+                ['Type', 'File Folder'],
+                ['Location', VFS.parentOf(cwd)],
+                ['Contains', `${entries.length} item${entries.length === 1 ? '' : 's'}`],
+                ['Created', n && n.mtime ? formatDate(n.mtime) : '\u2014']
+            ]);
+        }
+        const e = sel[0];
+        if (e.desktopIcon) return showIconProperties(e.desktopIcon);
+        showPropertiesDialog(e.name, e.icon, [
+            ['Type', e.typeLabel],
+            ['Location', cwd],
+            ['Size', e.type === 'folder' ? `${(e.node && e.node.children || []).length} items` : formatBytes(e.size)],
+            ['Modified', e.mtime ? formatDate(e.mtime) : '\u2014']
+        ]);
+    }
+
+    /* ---- rename in place ---- */
+    function beginRename(name) {
+        const el = itemsEl.querySelector(`.exp2-item[data-name="${CSS.escape(name)}"] .exp2-name`);
+        if (!el) return;
+        const input = document.createElement('input');
+        input.className = 'exp2-rename';
+        input.value = name;
+        el.replaceWith(input);
+        input.focus();
+        const dot = name.lastIndexOf('.');
+        input.setSelectionRange(0, dot > 0 ? dot : name.length);
+
+        let done = false;
+        const finish = (save) => {
+            if (done) return;
+            done = true;
+            const next = input.value.trim();
+            if (save && next && next !== name && isDesktop()) {
+                const entry = entries.find(x => x.name === name);
+                const span = entry && entry.desktopIcon && entry.desktopIcon.querySelector('span');
+                if (span) {
+                    span.textContent = next;
+                    if (entry.desktopIcon.dataset.name) entry.desktopIcon.dataset.name = next;
+                    entry.desktopIcon.dataset.mtime = String(Date.now());
+                    selection = new Set([next]);
+                }
+                refreshExplorerWindows();
+                return;
+            }
+            if (save && next && next !== name) {
+                if (!VFS.rename(VFS.join(cwd, name), next)) {
+                    XPAudio.play('error');
+                    showInfoDialog('Error Renaming File or Folder', 'assets/error-icon.png',
+                        `Cannot rename <b>${escHtml(name)}</b>: a file with that name already exists.`);
+                } else {
+                    syncDesktopFromVfs(cwd);
+                    selection = new Set([next]);
+                }
+            }
+            refreshExplorerWindows();
+        };
+        input.addEventListener('keydown', (e) => {
+            e.stopPropagation();
+            if (e.key === 'Enter') { e.preventDefault(); finish(true); }
+            else if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+        });
+        input.addEventListener('blur', () => finish(true));
+    }
+
+    /* ---- mouse handling in the file area ---- */
+    itemsEl.addEventListener('mousedown', (e) => {
+        const item = e.target.closest('.exp2-item');
+        if (!item) return;
+        const name = item.dataset.name;
+        if (e.shiftKey) selectRange(name);
+        else if (e.ctrlKey || e.metaKey) {
+            selection.has(name) ? selection.delete(name) : selection.add(name);
+            lastAnchor = name;
+            applySelectionClasses(); updateStatus(); renderSidebar();
+        } else if (!selection.has(name)) {
+            selectOnly(name);
+        }
+    });
+
+    itemsEl.addEventListener('dblclick', (e) => {
+        const item = e.target.closest('.exp2-item');
+        if (!item) return;
+        openEntry(entries.find(x => x.name === item.dataset.name));
+    });
+
+    itemsEl.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const item = e.target.closest('.exp2-item');
+        if (item) {
+            if (!selection.has(item.dataset.name)) selectOnly(item.dataset.name);
+            const entry = entries.find(x => x.name === item.dataset.name);
+            const many = selection.size > 1;
+            showContextMenu(e.clientX, e.clientY, [
+                { label: 'Open', icon: entry.icon, action: () => openEntry(entry) },
+                entry.kind === 'image' ? { label: 'Set as Desktop Background', action: () => { setWallpaper(entry.src); notify({ title: 'Desktop', text: 'Background changed.', icon: SysIcons.info }); } } : null,
+                { sep: true },
+                { label: 'Cut', action: () => cutSelection() },
+                { label: 'Copy', action: () => copySelection() },
+                { sep: true },
+                { label: 'Delete', icon: 'assets/bin-icon.png', action: () => deleteSelection() },
+                { label: 'Rename', disabled: many, action: () => beginRename(entry.name) },
+                { sep: true },
+                { label: 'Properties', action: () => propertiesForSelection() }
+            ].filter(Boolean));
+        } else {
+            selectOnly(null);
+            showContextMenu(e.clientX, e.clientY, [
+                { label: 'View', submenu: ['Thumbnails', 'Tiles', 'Icons', 'List', 'Details'].map(v => ({
+                    label: v, action: () => setView(v.toLowerCase())
+                })) },
+                { label: 'Arrange Icons by', submenu: [
+                    { label: 'Name', action: () => setSort('name') },
+                    { label: 'Size', action: () => setSort('size') },
+                    { label: 'Type', action: () => setSort('type') },
+                    { label: 'Modified', action: () => setSort('mtime') }
+                ]},
+                { label: 'Refresh', action: () => render() },
+                { sep: true },
+                { label: 'Paste', disabled: !clipboard, action: () => pasteHere() },
+                { sep: true },
+                { label: 'New', submenu: [
+                    { label: 'Folder', icon: 'assets/folder-icon.png', action: () => newFolderHere() },
+                    { label: 'Text Document', icon: 'assets/notepad-icon.png', action: () => newTextHere() }
+                ]},
+                { sep: true },
+                { label: 'Properties', action: () => propertiesForSelection() }
+            ]);
+        }
+    });
+
+    // Rubber-band selection over the empty part of the listing
+    filesEl.addEventListener('mousedown', (e) => {
+        if (e.button !== 0 || e.target.closest('.exp2-item')) return;
+        if (!e.ctrlKey && !e.metaKey) selectOnly(null);
+        const fr = filesEl.getBoundingClientRect();
+        const sx = e.clientX, sy = e.clientY;
+        let moved = false;
+        const onMove = (ev) => {
+            if (!moved && Math.hypot(ev.clientX - sx, ev.clientY - sy) < 4) return;
+            moved = true;
+            marqueeEl.style.display = 'block';
+            marqueeEl.style.left = (Math.min(sx, ev.clientX) - fr.left + filesEl.scrollLeft) + 'px';
+            marqueeEl.style.top = (Math.min(sy, ev.clientY) - fr.top + filesEl.scrollTop) + 'px';
+            marqueeEl.style.width = Math.abs(ev.clientX - sx) + 'px';
+            marqueeEl.style.height = Math.abs(ev.clientY - sy) + 'px';
+            const box = { left: Math.min(sx, ev.clientX), right: Math.max(sx, ev.clientX),
+                          top: Math.min(sy, ev.clientY), bottom: Math.max(sy, ev.clientY) };
+            selection = new Set();
+            itemsEl.querySelectorAll('.exp2-item').forEach(el => {
+                if (rectsIntersect(box, el.getBoundingClientRect())) selection.add(el.dataset.name);
+            });
+            applySelectionClasses();
+            updateStatus();
+        };
+        const onUp = () => {
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+            marqueeEl.style.display = 'none';
+            if (moved) renderSidebar();
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+    });
+
+    /* ---- keyboard ---- */
+    function onKeyDown(e) {
+        if (!win.classList.contains('active-window')) return;
+        if (e.target.closest('input, textarea')) return;
+        const key = e.key;
+        if ((e.ctrlKey || e.metaKey) && key.toLowerCase() === 'a') { e.preventDefault(); selectAll(); }
+        else if ((e.ctrlKey || e.metaKey) && key.toLowerCase() === 'c') { e.preventDefault(); copySelection(); }
+        else if ((e.ctrlKey || e.metaKey) && key.toLowerCase() === 'x') { e.preventDefault(); cutSelection(); }
+        else if ((e.ctrlKey || e.metaKey) && key.toLowerCase() === 'v') { e.preventDefault(); pasteHere(); }
+        else if (key === 'F5') { e.preventDefault(); render(); }
+        else if (key === 'F2') { e.preventDefault(); const s = selectedEntries()[0]; if (s) beginRename(s.name); }
+        else if (key === 'Delete') { e.preventDefault(); deleteSelection(); }
+        else if (key === 'Enter') { e.preventDefault(); selectedEntries().forEach(openEntry); }
+        else if (key === 'Backspace') { e.preventDefault(); goUp(); }
+        else if (key === 'ArrowDown' || key === 'ArrowRight' || key === 'ArrowUp' || key === 'ArrowLeft') {
+            e.preventDefault();
+            if (!entries.length) return;
+            const cur = entries.findIndex(x => x.name === lastAnchor);
+            const step = (key === 'ArrowDown' || key === 'ArrowRight') ? 1 : -1;
+            const next = Math.min(entries.length - 1, Math.max(0, cur === -1 ? 0 : cur + step));
+            selectOnly(entries[next].name);
+            const el = itemsEl.querySelector(`.exp2-item[data-name="${CSS.escape(entries[next].name)}"]`);
+            if (el) el.scrollIntoView({ block: 'nearest' });
+        }
+    }
+    document.addEventListener('keydown', onKeyDown);
+
+    /* ---- toolbar / address bar ---- */
+    backBtn.addEventListener('click', () => {
+        if (historyIndex > 0) { historyIndex--; navigate(history[historyIndex], false); }
+    });
+    fwdBtn.addEventListener('click', () => {
+        if (historyIndex < history.length - 1) { historyIndex++; navigate(history[historyIndex], false); }
+    });
+    upBtn.addEventListener('click', goUp);
+    win.querySelector('.exp2-search-btn').addEventListener('click', () => openSearch(cwd));
+    win.querySelector('.exp2-folders-btn').addEventListener('click', () => {
+        treeEl.classList.toggle('hidden');
+        if (!treeEl.classList.contains('hidden')) renderTree();
+    });
+    win.querySelector('.exp2-go').addEventListener('click', () => navigate(addressInput.value.trim()));
+    addressInput.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+        if (e.key === 'Enter') navigate(addressInput.value.trim());
+    });
+    addressInput.addEventListener('focus', () => addressInput.select());
+
+    function setView(v) {
+        view = v;
+        Store.set('xpExplorerView', v);
+        viewsMenu.classList.add('hidden');
+        render();
+    }
+    function setSort(key) {
+        if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
+        render();
+    }
+    viewsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        viewsMenu.classList.toggle('hidden');
+    });
+    viewsMenu.querySelectorAll('.exp2-views-item').forEach(item =>
+        item.addEventListener('click', () => setView(item.dataset.view)));
+    document.addEventListener('click', () => viewsMenu.classList.add('hidden'));
+    detailsHead.querySelectorAll('.exp2-col').forEach(col =>
+        col.addEventListener('click', () => setSort(col.dataset.sort)));
+
+    /* ---- the optional folder tree ---- */
+    function renderTree() {
+        function branch(node, path, depth) {
+            const kids = (node.children || []).filter(c => c.type === 'folder');
+            const open = cwd.toLowerCase().startsWith(path.toLowerCase());
+            return `<div class="exp2-tree-node ${path === cwd ? 'active' : ''}" data-path="${escAttr(path)}"
+                       style="padding-left:${8 + depth * 14}px">
+                      <img src="${escAttr(VFS.iconFor(node))}" alt="">${escHtml(node.name)}
+                    </div>` +
+                (open ? kids.map(k => branch(k, VFS.join(path, k.name), depth + 1)).join('') : '');
+        }
+        treeEl.innerHTML = `<div class="exp2-tree-head">Folders</div>` +
+            `<div class="exp2-tree-node ${cwd === MY_COMPUTER ? 'active' : ''}" data-path="${MY_COMPUTER}" style="padding-left:8px">
+               <img src="assets/start-mycomputer.png" alt="">My Computer</div>` +
+            branch(VFS.root, 'C:', 1);
+        treeEl.querySelectorAll('.exp2-tree-node').forEach(n =>
+            n.addEventListener('click', () => navigate(n.dataset.path)));
+    }
+
+    /* ---- menus ---- */
+    setupMenubar(win, 'exp2-menu-item', 'exp2-dropdown');
+    setupDropdownActions(win, 'exp2-dropdown-item', {
+        newfolder: newFolderHere, newtext: newTextHere,
+        open: () => selectedEntries().forEach(openEntry),
+        rename: () => { const s = selectedEntries()[0]; if (s) beginRename(s.name); },
+        delete: deleteSelection,
+        properties: propertiesForSelection,
+        close: () => closeWindow(win),
+        cut: cutSelection, copy: copySelection, paste: pasteHere,
+        selectall: selectAll,
+        invertselection: () => {
+            const inv = entries.filter(e => !selection.has(e.name)).map(e => e.name);
+            selection = new Set(inv);
+            applySelectionClasses(); updateStatus(); renderSidebar();
+        },
+        'view-thumbnails': () => setView('thumbnails'),
+        'view-tiles': () => setView('tiles'),
+        'view-icons': () => setView('icons'),
+        'view-list': () => setView('list'),
+        'view-details': () => setView('details'),
+        'sort-name': () => setSort('name'),
+        'sort-size': () => setSort('size'),
+        'sort-type': () => setSort('type'),
+        'sort-mtime': () => setSort('mtime'),
+        refresh: () => render(),
+        'fav-docs': () => navigate(VFS.DOCS),
+        'fav-pics': () => navigate(VFS.PICTURES),
+        'fav-projects': () => navigate(VFS.join(VFS.DOCS, 'Projects')),
+        'fav-desktop': () => navigate(VFS.DESKTOP),
+        mapdrive: () => showNotImplemented('Map Network Drive'),
+        synchronize: () => showNotImplemented('Synchronize'),
+        folderoptions: () => showNotImplemented('Folder Options'),
+        helptopics: () => openHelpCenter(),
+        about: () => showAboutWindows()
+    });
+
+    win._explorerRefresh = () => render();
+    win._explorerPath = () => cwd;
+    addCleanup(win, () => document.removeEventListener('keydown', onKeyDown));
+
+    render();
+}
+
+// Shared clipboard for Explorer cut/copy/paste.
+let clipboard = null;
+
+function getExplorerWindows() {
+    return [...document.querySelectorAll('.popup')].filter(w => typeof w._explorerRefresh === 'function');
+}
+function refreshExplorerWindows() {
+    getExplorerWindows().forEach(w => w._explorerRefresh());
+}
+
+
+/* ===== 8. Desktop <-> file system bridge ==================================
+   The Desktop folder is special: what is on screen *is* the folder, so
+   Explorer reads the live icons instead of a stored copy. Everything else
+   lives in the VFS.
+   ========================================================================= */
+function desktopVfsEntries() {
+    return [...document.querySelectorAll('.desktop .icon')].map(icon => {
+        const info = getIconInfo(icon);
+        const img = icon.querySelector('img');
+        const isFolder = icon.classList.contains('folder-new') || icon.id === 'icon3';
+        return {
+            name: info.name,
+            path: VFS.join(VFS.DESKTOP, info.name),
+            desktopIcon: icon,
+            type: isFolder ? 'folder' : 'file',
+            kind: icon.classList.contains('image-file') ? 'image'
+                : icon.classList.contains('text-file') ? 'text'
+                : isFolder ? 'folder' : 'app',
+            icon: img ? img.getAttribute('src') : 'assets/image-file-icon.png',
+            typeLabel: info.type,
+            mtime: info.mtime,
+            size: icon.classList.contains('image-file') ? (getImageInfo(icon.dataset.image).bytes || 0) : info.sizeValue,
+            src: icon.dataset.image
+        };
+    });
+}
+
+// After a VFS change, keep every open view in sync.
+function syncDesktopFromVfs() {
+    refreshExplorerWindows();
+}
+
+// Send a VFS node to the Recycle Bin (restorable).
+function recycleVfsPath(path) {
+    const node = VFS.get(path);
+    if (!node || node.locked) return false;
+    VFS.remove(path);
+    recycleBin.push({
+        type: 'vfs',
+        label: node.name,
+        iconSrc: VFS.iconFor(node),
+        fromPath: VFS.parentOf(path),
+        node
+    });
+    refreshBinWindows();
+    return true;
+}
+
+// Open a file from the file system with the program that handles it.
+function openVfsFile(node, path) {
+    if (!node) return;
+    if (node.kind !== 'app') {
+        rememberRecent({ name: node.name, path, icon: VFS.iconFor(node) });
+    }
+    switch (node.kind) {
+        case 'image': {
+            const siblings = VFS.list(VFS.parentOf(path))
+                .filter(n => n.kind === 'image')
+                .map(n => ({ src: n.src, name: n.name }));
+            openImageFileWindow(node.src, node.name, siblings);
+            break;
+        }
+        case 'text':
+            openNotepadFile(path);
+            break;
+        case 'link':
+            window.open(node.url, '_blank', 'noopener,noreferrer');
+            break;
+        case 'app':
+            launchApp(node.app || VFS.basename(node.name));
+            break;
+        default:
+            XPAudio.play('error');
+            showInfoDialog('Windows', 'assets/error-icon.png',
+                `Windows cannot open this file:<br><br><b>${escHtml(node.name)}</b><br><br>` +
+                `There is no program associated with this file type.`);
+    }
+}
+
+// Notepad bound to a real file, so File > Save writes back to the tree.
+function openNotepadFile(path) {
+    const node = VFS.get(path);
+    if (!node) return null;
+    // Keyed by path, so re-opening a document focuses the window it is in
+    const key = 'notepad-file:' + path.toLowerCase();
+    return openAppWindow(key, {
+        appId: 'notepad',
+        title: node.name + ' - Notepad',
+        icon: 'assets/notepad-icon.png',
+        content: iconContent.icon5.content,
+        width: 520, height: 400, minW: 300, minH: 200,
+        setup: (win) => setupNotepad(win, false, node.content || '', { path, name: node.name })
+    });
+}
+
+
+/* ===== 9. Run, Search, About =============================================== */
+
+function showRunDialog() {
+    const recent = Store.get('xpRunHistory', []);
+    const dlg = showDialog({
+        title: 'Run',
+        icon: 'assets/start-run.png',
+        width: 380,
+        className: 'xp-run-dialog',
+        bodyHtml: `
+            <div class="xp-run-row">
+                <img class="xp-run-img" src="assets/start-run.png" alt="">
+                <p>Type the name of a program, folder, document, or Internet
+                   resource, and Windows will open it for you.</p>
+            </div>
+            <label class="xp-field">
+                <span>Open:</span>
+                <input class="xp-run-input" type="text" list="xp-run-list" spellcheck="false" autocomplete="off">
+                <datalist id="xp-run-list">
+                    ${['notepad', 'mspaint', 'cmd', 'iexplore', 'explorer', 'control', 'taskmgr', 'calc', 'winmine']
+                        .concat(recent).map(v => `<option value="${escAttr(v)}"></option>`).join('')}
+                </datalist>
+            </label>`,
+        buttons: [
+            { label: 'OK', primary: true, action: (el) => { runCommand(el.querySelector('.xp-run-input').value); } },
+            { label: 'Cancel' },
+            { label: 'Browse...', action: () => { openExplorer(VFS.DOCS); } }
+        ]
+    });
+    setTimeout(() => {
+        const input = dlg.el.querySelector('.xp-run-input');
+        if (input) { input.focus(); input.value = recent[0] || ''; input.select(); }
+    }, 40);
+    return dlg;
+}
+
+// The Run box understands program names, URLs and file-system paths.
+function runCommand(raw) {
+    const value = String(raw || '').trim();
+    if (!value) return;
+    const history = [value, ...Store.get('xpRunHistory', []).filter(v => v !== value)].slice(0, 10);
+    Store.set('xpRunHistory', history);
+
+    if (/^(https?:\/\/|www\.)/i.test(value) || looksLikeURL(value)) {
+        const win = launchApp('internet');
+        if (win && typeof win._browserGo === 'function') win._browserGo(normalizeURL(value));
+        return;
+    }
+    if (/^[A-Za-z]:\\/.test(value) || value === MY_COMPUTER) {
+        const node = value === MY_COMPUTER ? true : VFS.get(value);
+        if (!node) return runNotFound(value);
+        if (value === MY_COMPUTER || node.type === 'folder') openExplorer(value);
+        else openVfsFile(node, value);
+        return;
+    }
+    const key = value.toLowerCase().replace(/\.exe$/, '').split(/\s+/)[0];
+    const known = LEGACY_APPS[key] || ['explorer', 'mycomputer', 'controlpanel', 'control', 'taskmgr',
+        'taskmanager', 'calc', 'calculator', 'search', 'help', 'display', 'desk.cpl', 'winver',
+        'sysinfo', 'mydocuments', 'mypictures', 'mymusic'].includes(key);
+    if (!known) return runNotFound(value);
+    launchApp(key);
+}
+
+function runNotFound(value) {
+    XPAudio.play('error');
+    showDialog({
+        title: 'Run', icon: 'assets/error-icon.png', width: 400, sound: false,
+        bodyHtml: `<div class="xp-run-row">
+            <img class="xp-run-img" src="assets/error-icon.png" alt="">
+            <p>Windows cannot find '<b>${escHtml(value)}</b>'. Make sure you typed
+               the name correctly, and then try again.</p></div>`,
+        buttons: [{ label: 'OK', primary: true }]
+    });
+}
+
+// Search Results: walks the whole tree plus the live desktop.
+function openSearch(startPath) {
+    return openAppInstance('search', {
+        appId: 'search',
+        title: 'Search Results',
+        icon: 'assets/start-search.png',
+        content: `
+          <div class="srch">
+            <div class="srch-side">
+              <div class="srch-title">Search Companion</div>
+              <p class="srch-hint">What do you want to search for?</p>
+              <label class="srch-label">All or part of the file name:</label>
+              <input class="srch-name" type="text" spellcheck="false" autocomplete="off">
+              <label class="srch-label">A word or phrase in the file:</label>
+              <input class="srch-text" type="text" spellcheck="false" autocomplete="off">
+              <label class="srch-label">Look in:</label>
+              <select class="srch-scope">
+                <option value="C:">Local Disk (C:)</option>
+                <option value="${escAttr(VFS.DOCS)}">My Documents</option>
+                <option value="${escAttr(VFS.PICTURES)}">My Pictures</option>
+                <option value="${escAttr(VFS.DESKTOP)}">Desktop</option>
+              </select>
+              <div class="srch-actions">
+                <button class="srch-go">Search</button>
+                <button class="srch-clear">Clear</button>
+              </div>
+            </div>
+            <div class="srch-main">
+              <div class="srch-head"><span>Name</span><span>In Folder</span><span>Size</span><span>Type</span></div>
+              <div class="srch-results"><div class="srch-idle">To start your search, follow the instructions in the left pane.</div></div>
+              <div class="srch-status">Ready</div>
+            </div>
+          </div>`,
+        width: 720, height: 460, minW: 560, minH: 340,
+        setup: (win) => setupSearch(win, startPath)
+    });
+}
+
+function setupSearch(win, startPath) {
+    const nameInput = win.querySelector('.srch-name');
+    const textInput = win.querySelector('.srch-text');
+    const scopeSel = win.querySelector('.srch-scope');
+    const resultsEl = win.querySelector('.srch-results');
+    const statusEl = win.querySelector('.srch-status');
+
+    if (startPath) {
+        const opt = [...scopeSel.options].find(o => o.value === startPath);
+        if (opt) scopeSel.value = startPath;
+    }
+
+    function walk(path, out, depth) {
+        if (depth > 8) return;
+        const node = VFS.get(path);
+        if (!node || node.type !== 'folder') return;
+        (node.children || []).forEach(child => {
+            const childPath = VFS.join(path, child.name);
+            out.push({ node: child, path: childPath, folder: path });
+            if (child.type === 'folder') walk(childPath, out, depth + 1);
+        });
+    }
+
+    function run() {
+        const namePart = nameInput.value.trim().toLowerCase();
+        const textPart = textInput.value.trim().toLowerCase();
+        if (!namePart && !textPart) {
+            resultsEl.innerHTML = `<div class="srch-idle">Type a file name or some text to search for.</div>`;
+            statusEl.textContent = 'Ready';
+            return;
+        }
+        const all = [];
+        walk(scopeSel.value === 'C:' ? 'C:' : scopeSel.value, all, 0);
+        if (scopeSel.value === 'C:' || scopeSel.value === VFS.DESKTOP) {
+            desktopVfsEntries().forEach(e => all.push({
+                node: { name: e.name, type: e.type, kind: e.kind, icon: e.icon, mtime: e.mtime, src: e.src },
+                path: e.path, folder: VFS.DESKTOP, desktopIcon: e.desktopIcon
+            }));
+        }
+        const hits = all.filter(({ node }) => {
+            const nameOk = !namePart || node.name.toLowerCase().includes(namePart);
+            const textOk = !textPart || String(node.content || '').toLowerCase().includes(textPart);
+            return nameOk && textOk;
+        });
+
+        statusEl.textContent = `${hits.length} file${hits.length === 1 ? '' : 's'} found`;
+        XPAudio.play(hits.length ? 'navigate' : 'error');
+        if (!hits.length) {
+            resultsEl.innerHTML = `<div class="srch-idle">There are no results to display.</div>`;
+            return;
+        }
+        resultsEl.innerHTML = hits.map((h, i) => `
+            <div class="srch-row" data-i="${i}">
+              <span class="srch-c1"><img src="${escAttr(VFS.iconFor(h.node))}" alt="">${escHtml(h.node.name)}</span>
+              <span class="srch-c2">${escHtml(h.folder)}</span>
+              <span class="srch-c3">${h.node.type === 'folder' ? '' : formatBytes(VFS.sizeOf(h.node))}</span>
+              <span class="srch-c4">${escHtml(VFS.typeLabel(h.node))}</span>
+            </div>`).join('');
+        resultsEl.querySelectorAll('.srch-row').forEach(row => {
+            const hit = hits[+row.dataset.i];
+            row.addEventListener('click', () => {
+                resultsEl.querySelectorAll('.srch-row').forEach(r => r.classList.remove('selected'));
+                row.classList.add('selected');
+            });
+            row.addEventListener('dblclick', () => {
+                if (hit.desktopIcon) openIconWindow(hit.desktopIcon);
+                else if (hit.node.type === 'folder') openExplorer(hit.path);
+                else openVfsFile(hit.node, hit.path);
+            });
+        });
+    }
+
+    win.querySelector('.srch-go').addEventListener('click', run);
+    win.querySelector('.srch-clear').addEventListener('click', () => {
+        nameInput.value = '';
+        textInput.value = '';
+        resultsEl.innerHTML = `<div class="srch-idle">To start your search, follow the instructions in the left pane.</div>`;
+        statusEl.textContent = 'Ready';
+    });
+    [nameInput, textInput].forEach(i => i.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+        if (e.key === 'Enter') run();
+    }));
+    setTimeout(() => nameInput.focus(), 60);
+}
+
+function showAboutWindows() {
+    showDialog({
+        title: 'About Windows',
+        icon: 'assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png',
+        width: 420,
+        bodyHtml: `
+            <div class="xp-about">
+                <img class="xp-about-logo" src="assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png" alt="">
+                <div>
+                    <h3>Microsoft&reg; Windows</h3>
+                    <p>Version 5.1 (Build 2600.xpsp_sp3) Service Pack 3</p>
+                    <p class="xp-about-note">This is a recreation, not the real thing — a Windows XP
+                       desktop rebuilt from scratch in HTML, CSS and JavaScript by
+                       <b>Marco Tancredi</b> as a portfolio piece.</p>
+                    <p class="xp-about-note">Physical memory available to Windows: 523,760 KB</p>
+                </div>
+            </div>`,
+        buttons: [{ label: 'OK', primary: true }]
+    });
+}
+
+function openHelpCenter() {
+    return openAppWindow('helpcenter', {
+        appId: 'help',
+        title: 'Help and Support Center',
+        icon: 'assets/start-help.png',
+        content: `
+          <div class="help-app">
+            <div class="help-banner">
+              <span class="help-brand">Help and Support Center</span>
+              <span class="help-sub">Windows XP Portfolio Edition</span>
+            </div>
+            <div class="help-body">
+              <div class="help-col">
+                <h3>Pick a help topic</h3>
+                <ul class="help-list">
+                  <li data-topic="basics">What's on this desktop</li>
+                  <li data-topic="keyboard">Keyboard shortcuts</li>
+                  <li data-topic="files">Working with files and folders</li>
+                  <li data-topic="contact">Getting in touch with Marco</li>
+                  <li data-topic="about">About this project</li>
+                </ul>
+              </div>
+              <div class="help-col help-content"></div>
+            </div>
+          </div>`,
+        width: 640, height: 460, minW: 480, minH: 340,
+        setup: (win) => {
+            const TOPICS = {
+                basics: `<h3>What's on this desktop</h3>
+                    <p>Everything here behaves like the real thing. Double-click an icon to open it,
+                    drag icons around, right-click anywhere for a context menu.</p>
+                    <ul>
+                      <li><b>Projects</b> — the things Marco has built, with links to the source.</li>
+                      <li><b>Internet Explorer</b> — a working browser frame.</li>
+                      <li><b>Outlook Express</b> — send Marco a message.</li>
+                      <li><b>Notepad, Paint, Command Prompt, Calculator</b> — real, usable tools.</li>
+                      <li><b>Minesweeper and Snake</b> — because it wouldn't be XP without them.</li>
+                    </ul>`,
+                keyboard: `<h3>Keyboard shortcuts</h3>
+                    <table class="help-table">
+                      <tr><td>F2</td><td>Rename the selected icon</td></tr>
+                      <tr><td>Delete</td><td>Send the selection to the Recycle Bin</td></tr>
+                      <tr><td>Ctrl + A</td><td>Select every icon</td></tr>
+                      <tr><td>Enter</td><td>Open the selection</td></tr>
+                      <tr><td>Alt + Tab</td><td>Switch between open windows</td></tr>
+                      <tr><td>Alt + F4</td><td>Close the active window</td></tr>
+                      <tr><td>Ctrl + Shift + Esc</td><td>Task Manager</td></tr>
+                      <tr><td>F5</td><td>Refresh</td></tr>
+                      <tr><td>Windows key</td><td>Open the Start menu</td></tr>
+                    </table>`,
+                files: `<h3>Working with files and folders</h3>
+                    <p>Open <b>My Computer</b> or <b>My Documents</b> from the Start menu to browse a real
+                    file system. You can create folders and text documents, rename them, delete them to the
+                    Recycle Bin and restore them again — and it all survives a page reload.</p>
+                    <p>Drag an image or a text file from your own computer onto the desktop and it becomes
+                    a real icon you can open.</p>`,
+                contact: `<h3>Getting in touch</h3>
+                    <p>Open <b>Outlook Express</b> from the Start menu and click <b>Create Mail</b>.
+                    Write whatever you like — ideas, feedback, work — and press Send.</p>
+                    <p>Or write directly to <b>${escHtml(MAILBOX_EMAIL)}</b>.</p>`,
+                about: `<h3>About this project</h3>
+                    <p>A Windows XP desktop rebuilt in the browser with no framework and no build step:
+                    one HTML file, one stylesheet and one script.</p>
+                    <p>Source: <b>github.com/Marc0GitHub/XP-Portfolio</b></p>`
+            };
+            const content = win.querySelector('.help-content');
+            const show = (topic) => {
+                content.innerHTML = TOPICS[topic] || '';
+                win.querySelectorAll('.help-list li').forEach(li =>
+                    li.classList.toggle('active', li.dataset.topic === topic));
+            };
+            win.querySelectorAll('.help-list li').forEach(li =>
+                li.addEventListener('click', () => { XPAudio.play('click'); show(li.dataset.topic); }));
+            show('basics');
+        }
+    });
+}
+
+
+/* ===== 10. Calculator ====================================================== */
+function openCalculator() {
+    return openAppWindow('calc', {
+        appId: 'calc',
+        title: 'Calculator',
+        icon: 'assets/start-controlpanel.png',
+        content: `
+          <div class="calc-app">
+            <div class="calc-menubar">
+              <span class="calc-menu-item">Edit</span>
+              <span class="calc-menu-item">View</span>
+              <span class="calc-menu-item">Help</span>
+            </div>
+            <div class="calc-display"><span class="calc-value">0</span></div>
+            <div class="calc-keys">
+              <div class="calc-memcol">
+                <button class="calc-key calc-mem" data-k="MC">MC</button>
+                <button class="calc-key calc-mem" data-k="MR">MR</button>
+                <button class="calc-key calc-mem" data-k="MS">MS</button>
+                <button class="calc-key calc-mem" data-k="M+">M+</button>
+              </div>
+              <div class="calc-grid">
+                <button class="calc-key calc-red" data-k="Back">Backspace</button>
+                <button class="calc-key calc-red" data-k="CE">CE</button>
+                <button class="calc-key calc-red" data-k="C">C</button>
+                <button class="calc-key calc-num" data-k="7">7</button>
+                <button class="calc-key calc-num" data-k="8">8</button>
+                <button class="calc-key calc-num" data-k="9">9</button>
+                <button class="calc-key calc-op" data-k="/">/</button>
+                <button class="calc-key calc-fn" data-k="sqrt">sqrt</button>
+                <button class="calc-key calc-num" data-k="4">4</button>
+                <button class="calc-key calc-num" data-k="5">5</button>
+                <button class="calc-key calc-num" data-k="6">6</button>
+                <button class="calc-key calc-op" data-k="*">*</button>
+                <button class="calc-key calc-fn" data-k="%">%</button>
+                <button class="calc-key calc-num" data-k="1">1</button>
+                <button class="calc-key calc-num" data-k="2">2</button>
+                <button class="calc-key calc-num" data-k="3">3</button>
+                <button class="calc-key calc-op" data-k="-">-</button>
+                <button class="calc-key calc-fn" data-k="1/x">1/x</button>
+                <button class="calc-key calc-num" data-k="0">0</button>
+                <button class="calc-key calc-num" data-k="+/-">+/-</button>
+                <button class="calc-key calc-num" data-k=".">.</button>
+                <button class="calc-key calc-op" data-k="+">+</button>
+                <button class="calc-key calc-eq" data-k="=">=</button>
+              </div>
+            </div>
+          </div>`,
+        width: 268, height: 286, minW: 268, minH: 286,
+        setup: setupCalculator
+    });
+}
+
+function setupCalculator(win) {
+    const display = win.querySelector('.calc-value');
+    let current = '0';       // what the display shows
+    let stored = null;       // left-hand operand
+    let pending = null;      // pending operator
+    let fresh = true;        // next digit starts a new number
+    let memory = 0;
+
+    const show = (v) => {
+        const n = Number(v);
+        let text = String(v);
+        if (Number.isFinite(n)) {
+            // Long results collapse to exponent form, like the real Calculator
+            text = Math.abs(n) >= 1e16 || (n !== 0 && Math.abs(n) < 1e-9)
+                ? n.toExponential(10).replace(/e([+-])(\d)$/, 'e$10$2')
+                : String(parseFloat(n.toPrecision(15)));
+        }
+        display.textContent = text;
+    };
+
+    function digit(d) {
+        if (fresh) { current = d === '.' ? '0.' : d; fresh = false; }
+        else if (d === '.') { if (!current.includes('.')) current += '.'; }
+        else current = current === '0' ? d : current + d;
+        show(current);
+    }
+
+    function compute(a, b, op) {
+        switch (op) {
+            case '+': return a + b;
+            case '-': return a - b;
+            case '*': return a * b;
+            case '/': return b === 0 ? 'Cannot divide by zero' : a / b;
+            default: return b;
+        }
+    }
+
+    function operator(op) {
+        const value = parseFloat(current) || 0;
+        if (pending !== null && !fresh) {
+            const result = compute(stored, value, pending);
+            if (typeof result === 'string') { show(result); reset(true); return; }
+            stored = result;
+            show(stored);
+        } else {
+            stored = value;
+        }
+        pending = op;
+        fresh = true;
+    }
+
+    function equals() {
+        if (pending === null) return;
+        const result = compute(stored, parseFloat(current) || 0, pending);
+        if (typeof result === 'string') { show(result); reset(true); return; }
+        show(result);
+        current = String(result);
+        stored = result;
+        pending = null;
+        fresh = true;
+    }
+
+    function reset(keepDisplay) {
+        current = '0'; stored = null; pending = null; fresh = true;
+        if (!keepDisplay) show('0');
+    }
+
+    function press(k) {
+        XPAudio.play('click');
+        if (/^[0-9.]$/.test(k)) return digit(k);
+        switch (k) {
+            case '+': case '-': case '*': case '/': return operator(k);
+            case '=': return equals();
+            case 'C': return reset();
+            case 'CE': current = '0'; fresh = true; return show('0');
+            case 'Back':
+                if (fresh) return;
+                current = current.length > 1 ? current.slice(0, -1) : '0';
+                if (current === '-' || current === '') current = '0';
+                return show(current);
+            case '+/-': current = String(-(parseFloat(current) || 0)); return show(current);
+            case 'sqrt': {
+                const v = parseFloat(current) || 0;
+                if (v < 0) { show('Invalid input for function'); return reset(true); }
+                current = String(Math.sqrt(v)); fresh = true; return show(current);
+            }
+            case '1/x': {
+                const v = parseFloat(current) || 0;
+                if (v === 0) { show('Cannot divide by zero'); return reset(true); }
+                current = String(1 / v); fresh = true; return show(current);
+            }
+            case '%': {
+                const v = parseFloat(current) || 0;
+                current = String((stored || 0) * v / 100); fresh = true; return show(current);
+            }
+            case 'MC': memory = 0; return;
+            case 'MR': current = String(memory); fresh = true; return show(current);
+            case 'MS': memory = parseFloat(current) || 0; return;
+            case 'M+': memory += parseFloat(current) || 0; return;
+        }
+    }
+
+    win.querySelectorAll('.calc-key').forEach(btn =>
+        btn.addEventListener('click', () => press(btn.dataset.k)));
+
+    const KEYMAP = { Enter: '=', '\r': '=', Escape: 'C', Backspace: 'Back', Delete: 'CE', '%': '%' };
+    function onKey(e) {
+        if (!win.classList.contains('active-window')) return;
+        const k = KEYMAP[e.key] || (/^[0-9.+\-*/=]$/.test(e.key) ? e.key : null);
+        if (!k) return;
+        e.preventDefault();
+        press(k);
+        const btn = win.querySelector(`.calc-key[data-k="${CSS.escape(k)}"]`);
+        if (btn) { btn.classList.add('calc-pressed'); setTimeout(() => btn.classList.remove('calc-pressed'), 90); }
+    }
+    document.addEventListener('keydown', onKey);
+    addCleanup(win, () => document.removeEventListener('keydown', onKey));
+}
+
+
+/* ===== 11. Task Manager ====================================================
+   Applications lists the real open windows and can actually end them.
+   Processes and Performance are simulated, but they move like the real ones.
+   ========================================================================= */
+function openTaskManager() {
+    return openAppWindow('taskmgr', {
+        appId: 'taskmgr',
+        title: 'Windows Task Manager',
+        icon: 'assets/start-controlpanel.png',
+        content: `
+          <div class="tm-app">
+            <div class="tm-menubar">
+              <span class="tm-menu-item">File</span><span class="tm-menu-item">Options</span>
+              <span class="tm-menu-item">View</span><span class="tm-menu-item">Windows</span>
+              <span class="tm-menu-item">Help</span>
+            </div>
+            <div class="tm-tabs">
+              <button class="tm-tab active" data-tab="apps">Applications</button>
+              <button class="tm-tab" data-tab="procs">Processes</button>
+              <button class="tm-tab" data-tab="perf">Performance</button>
+            </div>
+            <div class="tm-panel tm-panel-apps">
+              <div class="tm-listhead"><span>Task</span><span>Status</span></div>
+              <div class="tm-applist"></div>
+              <div class="tm-buttons">
+                <button class="tm-btn tm-end" disabled>End Task</button>
+                <button class="tm-btn tm-switch" disabled>Switch To</button>
+                <button class="tm-btn tm-new">New Task...</button>
+              </div>
+            </div>
+            <div class="tm-panel tm-panel-procs hidden">
+              <div class="tm-listhead tm-proc-head"><span>Image Name</span><span>User Name</span><span>CPU</span><span>Mem Usage</span></div>
+              <div class="tm-proclist"></div>
+            </div>
+            <div class="tm-panel tm-panel-perf hidden">
+              <div class="tm-perf-row">
+                <div class="tm-perf-box"><div class="tm-perf-label">CPU Usage</div>
+                  <canvas class="tm-gauge" width="86" height="86"></canvas></div>
+                <div class="tm-perf-box tm-perf-wide"><div class="tm-perf-label">CPU Usage History</div>
+                  <canvas class="tm-graph tm-graph-cpu" width="320" height="86"></canvas></div>
+              </div>
+              <div class="tm-perf-row">
+                <div class="tm-perf-box"><div class="tm-perf-label">PF Usage</div>
+                  <canvas class="tm-gauge tm-gauge-mem" width="86" height="86"></canvas></div>
+                <div class="tm-perf-box tm-perf-wide"><div class="tm-perf-label">Page File Usage History</div>
+                  <canvas class="tm-graph tm-graph-mem" width="320" height="86"></canvas></div>
+              </div>
+              <div class="tm-totals"></div>
+            </div>
+            <div class="tm-statusbar">
+              <span class="tm-stat-proc">Processes: 0</span>
+              <span class="tm-stat-cpu">CPU Usage: 0%</span>
+              <span class="tm-stat-mem">Commit Charge: 0M / 0M</span>
+            </div>
+          </div>`,
+        width: 470, height: 520, minW: 420, minH: 400,
+        setup: setupTaskManager
+    });
+}
+
+function setupTaskManager(win) {
+    const appList = win.querySelector('.tm-applist');
+    const procList = win.querySelector('.tm-proclist');
+    const endBtn = win.querySelector('.tm-end');
+    const switchBtn = win.querySelector('.tm-switch');
+    const totalsEl = win.querySelector('.tm-totals');
+    const statProc = win.querySelector('.tm-stat-proc');
+    const statCpu = win.querySelector('.tm-stat-cpu');
+    const statMem = win.querySelector('.tm-stat-mem');
+
+    let selectedOwner = null;
+    let cpuHistory = new Array(60).fill(2);
+    let memHistory = new Array(60).fill(30);
+
+    // Background processes that are always "running", plus one per open window.
+    const BASE_PROCS = [
+        ['System Idle Process', 'SYSTEM', 92, 28],
+        ['System', 'SYSTEM', 0, 236],
+        ['smss.exe', 'SYSTEM', 0, 388],
+        ['csrss.exe', 'SYSTEM', 0, 4128],
+        ['winlogon.exe', 'SYSTEM', 0, 3624],
+        ['services.exe', 'SYSTEM', 0, 4092],
+        ['lsass.exe', 'SYSTEM', 0, 1268],
+        ['svchost.exe', 'SYSTEM', 0, 5124],
+        ['svchost.exe', 'NETWORK SERVICE', 0, 3648],
+        ['spoolsv.exe', 'SYSTEM', 0, 4416],
+        ['explorer.exe', VFS.USER, 1, 18452],
+        ['taskmgr.exe', VFS.USER, 2, 5108]
+    ];
+
+    const IMAGE_NAMES = {
+        icon2: 'iexplore.exe', icon4: 'mspaint.exe', icon5: 'notepad.exe',
+        icon10: 'msimn.exe', icon11: 'cmd.exe', icon13: 'winmine.exe',
+        icon9: 'snake.exe', icon12: 'blog.exe', icon1: 'explorer.exe', icon3: 'explorer.exe'
+    };
+
+    function openWindowList() {
+        return [...document.querySelectorAll('.popup')].map(w => ({
+            owner: w.dataset.owner,
+            title: (w.querySelector('.popup-title') || {}).textContent || 'Window',
+            icon: w.dataset.icon,
+            minimized: w.style.display === 'none',
+            el: w
+        }));
+    }
+
+    function renderApps() {
+        const list = openWindowList();
+        if (!list.length) {
+            appList.innerHTML = `<div class="tm-empty">There are no tasks running.</div>`;
+        } else {
+            appList.innerHTML = list.map(a => `
+                <div class="tm-row ${a.owner === selectedOwner ? 'selected' : ''}" data-owner="${escAttr(a.owner)}">
+                  <span class="tm-task"><img src="${escAttr(a.icon)}" alt="">${escHtml(a.title)}</span>
+                  <span class="tm-status">Running</span>
+                </div>`).join('');
+            appList.querySelectorAll('.tm-row').forEach(row => {
+                row.addEventListener('click', () => {
+                    selectedOwner = row.dataset.owner;
+                    renderApps();
+                });
+                row.addEventListener('dblclick', () => switchTo(row.dataset.owner));
+            });
+        }
+        const has = !!(selectedOwner && document.querySelector(`.popup[data-owner="${selectedOwner}"]`));
+        endBtn.disabled = !has;
+        switchBtn.disabled = !has;
+        statProc.textContent = `Processes: ${BASE_PROCS.length + list.length}`;
+    }
+
+    function switchTo(owner) {
+        const w = document.querySelector(`.popup[data-owner="${owner}"]`);
+        if (!w) return;
+        if (w.style.display === 'none') restoreWindow(w); else bringToFront(w);
+    }
+
+    function renderProcs(cpu) {
+        const extra = openWindowList().map(a => [
+            IMAGE_NAMES[a.owner] || (String(a.owner).split('-')[0] + '.exe'),
+            VFS.USER,
+            Math.round(Math.random() * 3),
+            8000 + Math.round(Math.random() * 24000)
+        ]);
+        const rows = [...BASE_PROCS, ...extra].map(([name, user, base, mem]) => {
+            const jitter = name === 'System Idle Process'
+                ? Math.max(0, 100 - cpu)
+                : Math.max(0, base + Math.round((Math.random() - 0.6) * 2));
+            return `<div class="tm-row tm-proc-row">
+                <span>${escHtml(name)}</span><span>${escHtml(user)}</span>
+                <span class="tm-num">${String(jitter).padStart(2, '0')}</span>
+                <span class="tm-num">${(mem + Math.round((Math.random() - 0.5) * 400)).toLocaleString()} K</span>
+            </div>`;
+        });
+        procList.innerHTML = rows.join('');
+    }
+
+    function drawGauge(canvas, value, color) {
+        const ctx = canvas.getContext('2d');
+        const { width: w, height: h } = canvas;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = 'rgba(0,160,0,0.35)';
+        ctx.lineWidth = 1;
+        for (let y = 0; y < h; y += 10) { ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(w, y + .5); ctx.stroke(); }
+        for (let x = 0; x < w; x += 10) { ctx.beginPath(); ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, h); ctx.stroke(); }
+        const barH = Math.round(h * value / 100);
+        ctx.fillStyle = color;
+        ctx.fillRect(6, h - barH, w - 12, barH);
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 13px Tahoma, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(Math.round(value) + ' %', w / 2, h / 2 + 5);
+    }
+
+    function drawGraph(canvas, data, color) {
+        const ctx = canvas.getContext('2d');
+        const { width: w, height: h } = canvas;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = 'rgba(0,160,0,0.3)';
+        ctx.lineWidth = 1;
+        for (let y = 0; y < h; y += 12) { ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(w, y + .5); ctx.stroke(); }
+        for (let x = 0; x < w; x += 12) { ctx.beginPath(); ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, h); ctx.stroke(); }
+        const step = w / (data.length - 1);
+        ctx.beginPath();
+        data.forEach((v, i) => {
+            const x = i * step;
+            const y = h - (v / 100) * h;
+            i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        });
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
+        ctx.fillStyle = color.replace('rgb', 'rgba').replace(')', ',0.25)');
+        ctx.fill();
+    }
+
+    function tickPerf() {
+        const windows = document.querySelectorAll('.popup').length;
+        const target = 3 + windows * 4 + Math.random() * 14;
+        const cpu = Math.min(100, Math.max(0, cpuHistory[cpuHistory.length - 1] * 0.7 + target * 0.3));
+        cpuHistory = [...cpuHistory.slice(1), cpu];
+        const mem = Math.min(100, 26 + windows * 5 + Math.random() * 4);
+        memHistory = [...memHistory.slice(1), mem];
+
+        drawGauge(win.querySelector('.tm-gauge'), cpu, 'rgb(0,255,0)');
+        drawGauge(win.querySelector('.tm-gauge-mem'), mem, 'rgb(255,235,0)');
+        drawGraph(win.querySelector('.tm-graph-cpu'), cpuHistory, 'rgb(0,255,0)');
+        drawGraph(win.querySelector('.tm-graph-mem'), memHistory, 'rgb(255,235,0)');
+
+        const commit = Math.round(mem * 10.24);
+        totalsEl.innerHTML = `
+            <div class="tm-totals-box"><b>Totals</b>
+              <div>Handles<span>${(8400 + windows * 120).toLocaleString()}</span></div>
+              <div>Threads<span>${(320 + windows * 9)}</span></div>
+              <div>Processes<span>${BASE_PROCS.length + windows}</span></div>
+            </div>
+            <div class="tm-totals-box"><b>Physical Memory (K)</b>
+              <div>Total<span>523,760</span></div>
+              <div>Available<span>${(523760 - commit * 380).toLocaleString()}</span></div>
+              <div>System Cache<span>${(118000 + windows * 900).toLocaleString()}</span></div>
+            </div>`;
+        statCpu.textContent = `CPU Usage: ${Math.round(cpu)}%`;
+        statMem.textContent = `Commit Charge: ${commit}M / 1024M`;
+
+        if (!win.querySelector('.tm-panel-procs').classList.contains('hidden')) renderProcs(cpu);
+    }
+
+    win.querySelectorAll('.tm-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            XPAudio.play('click');
+            win.querySelectorAll('.tm-tab').forEach(t => t.classList.toggle('active', t === tab));
+            win.querySelectorAll('.tm-panel').forEach(p =>
+                p.classList.toggle('hidden', !p.classList.contains('tm-panel-' + tab.dataset.tab)));
+            tickPerf();
+        });
+    });
+
+    endBtn.addEventListener('click', () => {
+        const w = document.querySelector(`.popup[data-owner="${selectedOwner}"]`);
+        if (!w) return;
+        const title = (w.querySelector('.popup-title') || {}).textContent || 'this program';
+        showConfirmDialog('End Program', 'assets/error-icon.png',
+            `<b>${escHtml(title)}</b><br><br>Ending this program will close it immediately. Continue?`,
+            () => { closeWindow(w); selectedOwner = null; renderApps(); });
+    });
+    switchBtn.addEventListener('click', () => switchTo(selectedOwner));
+    win.querySelector('.tm-new').addEventListener('click', () => showRunDialog());
+
+    const appTimer = setInterval(renderApps, 1200);
+    const perfTimer = setInterval(tickPerf, 1000);
+    addCleanup(win, () => { clearInterval(appTimer); clearInterval(perfTimer); });
+
+    renderApps();
+    tickPerf();
+}
+
+
+/* ===== 12. Control Panel =================================================== */
+const CONTROL_PANEL_ITEMS = [
+    { name: 'Display', icon: 'assets/xp-desktop.webp', desc: 'Change the appearance of your desktop, such as the background, screen saver, colors and font sizes.', open: () => showDisplayProperties() },
+    { name: 'Sounds and Audio Devices', icon: 'assets/start-mediaplayer.png', desc: 'Change the sound scheme for your computer, or configure the settings for your speakers.', open: () => showSoundProperties() },
+    { name: 'Date and Time', icon: 'assets/start-controlpanel.png', desc: 'Set the date, time and time zone for your computer.', open: () => showDateTimeProperties() },
+    { name: 'System', icon: 'assets/start-mycomputer.png', desc: 'See information about your computer system, and change settings for hardware and performance.', open: () => showSystemProperties() },
+    { name: 'Add or Remove Programs', icon: null, desc: 'Install or remove programs and Windows components.', open: () => showAddRemovePrograms() },
+    { name: 'Taskbar and Start Menu', icon: 'assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png', desc: 'Customize the Start menu and the taskbar, such as the types of items to be displayed and how they should appear.', open: () => showTaskbarProperties() },
+    { name: 'User Accounts', icon: 'assets/start-avatar.png', desc: 'Change user account settings and passwords for people who share this computer.', open: () => showUserAccounts() },
+    { name: 'Mouse', icon: 'assets/start-printers.png', desc: 'Customize your mouse settings, such as the button configuration and pointer speed.', open: () => showNotImplemented('Mouse Properties') },
+    { name: 'Printers and Faxes', icon: 'assets/start-printers.png', desc: 'Shows installed printers and fax printers and helps you add new ones.', open: () => showInfoDialog('Printers and Faxes', 'assets/start-printers.png', 'No printers are installed on this computer.') }
+];
+
+function openControlPanel(focusName) {
+    const win = openAppWindow('controlpanel', {
+        appId: 'controlpanel',
+        title: 'Control Panel',
+        icon: 'assets/start-controlpanel.png',
+        content: `
+          <div class="cp-app">
+            <div class="cp-toolbar">
+              <button class="cp-tbtn cp-view-toggle">Switch to Category View</button>
+              <span class="cp-title">Control Panel</span>
+            </div>
+            <div class="cp-body">
+              <div class="cp-side">
+                <div class="cp-pane">
+                  <div class="cp-pane-title">See Also</div>
+                  <button class="cp-link" data-go="windowsupdate">Windows Update</button>
+                  <button class="cp-link" data-go="help">Help and Support</button>
+                </div>
+              </div>
+              <div class="cp-items"></div>
+            </div>
+            <div class="cp-status"></div>
+          </div>`,
+        width: 660, height: 460, minW: 520, minH: 340,
+        setup: (w) => setupControlPanel(w, focusName)
+    });
+    return win;
+}
+
+function setupControlPanel(win, focusName) {
+    const itemsEl = win.querySelector('.cp-items');
+    const statusEl = win.querySelector('.cp-status');
+    const toggle = win.querySelector('.cp-view-toggle');
+    let category = Store.get('xpCpCategory', false);
+
+    const CATEGORIES = [
+        { name: 'Appearance and Themes', icon: 'assets/xp-desktop.webp', items: ['Display', 'Taskbar and Start Menu'] },
+        { name: 'Sounds, Speech, and Audio Devices', icon: 'assets/start-mediaplayer.png', items: ['Sounds and Audio Devices'] },
+        { name: 'Performance and Maintenance', icon: 'assets/start-mycomputer.png', items: ['System', 'Date and Time'] },
+        { name: 'Add or Remove Programs', icon: null, items: ['Add or Remove Programs'] },
+        { name: 'Printers and Other Hardware', icon: 'assets/start-printers.png', items: ['Printers and Faxes', 'Mouse'] },
+        { name: 'User Accounts', icon: 'assets/start-avatar.png', items: ['User Accounts'] }
+    ];
+
+    function render() {
+        toggle.textContent = category ? 'Switch to Classic View' : 'Switch to Category View';
+        itemsEl.className = 'cp-items' + (category ? ' cp-items-cat' : '');
+        if (category) {
+            itemsEl.innerHTML = CATEGORIES.map((c, i) => `
+                <button class="cp-cat" data-i="${i}">
+                  <img src="${escAttr(c.icon || ALL_PROGRAMS_ICON)}" alt="">
+                  <div><b>${escHtml(c.name)}</b><span>${escHtml(c.items.join(', '))}</span></div>
+                </button>`).join('');
+            itemsEl.querySelectorAll('.cp-cat').forEach(btn => {
+                const cat = CATEGORIES[+btn.dataset.i];
+                btn.addEventListener('mouseenter', () => { statusEl.textContent = cat.name; });
+                btn.addEventListener('click', () => {
+                    XPAudio.play('click');
+                    const first = CONTROL_PANEL_ITEMS.find(it => it.name === cat.items[0]);
+                    if (first) first.open();
+                });
+            });
+        } else {
+            itemsEl.innerHTML = CONTROL_PANEL_ITEMS.map((it, i) => `
+                <button class="cp-item" data-i="${i}" title="${escAttr(it.desc)}">
+                  <img src="${escAttr(it.icon || ALL_PROGRAMS_ICON)}" alt="">
+                  <span>${escHtml(it.name)}</span>
+                </button>`).join('');
+            itemsEl.querySelectorAll('.cp-item').forEach(btn => {
+                const item = CONTROL_PANEL_ITEMS[+btn.dataset.i];
+                btn.addEventListener('mouseenter', () => { statusEl.textContent = item.desc; });
+                btn.addEventListener('mouseleave', () => { statusEl.textContent = ''; });
+                btn.addEventListener('dblclick', () => { XPAudio.play('click'); item.open(); });
+                btn.addEventListener('click', () => {
+                    itemsEl.querySelectorAll('.cp-item').forEach(b => b.classList.toggle('selected', b === btn));
+                });
+            });
+        }
+    }
+
+    toggle.addEventListener('click', () => {
+        category = !category;
+        Store.set('xpCpCategory', category);
+        XPAudio.play('click');
+        render();
+    });
+    win.querySelectorAll('.cp-link').forEach(link => link.addEventListener('click', () => {
+        if (link.dataset.go === 'help') openHelpCenter();
+        else showNotImplemented('Windows Update');
+    }));
+
+    render();
+    if (focusName) {
+        const item = CONTROL_PANEL_ITEMS.find(i => i.name === focusName);
+        if (item) setTimeout(item.open, 120);
+    }
+}
+
+
+/* ===== 13. Display Properties, themes and the screen saver =================
+   The Appearance tab really does restyle the desktop (XP shipped Blue, Olive
+   Green and Silver), and the Screen Saver tab really does start one.
+   ========================================================================= */
+const LUNA_THEMES = {
+    blue:   { label: 'Default (blue)', cls: '' },
+    olive:  { label: 'Olive Green',    cls: 'luna-olive' },
+    silver: { label: 'Silver',         cls: 'luna-silver' }
+};
+const THEME_KEY = 'xpLunaTheme';
+
+function applyLunaTheme(name) {
+    const theme = LUNA_THEMES[name] || LUNA_THEMES.blue;
+    document.body.classList.remove('luna-olive', 'luna-silver');
+    if (theme.cls) document.body.classList.add(theme.cls);
+    Store.set(THEME_KEY, name in LUNA_THEMES ? name : 'blue');
+}
+
+const SCREENSAVERS = {
+    none:      'None',
+    logo:      'Windows XP',
+    starfield: 'Starfield Simulation',
+    marquee:   '3D Text',
+    mystify:   'Mystify'
+};
+const SAVER_KEY = 'xpScreenSaver';
+const SAVER_WAIT_KEY = 'xpScreenSaverWait';
+
+function showDisplayProperties(initialTab) {
+    const current = getSavedWallpaper();
+    const theme = Store.get(THEME_KEY, 'blue');
+    const saver = Store.get(SAVER_KEY, 'logo');
+    const wait = Store.get(SAVER_WAIT_KEY, 5);
+
+    const wallpaperOptions = [{ src: DEFAULT_WALLPAPER, label: 'Bliss (default)' }, ...WALLPAPERS];
+
+    const dlg = showDialog({
+        title: 'Display Properties',
+        icon: 'assets/xp-desktop.webp',
+        width: 440,
+        className: 'xp-tabbed',
+        bodyHtml: `
+          <div class="xp-tabs">
+            <button class="xp-tab" data-tab="themes">Themes</button>
+            <button class="xp-tab" data-tab="desktop">Desktop</button>
+            <button class="xp-tab" data-tab="saver">Screen Saver</button>
+            <button class="xp-tab" data-tab="appearance">Appearance</button>
+            <button class="xp-tab" data-tab="settings">Settings</button>
+          </div>
+          <div class="xp-tabbody">
+
+            <div class="xp-tabpage" data-page="themes">
+              <p>A theme is a background plus a set of sounds, icons and other
+                 elements to help you personalize your computer with one click.</p>
+              <label class="xp-field"><span>Theme:</span>
+                <select class="dp-theme">
+                  ${Object.entries(LUNA_THEMES).map(([k, v]) =>
+                    `<option value="${k}" ${k === theme ? 'selected' : ''}>Windows XP — ${escHtml(v.label)}</option>`).join('')}
+                </select>
+              </label>
+              <div class="dp-monitor"><div class="dp-screen dp-preview-screen"></div></div>
+            </div>
+
+            <div class="xp-tabpage hidden" data-page="desktop">
+              <div class="dp-monitor"><div class="dp-screen dp-wall-preview"></div></div>
+              <label class="xp-label">Background:</label>
+              <div class="dp-wall-list">
+                ${wallpaperOptions.map(w => `<div class="dp-wall ${w.src === current ? 'selected' : ''}" data-src="${escAttr(w.src)}">${escHtml(w.label)}</div>`).join('')}
+                ${ANIMATED_WALLPAPERS.map(w => `<div class="dp-wall ${w.src === current ? 'selected' : ''}" data-src="${escAttr(w.src)}" data-anim="1">${escHtml(w.label)} (video)</div>`).join('')}
+              </div>
+              <div class="dp-row">
+                <button class="xp-btn dp-browse">Browse...</button>
+                <span class="dp-hint">Right-click any image on the desktop for “Set as Wallpaper”.</span>
+              </div>
+              <label class="xp-check dp-buddy-row">
+                <input type="checkbox" class="dp-buddy"> Show the desktop buddy
+              </label>
+            </div>
+
+            <div class="xp-tabpage hidden" data-page="saver">
+              <div class="dp-monitor"><div class="dp-screen dp-saver-preview"></div></div>
+              <label class="xp-field"><span>Screen saver:</span>
+                <select class="dp-saver">
+                  ${Object.entries(SCREENSAVERS).map(([k, v]) =>
+                    `<option value="${k}" ${k === saver ? 'selected' : ''}>${escHtml(v)}</option>`).join('')}
+                </select>
+              </label>
+              <div class="dp-row">
+                <button class="xp-btn dp-preview-btn">Preview</button>
+                <label class="xp-field xp-field-inline"><span>Wait:</span>
+                  <input class="dp-wait" type="number" min="1" max="60" value="${wait}"> <span>minutes</span>
+                </label>
+              </div>
+              <p class="dp-hint">The screen saver starts after the desktop has been idle for this long.
+                 Move the mouse or press a key to wake it.</p>
+            </div>
+
+            <div class="xp-tabpage hidden" data-page="appearance">
+              <div class="dp-monitor"><div class="dp-screen dp-appearance-screen">
+                 <div class="dp-fake-title">Active Window</div>
+                 <div class="dp-fake-body"><button class="dp-fake-btn">OK</button></div>
+              </div></div>
+              <label class="xp-field"><span>Windows and buttons:</span>
+                <select class="dp-style" disabled><option>Windows XP style</option></select>
+              </label>
+              <label class="xp-field"><span>Color scheme:</span>
+                <select class="dp-color">
+                  ${Object.entries(LUNA_THEMES).map(([k, v]) =>
+                    `<option value="${k}" ${k === theme ? 'selected' : ''}>${escHtml(v.label)}</option>`).join('')}
+                </select>
+              </label>
+              <label class="xp-field"><span>Font size:</span>
+                <select class="dp-font"><option>Normal</option><option>Large Fonts</option><option>Extra Large Fonts</option></select>
+              </label>
+            </div>
+
+            <div class="xp-tabpage hidden" data-page="settings">
+              <div class="dp-monitor"><div class="dp-screen dp-settings-screen"></div></div>
+              <div class="dp-row dp-settings-row">
+                <label class="xp-label">Screen resolution</label>
+                <div class="dp-res">${window.innerWidth} by ${window.innerHeight} pixels</div>
+              </div>
+              <div class="dp-row dp-settings-row">
+                <label class="xp-label">Color quality</label>
+                <select class="dp-depth"><option>Highest (32 bit)</option><option>Medium (16 bit)</option></select>
+              </div>
+              <p class="dp-hint">Resolution follows your browser window — resize it and this updates.</p>
+            </div>
+
+          </div>`,
+        buttons: [
+            { label: 'OK', primary: true },
+            { label: 'Cancel', action: () => { /* changes apply live, so this just closes */ } },
+            { label: 'Apply', action: () => false }
+        ]
+    });
+
+    const el = dlg.el;
+    const pages = el.querySelectorAll('.xp-tabpage');
+    const tabs = el.querySelectorAll('.xp-tab');
+
+    function selectTab(name) {
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+        pages.forEach(p => p.classList.toggle('hidden', p.dataset.page !== name));
+    }
+    tabs.forEach(t => t.addEventListener('click', () => { XPAudio.play('click'); selectTab(t.dataset.tab); }));
+    selectTab(initialTab || 'desktop');
+
+    // ---- live wallpaper preview + apply ----
+    const previews = el.querySelectorAll('.dp-screen');
+    function paintPreview(src) {
+        previews.forEach(p => {
+            p.style.backgroundImage = isAnimatedWallpaper(src)
+                ? `url(${(ANIMATED_WALLPAPERS.find(w => w.src === src) || {}).poster || DEFAULT_WALLPAPER})`
+                : `url(${src})`;
+        });
+    }
+    paintPreview(current);
+
+    el.querySelectorAll('.dp-wall').forEach(item => {
+        item.addEventListener('click', () => {
+            el.querySelectorAll('.dp-wall').forEach(i => i.classList.remove('selected'));
+            item.classList.add('selected');
+            setWallpaper(item.dataset.src);
+            paintPreview(item.dataset.src);
+            XPAudio.play('click');
+        });
+    });
+    const buddyBox = el.querySelector('.dp-buddy');
+    if (buddyBox) {
+        buddyBox.checked = Mascot.on;
+        buddyBox.addEventListener('change', () => {
+            Mascot.set(buddyBox.checked);
+            XPAudio.play('click');
+        });
+    }
+
+    el.querySelector('.dp-browse').addEventListener('click', () => {
+        pickLocalFiles('image/*', (files) => {
+            const file = files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => { setWallpaper(reader.result); paintPreview(reader.result); };
+            reader.readAsDataURL(file);
+        });
+    });
+
+    // ---- theme / colour scheme ----
+    const themeSel = el.querySelector('.dp-theme');
+    const colorSel = el.querySelector('.dp-color');
+    const setTheme = (v) => {
+        applyLunaTheme(v);
+        themeSel.value = v;
+        colorSel.value = v;
+        XPAudio.play('click');
+    };
+    themeSel.addEventListener('change', () => setTheme(themeSel.value));
+    colorSel.addEventListener('change', () => setTheme(colorSel.value));
+
+    // ---- screen saver ----
+    const saverSel = el.querySelector('.dp-saver');
+    const waitInput = el.querySelector('.dp-wait');
+    saverSel.addEventListener('change', () => {
+        Store.set(SAVER_KEY, saverSel.value);
+        ScreenSaver.reset();
+    });
+    waitInput.addEventListener('change', () => {
+        const v = Math.min(60, Math.max(1, parseInt(waitInput.value, 10) || 5));
+        waitInput.value = v;
+        Store.set(SAVER_WAIT_KEY, v);
+        ScreenSaver.reset();
+    });
+    el.querySelector('.dp-preview-btn').addEventListener('click', () => {
+        dlg.close();
+        ScreenSaver.start(saverSel.value);
+    });
+
+    return dlg;
+}
+
+function showSoundProperties() {
+    const dlg = showDialog({
+        title: 'Sounds and Audio Devices Properties',
+        icon: 'assets/start-mediaplayer.png',
+        width: 400,
+        bodyHtml: `
+          <div class="snd-panel">
+            <label class="xp-label">Device volume</label>
+            <div class="snd-row">
+              <span>Low</span>
+              <input class="snd-slider" type="range" min="0" max="100" value="${Math.round(XPAudio.volume * 100)}">
+              <span>High</span>
+            </div>
+            <label class="xp-check"><input type="checkbox" class="snd-mute" ${XPAudio.muted ? 'checked' : ''}> Mute</label>
+            <hr>
+            <label class="xp-label">Sound scheme</label>
+            <select class="snd-scheme"><option>Windows XP Portfolio</option><option>No Sounds</option></select>
+            <p class="dp-hint">Every sound on this desktop is generated live with the Web Audio API —
+               no audio files are downloaded.</p>
+            <div class="snd-test">
+              ${['startup', 'ding', 'error', 'recycle', 'tada'].map(s =>
+                `<button class="xp-btn snd-play" data-sound="${s}">${s}</button>`).join('')}
+            </div>
+          </div>`,
+        buttons: [{ label: 'OK', primary: true }, { label: 'Cancel' }]
+    });
+    const el = dlg.el;
+    const slider = el.querySelector('.snd-slider');
+    const mute = el.querySelector('.snd-mute');
+    slider.addEventListener('input', () => { XPAudio.volume = slider.value / 100; syncVolumeUi(); });
+    slider.addEventListener('change', () => XPAudio.play('ding'));
+    mute.addEventListener('change', () => { XPAudio.muted = mute.checked; syncVolumeUi(); });
+    el.querySelector('.snd-scheme').addEventListener('change', (e) => {
+        XPAudio.muted = e.target.value === 'No Sounds';
+        mute.checked = XPAudio.muted;
+        syncVolumeUi();
+    });
+    el.querySelectorAll('.snd-play').forEach(b =>
+        b.addEventListener('click', () => XPAudio.play(b.dataset.sound)));
+    return dlg;
+}
+
+function showDateTimeProperties() {
+    let timer = null;
+    const dlg = showDialog({
+        onClose: () => clearInterval(timer),
+        title: 'Date and Time Properties',
+        icon: 'assets/start-controlpanel.png',
+        width: 340,
+        bodyHtml: `
+          <div class="dt-panel">
+            <div class="dt-clock"></div>
+            <div class="dt-date"></div>
+            <label class="xp-field"><span>Time zone:</span>
+              <select class="dt-tz"><option>${escHtml(Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local time')}</option></select>
+            </label>
+            <p class="dp-hint">The clock follows your computer's real time.</p>
+          </div>`,
+        buttons: [{ label: 'OK', primary: true }, { label: 'Cancel' }]
+    });
+    const clock = dlg.el.querySelector('.dt-clock');
+    const date = dlg.el.querySelector('.dt-date');
+    const tick = () => {
+        const d = new Date();
+        clock.textContent = d.toLocaleTimeString();
+        date.textContent = d.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    };
+    tick();
+    timer = setInterval(tick, 1000);
+    return dlg;
+}
+
+function showSystemProperties() {
+    const nav = navigator || {};
+    showDialog({
+        title: 'System Properties',
+        icon: 'assets/start-mycomputer.png',
+        width: 420,
+        bodyHtml: `
+          <div class="sys-panel">
+            <img class="sys-logo" src="assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png" alt="">
+            <div class="sys-info">
+              <b>System:</b>
+              <div>Microsoft Windows XP</div>
+              <div>Portfolio Edition</div>
+              <div>Version 2026</div>
+              <br>
+              <b>Registered to:</b>
+              <div>Marco Tancredi</div>
+              <div>github.com/Marc0GitHub</div>
+              <br>
+              <b>Computer:</b>
+              <div>${escHtml((nav.userAgentData && nav.userAgentData.platform) || nav.platform || 'x86 Family')}</div>
+              <div>${escHtml(String(nav.hardwareConcurrency || 4))} logical processors</div>
+              <div>${escHtml(String(nav.deviceMemory || 4))} GB of RAM</div>
+              <div>${window.screen.width} × ${window.screen.height} display</div>
+            </div>
+          </div>`,
+        buttons: [{ label: 'OK', primary: true }]
+    });
+}
+
+function showAddRemovePrograms() {
+    const programs = [
+        { name: 'Internet Explorer', size: '12.4 MB', used: 'Frequently', app: 'internet' },
+        { name: 'Outlook Express', size: '8.1 MB', used: 'Occasionally', app: 'email' },
+        { name: 'Paint', size: '2.7 MB', used: 'Occasionally', app: 'paint' },
+        { name: 'Notepad', size: '0.6 MB', used: 'Frequently', app: 'notepad' },
+        { name: 'Minesweeper', size: '1.2 MB', used: 'Rarely', app: 'minesweeper' },
+        { name: 'Snake', size: '0.9 MB', used: 'Rarely', app: 'snake' },
+        { name: 'Command Prompt', size: '0.4 MB', used: 'Occasionally', app: 'cmd' },
+        { name: "Marco's Blog", size: '3.3 MB', used: 'Frequently', app: 'blog' }
+    ];
+    const dlg = showDialog({
+        title: 'Add or Remove Programs',
+        icon: ALL_PROGRAMS_ICON,
+        width: 520,
+        bodyHtml: `
+          <div class="arp-panel">
+            <p class="dp-hint">Currently installed programs:</p>
+            <div class="arp-list">
+              ${programs.map((p, i) => `
+                <div class="arp-row" data-i="${i}">
+                  <span class="arp-name">${escHtml(p.name)}</span>
+                  <span class="arp-size">Size &nbsp;<b>${escHtml(p.size)}</b></span>
+                  <span class="arp-used">Used &nbsp;<b>${escHtml(p.used)}</b></span>
+                  <button class="xp-btn arp-open">Open</button>
+                </div>`).join('')}
+            </div>
+          </div>`,
+        buttons: [{ label: 'Close', primary: true }]
+    });
+    dlg.el.querySelectorAll('.arp-row').forEach(row => {
+        const p = programs[+row.dataset.i];
+        row.querySelector('.arp-open').addEventListener('click', () => { dlg.close(); launchApp(p.app); });
+        row.addEventListener('click', () => {
+            dlg.el.querySelectorAll('.arp-row').forEach(r => r.classList.toggle('selected', r === row));
+        });
+    });
+}
+
+function showTaskbarProperties() {
+    const cfg = Store.get('xpTaskbarPrefs', { autohide: false, clock: true, quicklaunch: true });
+    const dlg = showDialog({
+        title: 'Taskbar and Start Menu Properties',
+        icon: 'assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png',
+        width: 360,
+        bodyHtml: `
+          <div class="tbp-panel">
+            <label class="xp-check"><input type="checkbox" data-k="autohide" ${cfg.autohide ? 'checked' : ''}> Auto-hide the taskbar</label>
+            <label class="xp-check"><input type="checkbox" data-k="quicklaunch" ${cfg.quicklaunch ? 'checked' : ''}> Show Quick Launch</label>
+            <label class="xp-check"><input type="checkbox" data-k="clock" ${cfg.clock ? 'checked' : ''}> Show the clock</label>
+          </div>`,
+        buttons: [{ label: 'OK', primary: true }, { label: 'Cancel' }]
+    });
+    dlg.el.querySelectorAll('input[type=checkbox]').forEach(box => {
+        box.addEventListener('change', () => {
+            cfg[box.dataset.k] = box.checked;
+            Store.set('xpTaskbarPrefs', cfg);
+            applyTaskbarPrefs();
+        });
+    });
+}
+
+function showUserAccounts() {
+    showDialog({
+        title: 'User Accounts',
+        icon: 'assets/start-avatar.png',
+        width: 360,
+        bodyHtml: `
+          <div class="ua-panel">
+            <img class="ua-avatar" src="assets/start-avatar.png" alt="">
+            <div>
+              <h3>${escHtml(VFS.USER)}</h3>
+              <p>Computer administrator</p>
+              <p class="dp-hint">Password protected — well, it would be, if this were a real computer.</p>
+            </div>
+          </div>`,
+        buttons: [{ label: 'OK', primary: true }]
+    });
+}
+
+// Open the browser's file picker without leaving a stray <input> behind.
+function pickLocalFiles(accept, callback, multiple = false) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = accept || '';
+    input.multiple = !!multiple;
+    input.style.display = 'none';
+    document.body.appendChild(input);
+    input.addEventListener('change', () => {
+        callback([...input.files]);
+        input.remove();
+    });
+    input.click();
+}
+
+
+/* ===== 14. Window manager extras ===========================================
+   Edge resizing on all eight sides, drag-to-edge snapping with a preview,
+   the system menu on the title bar, and an Alt+Tab switcher.
+   ========================================================================= */
+
+const EDGE_DIRECTIONS = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
+
+function installEdgeResizers(win) {
+    EDGE_DIRECTIONS.forEach(dir => {
+        const handle = document.createElement('div');
+        handle.className = 'rs-edge rs-' + dir;
+        win.appendChild(handle);
+        handle.addEventListener('mousedown', (e) => {
+            if (win.classList.contains('maximized')) return;
+            e.preventDefault();
+            e.stopPropagation();
+            bringToFront(win);
+            const startRect = win.getBoundingClientRect();
+            const sx = e.clientX, sy = e.clientY;
+            const minW = parseInt(win.dataset.minW || '200', 10);
+            const minH = parseInt(win.dataset.minH || '150', 10);
+            document.body.classList.add('resizing');
+
+            const onMove = (ev) => {
+                const dx = ev.clientX - sx;
+                const dy = ev.clientY - sy;
+                let { left, top, width, height } = {
+                    left: startRect.left, top: startRect.top,
+                    width: startRect.width, height: startRect.height
+                };
+                if (dir.includes('e')) width = Math.max(minW, startRect.width + dx);
+                if (dir.includes('s')) height = Math.max(minH, startRect.height + dy);
+                if (dir.includes('w')) {
+                    width = Math.max(minW, startRect.width - dx);
+                    left = startRect.right - width;
+                }
+                if (dir.includes('n')) {
+                    height = Math.max(minH, startRect.height - dy);
+                    top = Math.max(0, startRect.bottom - height);
+                    height = startRect.bottom - top;
+                }
+                win.style.left = Math.round(left) + 'px';
+                win.style.top = Math.round(top) + 'px';
+                win.style.width = Math.round(width) + 'px';
+                win.style.height = Math.round(height) + 'px';
+                win.dispatchEvent(new CustomEvent('windowResizing'));
+            };
+            const onUp = () => {
+                document.removeEventListener('mousemove', onMove);
+                document.removeEventListener('mouseup', onUp);
+                document.body.classList.remove('resizing');
+                win.dispatchEvent(new CustomEvent('windowResized'));
+            };
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+        });
+    });
+}
+
+/* ---- drag-to-edge snapping ---- */
+let snapPreviewEl = null;
+
+function snapZoneFor(x, y) {
+    const EDGE = 12;
+    if (y <= EDGE) return 'top';
+    if (x <= EDGE) return 'left';
+    if (x >= window.innerWidth - EDGE) return 'right';
+    return null;
+}
+
+function snapRect(zone) {
+    const h = workAreaHeight();
+    switch (zone) {
+        case 'top':   return { left: 0, top: 0, width: window.innerWidth, height: h };
+        case 'left':  return { left: 0, top: 0, width: Math.round(window.innerWidth / 2), height: h };
+        case 'right': return { left: Math.round(window.innerWidth / 2), top: 0,
+                               width: window.innerWidth - Math.round(window.innerWidth / 2), height: h };
+        default: return null;
+    }
+}
+
+function updateSnapPreview(x, y) {
+    const zone = snapZoneFor(x, y);
+    if (!zone) return hideSnapPreview();
+    const r = snapRect(zone);
+    if (!snapPreviewEl) {
+        snapPreviewEl = document.createElement('div');
+        snapPreviewEl.className = 'snap-preview';
+        document.body.appendChild(snapPreviewEl);
+    }
+    Object.assign(snapPreviewEl.style, {
+        left: r.left + 'px', top: r.top + 'px',
+        width: r.width + 'px', height: r.height + 'px', display: 'block'
+    });
+}
+
+function hideSnapPreview() {
+    if (snapPreviewEl) snapPreviewEl.style.display = 'none';
+}
+
+function applySnap(win, zone) {
+    const r = snapRect(zone);
+    if (!r) return;
+    if (zone === 'top') {
+        if (!win._isMaximized || !win._isMaximized()) win._toggleMaximize();
+        return;
+    }
+    const cur = win.getBoundingClientRect();
+    win._maxPrev = win._maxPrev || {
+        left: parseFloat(win.style.left) || cur.left,
+        top: parseFloat(win.style.top) || cur.top,
+        width: cur.width, height: cur.height
+    };
+    win._snapped = zone;
+    XPAudio.play('maximize');
+    animateWindowTo(win, r, 150, 'cubic-bezier(0.25, 0.1, 0.25, 1)', () => {
+        win.style.left = r.left + 'px';
+        win.style.top = r.top + 'px';
+        win.style.width = r.width + 'px';
+        win.style.height = r.height + 'px';
+        win.dispatchEvent(new CustomEvent('windowResized'));
+    });
+}
+
+/* ---- the system (window) menu ---- */
+function windowMenuItems(win) {
+    const maximized = win._isMaximized && win._isMaximized();
+    return [
+        { label: 'Restore', disabled: !maximized && !win._snapped, action: () => win._toggleMaximize && win._toggleMaximize() },
+        { label: 'Move', disabled: true },
+        { label: 'Size', disabled: true },
+        { label: 'Minimize', action: () => minimizeWindow(win) },
+        { label: 'Maximize', disabled: !!maximized, action: () => win._toggleMaximize && win._toggleMaximize() },
+        { sep: true },
+        { html: 'Close<span class="ctx-accel">Alt+F4</span>', label: 'Close', action: () => closeWindow(win) }
+    ];
+}
+
+function installWindowMenu(win) {
+    const header = win.querySelector('.popup-header');
+    const icon = win.querySelector('.popup-icon');
+    const show = (x, y) => showContextMenu(x, y, windowMenuItems(win));
+    if (icon) {
+        icon.style.cursor = 'pointer';
+        icon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const r = icon.getBoundingClientRect();
+            show(r.left, r.bottom);
+        });
+    }
+    header.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        show(e.clientX, e.clientY);
+    });
+}
+
+/* ---- Alt+Tab switcher ---- */
+const TaskSwitcher = (() => {
+    let overlay = null;
+    let order = [];
+    let index = 0;
+
+    function openWindowsInOrder() {
+        return [...document.querySelectorAll('.popup')]
+            .sort((a, b) => (parseFloat(b.style.zIndex) || 0) - (parseFloat(a.style.zIndex) || 0));
+    }
+
+    function open() {
+        order = openWindowsInOrder();
+        if (order.length < 2) return false;
+        index = 1;
+        overlay = document.createElement('div');
+        overlay.className = 'alt-tab';
+        overlay.innerHTML = `<div class="alt-tab-grid"></div><div class="alt-tab-label"></div>`;
+        document.body.appendChild(overlay);
+        render();
+        return true;
+    }
+
+    function render() {
+        if (!overlay) return;
+        const grid = overlay.querySelector('.alt-tab-grid');
+        grid.innerHTML = order.map((w, i) => `
+            <div class="alt-tab-item ${i === index ? 'active' : ''}">
+              <img src="${escAttr(w.dataset.icon)}" alt="">
+            </div>`).join('');
+        overlay.querySelector('.alt-tab-label').textContent =
+            (order[index].querySelector('.popup-title') || {}).textContent || '';
+    }
+
+    function next(step) {
+        if (!overlay) return;
+        index = (index + step + order.length) % order.length;
+        render();
+    }
+
+    function commit() {
+        if (!overlay) return;
+        const win = order[index];
+        overlay.remove();
+        overlay = null;
+        if (!win) return;
+        if (win.style.display === 'none') restoreWindow(win);
+        else bringToFront(win);
+    }
+
+    function cancel() {
+        if (overlay) { overlay.remove(); overlay = null; }
+    }
+
+    return {
+        get open() { return !!overlay; },
+        start: open, next, commit, cancel
+    };
+})();
+
+
+/* ===== 15. Taskbar: Quick Launch, tray, Show Desktop ======================= */
+
+let showDesktopActive = false;
+let showDesktopMemo = [];
+
+function toggleShowDesktop() {
+    const windows = [...document.querySelectorAll('.popup')];
+    if (!showDesktopActive) {
+        showDesktopMemo = windows.filter(w => w.style.display !== 'none');
+        showDesktopMemo.forEach(minimizeWindow);
+        showDesktopActive = showDesktopMemo.length > 0;
+    } else {
+        showDesktopMemo.filter(w => w.isConnected).forEach(restoreWindow);
+        showDesktopMemo = [];
+        showDesktopActive = false;
+    }
+}
+
+function setupQuickLaunch() {
+    const bar = document.getElementById('quick-launch');
+    if (!bar) return;
+    bar.querySelectorAll('.ql-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            XPAudio.play('click');
+            if (btn.dataset.app === 'showdesktop') toggleShowDesktop();
+            else launchApp(btn.dataset.app);
+        });
+    });
+}
+
+function syncVolumeUi() {
+    const btn = document.getElementById('tray-volume');
+    if (!btn) return;
+    btn.classList.toggle('tray-muted', XPAudio.muted || XPAudio.volume === 0);
+    btn.dataset.tip = XPAudio.muted ? 'Volume — muted' : `Volume — ${Math.round(XPAudio.volume * 100)}%`;
+    const popup = document.querySelector('.tray-volume-popup');
+    if (popup) {
+        const slider = popup.querySelector('.tvp-slider');
+        const mute = popup.querySelector('.tvp-mute');
+        if (slider) slider.value = String(Math.round(XPAudio.volume * 100));
+        if (mute) mute.checked = XPAudio.muted;
+    }
+}
+
+function setupTray() {
+    const volumeBtn = document.getElementById('tray-volume');
+    const networkBtn = document.getElementById('tray-network');
+
+    function closeVolumePopup() {
+        document.querySelectorAll('.tray-volume-popup').forEach(p => p.remove());
+    }
+
+    if (volumeBtn) {
+        volumeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            XPAudio.unlock();
+            if (document.querySelector('.tray-volume-popup')) return closeVolumePopup();
+            const popup = document.createElement('div');
+            popup.className = 'tray-volume-popup';
+            popup.innerHTML = `
+                <div class="tvp-title">Volume</div>
+                <input class="tvp-slider" type="range" min="0" max="100" step="1"
+                       value="${Math.round(XPAudio.volume * 100)}" orient="vertical">
+                <label class="tvp-mute-row"><input class="tvp-mute" type="checkbox" ${XPAudio.muted ? 'checked' : ''}> Mute</label>`;
+            document.body.appendChild(popup);
+            const r = volumeBtn.getBoundingClientRect();
+            popup.style.left = Math.min(window.innerWidth - popup.offsetWidth - 4,
+                Math.max(4, r.left + r.width / 2 - popup.offsetWidth / 2)) + 'px';
+            popup.style.bottom = (getTaskbarHeight() + 4) + 'px';
+
+            const slider = popup.querySelector('.tvp-slider');
+            slider.addEventListener('input', () => { XPAudio.volume = slider.value / 100; syncVolumeUi(); });
+            slider.addEventListener('change', () => XPAudio.play('ding'));
+            popup.querySelector('.tvp-mute').addEventListener('change', (ev) => {
+                XPAudio.muted = ev.target.checked;
+                syncVolumeUi();
+            });
+            popup.addEventListener('click', (ev) => ev.stopPropagation());
+        });
+        volumeBtn.addEventListener('dblclick', () => { closeVolumePopup(); showSoundProperties(); });
+        volumeBtn.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showContextMenu(e.clientX, e.clientY, [
+                { label: 'Open Volume Control', action: () => showSoundProperties() },
+                { label: XPAudio.muted ? 'Unmute' : 'Mute', action: () => { XPAudio.muted = !XPAudio.muted; syncVolumeUi(); } },
+                { sep: true },
+                { label: 'Adjust Audio Properties', action: () => showSoundProperties() }
+            ]);
+        });
+    }
+
+    if (networkBtn) {
+        networkBtn.addEventListener('click', () => {
+            notify({
+                title: 'Local Area Connection',
+                text: 'Speed: 100.0 Mbps   Status: Connected',
+                icon: SysIcons.network
+            });
+        });
+        networkBtn.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showContextMenu(e.clientX, e.clientY, [
+                { label: 'Open Network Connections', action: () => showNotImplemented('Network Connections') },
+                { label: 'Repair', action: () => notify({ title: 'Repair', text: 'The connection has been repaired.', icon: SysIcons.info }) },
+                { sep: true },
+                { label: 'Status', action: () => networkBtn.click() }
+            ]);
+        });
+    }
+
+    document.addEventListener('click', closeVolumePopup);
+    syncVolumeUi();
+}
+
+function applyTaskbarPrefs() {
+    const cfg = Store.get('xpTaskbarPrefs', { autohide: false, clock: true, quicklaunch: true });
+    const taskbar = document.querySelector('.taskbar');
+    const ql = document.getElementById('quick-launch');
+    const clock = document.getElementById('taskbar-clock');
+    if (taskbar) taskbar.classList.toggle('taskbar-autohide', !!cfg.autohide);
+    if (ql) ql.classList.toggle('hidden', !cfg.quicklaunch);
+    if (clock) clock.classList.toggle('hidden', !cfg.clock);
+}
+
+// Right-click / middle-click behaviour on taskbar buttons, plus hover tips.
+function enhanceTaskbarItem(item, win) {
+    item.dataset.tip = (win.querySelector('.popup-title') || {}).textContent || '';
+    item.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        showContextMenu(e.clientX, e.clientY, windowMenuItems(win));
+    });
+    item.addEventListener('mousedown', (e) => {
+        if (e.button === 1) { e.preventDefault(); closeWindow(win); }
+    });
+}
+
+// Right-clicking the taskbar itself.
+function setupTaskbarContextMenu() {
+    const taskbar = document.querySelector('.taskbar');
+    if (!taskbar) return;
+    taskbar.addEventListener('contextmenu', (e) => {
+        if (e.target.closest('.taskbar-item, .tray-icon, #taskbar-clock')) return;
+        e.preventDefault();
+        showContextMenu(e.clientX, e.clientY, [
+            { label: 'Cascade Windows', action: () => arrangeWindows('cascade') },
+            { label: 'Tile Windows Horizontally', action: () => arrangeWindows('h') },
+            { label: 'Tile Windows Vertically', action: () => arrangeWindows('v') },
+            { label: 'Show the Desktop', action: () => toggleShowDesktop() },
+            { sep: true },
+            { label: 'Task Manager', action: () => openTaskManager() },
+            { sep: true },
+            { label: 'Properties', action: () => showTaskbarProperties() }
+        ]);
+    });
+}
+
+function arrangeWindows(mode) {
+    const wins = [...document.querySelectorAll('.popup')].filter(w => w.style.display !== 'none');
+    if (!wins.length) return;
+    const H = workAreaHeight();
+    const W = window.innerWidth;
+    wins.forEach((w, i) => {
+        w.classList.remove('maximized');
+        w._snapped = null;
+        let rect;
+        if (mode === 'cascade') {
+            rect = { left: 20 + i * 26, top: 20 + i * 26,
+                     width: Math.min(640, W - 60 - i * 26), height: Math.min(460, H - 60 - i * 26) };
+        } else if (mode === 'h') {
+            const h = Math.floor(H / wins.length);
+            rect = { left: 0, top: i * h, width: W, height: h };
+        } else {
+            const wdt = Math.floor(W / wins.length);
+            rect = { left: i * wdt, top: 0, width: wdt, height: H };
+        }
+        animateWindowTo(w, rect, 160, 'ease-out', () => {
+            w.style.left = rect.left + 'px';
+            w.style.top = rect.top + 'px';
+            w.style.width = Math.max(240, rect.width) + 'px';
+            w.style.height = Math.max(160, rect.height) + 'px';
+            w.dispatchEvent(new CustomEvent('windowResized'));
+        });
+    });
+}
+
+
+/* ===== 16. Start menu: All Programs, Log Off, Turn Off ===================== */
+
+const ALL_PROGRAMS = [
+    { name: 'Accessories', icon: null, items: [
+        { name: 'Calculator', icon: 'assets/start-controlpanel.png', app: 'calc' },
+        { name: 'Command Prompt', icon: null, app: 'cmd' },
+        { name: 'Notepad', icon: 'assets/notepad-icon.png', app: 'notepad' },
+        { name: 'Paint', icon: 'assets/paint-icon.png', app: 'paint' },
+        { name: 'Windows Explorer', icon: 'assets/folder-icon.png', app: 'explorer' }
+    ]},
+    { name: 'Games', icon: 'assets/start-minesweeper.png', items: [
+        { name: 'Minesweeper', icon: 'assets/start-minesweeper.png', app: 'minesweeper' },
+        { name: 'Snake', icon: 'assets/snake-icon.png', app: 'snake' }
+    ]},
+    { name: 'System Tools', icon: 'assets/start-mycomputer.png', items: [
+        { name: 'Task Manager', icon: 'assets/start-controlpanel.png', app: 'taskmgr' },
+        { name: 'Control Panel', icon: 'assets/start-controlpanel.png', app: 'controlpanel' },
+        { name: 'Search', icon: 'assets/start-search.png', app: 'search' },
+        { name: 'System Information', icon: 'assets/start-mycomputer.png', app: 'sysinfo' }
+    ]},
+    { sep: true },
+    { name: 'Internet Explorer', icon: 'assets/internet-explorer-2-icon.png', app: 'internet' },
+    { name: 'Outlook Express', icon: 'assets/start-email.png', app: 'email' },
+    { name: "Marco's Blog", icon: null, app: 'blog' },
+    { name: 'Windows Media Player', icon: 'assets/start-mediaplayer.png', app: 'mediaplayer' }
+];
+
+// The All Programs flyout lives on <body>, not inside the Start menu: the
+// menu clips its own overflow to keep the rounded corners, which would cut
+// the flyout off.
+let allProgramsFlyout = null;
+let allProgramsHideTimer = null;
+
+function buildAllProgramsFlyout() {
+    const anchor = document.querySelector('.start-menu-all');
+    const startMenu = document.getElementById('start-menu');
+    if (!anchor || allProgramsFlyout) return;
+
+    const flyout = document.createElement('div');
+    flyout.className = 'start-flyout';
+    flyout.style.display = 'none';
+
+    const render = (list, container) => {
+        list.forEach(entry => {
+            if (entry.sep) {
+                const sep = document.createElement('div');
+                sep.className = 'start-flyout-sep';
+                container.appendChild(sep);
+                return;
+            }
+            const row = document.createElement('div');
+            row.className = 'start-flyout-item' + (entry.items ? ' has-sub' : '');
+            const iconSrc = entry.icon || (entry.app === 'cmd' ? (iconContent.cmd.icon || '')
+                : entry.app === 'blog' ? (iconContent.blog.icon || '') : ALL_PROGRAMS_ICON);
+            row.innerHTML = `<img src="${escAttr(iconSrc)}" alt=""><span>${escHtml(entry.name)}</span>` +
+                (entry.items ? '<span class="start-chevron">&#9656;</span>' : '');
+            if (entry.items) {
+                const sub = document.createElement('div');
+                sub.className = 'start-flyout start-flyout-sub';
+                render(entry.items, sub);
+                row.appendChild(sub);
+            } else {
+                row.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    hideAllPrograms();
+                    startMenu.classList.add('hidden');
+                    document.getElementById('start-button').classList.remove('start-open');
+                    XPAudio.play('click');
+                    launchApp(entry.app);
+                });
+            }
+            container.appendChild(row);
+        });
+    };
+    render(ALL_PROGRAMS, flyout);
+    document.body.appendChild(flyout);
+    allProgramsFlyout = flyout;
+
+    const show = () => {
+        clearTimeout(allProgramsHideTimer);
+        const menuRect = startMenu.getBoundingClientRect();
+        const itemRect = anchor.getBoundingClientRect();
+        flyout.style.display = 'flex';
+        const height = flyout.offsetHeight;
+        flyout.style.left = Math.min(menuRect.right - 2, window.innerWidth - flyout.offsetWidth - 4) + 'px';
+        flyout.style.top = Math.max(4, Math.min(itemRect.bottom - height, workAreaHeight() - height)) + 'px';
+    };
+    const scheduleHide = () => {
+        clearTimeout(allProgramsHideTimer);
+        allProgramsHideTimer = setTimeout(hideAllPrograms, 260);
+    };
+
+    anchor.addEventListener('mouseenter', show);
+    anchor.addEventListener('click', (e) => { e.stopPropagation(); show(); });
+    anchor.addEventListener('mouseleave', scheduleHide);
+    flyout.addEventListener('mouseenter', () => clearTimeout(allProgramsHideTimer));
+    flyout.addEventListener('mouseleave', scheduleHide);
+
+    // Hovering any other Start menu entry closes the flyout, like the real menu
+    document.querySelectorAll('.start-menu-item:not(.start-menu-all)').forEach(item =>
+        item.addEventListener('mouseenter', hideAllPrograms));
+}
+
+function hideAllPrograms() {
+    clearTimeout(allProgramsHideTimer);
+    if (allProgramsFlyout) allProgramsFlyout.style.display = 'none';
+}
+
+function showLogOffDialog() {
+    showDialog({
+        title: 'Log Off Windows',
+        icon: 'assets/start-avatar.png',
+        width: 400,
+        modal: true,
+        className: 'xp-shell-dialog',
+        sound: 'click',
+        bodyHtml: `
+            <div class="shell-choices">
+                <button class="shell-choice" data-act="switch">
+                    <span class="shell-orb shell-orb-switch">&#128100;</span>
+                    <span>Switch User</span>
+                </button>
+                <button class="shell-choice" data-act="logoff">
+                    <span class="shell-orb shell-orb-logoff">&#8631;</span>
+                    <span>Log Off</span>
+                </button>
+            </div>
+            <p class="shell-note">Are you sure you want to log off?</p>`,
+        buttons: [{ label: 'Cancel' }]
+    }).el.querySelectorAll('.shell-choice').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.xp-dialog, .xp-modal-backdrop').forEach(n => n.remove());
+            XPAudio.play('logoff');
+            runShutdownSequence(btn.dataset.act === 'switch' ? 'switch' : 'logoff');
+        });
+    });
+}
+
+function showTurnOffDialog() {
+    const dlg = showDialog({
+        title: 'Turn off computer',
+        icon: 'assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png',
+        width: 440,
+        modal: true,
+        className: 'xp-shell-dialog xp-turnoff',
+        sound: 'click',
+        bodyHtml: `
+            <div class="shell-choices">
+                <button class="shell-choice" data-act="standby">
+                    <span class="shell-orb shell-orb-standby">&#9790;</span>
+                    <span>Stand By</span>
+                </button>
+                <button class="shell-choice" data-act="off">
+                    <span class="shell-orb shell-orb-off">&#9211;</span>
+                    <span>Turn Off</span>
+                </button>
+                <button class="shell-choice" data-act="restart">
+                    <span class="shell-orb shell-orb-restart">&#8635;</span>
+                    <span>Restart</span>
+                </button>
+            </div>`,
+        buttons: [{ label: 'Cancel' }]
+    });
+    dlg.el.querySelectorAll('.shell-choice').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const act = btn.dataset.act;
+            document.querySelectorAll('.xp-dialog, .xp-modal-backdrop').forEach(n => n.remove());
+            if (act === 'standby') { ScreenSaver.start(Store.get(SAVER_KEY, 'logo')); return; }
+            XPAudio.play('shutdown');
+            runShutdownSequence(act);
+        });
+    });
+    return dlg;
+}
+
+
+/* ===== 17. Boot, logon and shutdown ========================================
+   The lifecycle that frames the whole thing: the loader, the welcome screen
+   with the user tile, and the "It is now safe…" screen on the way out.
+   Returning visitors skip straight past the welcome screen.
+   ========================================================================= */
+
+const BOOT_MESSAGES = [
+    'Starting Windows…',
+    'Loading your personal settings…',
+    'Applying your desktop preferences…',
+    'Preparing the desktop…'
+];
+
+function runBootSequence() {
+    const splash = document.getElementById('bootSplash');
+    const logon = document.getElementById('logonScreen');
+    const text = document.getElementById('bootText');
+    if (!splash) { finishBoot(); return; }
+
+    // Anyone who has been here before gets a short boot and no welcome screen
+    const returning = Store.get('xpHasBooted', false);
+    const bootMs = returning ? 1200 : 2400;
+
+    let i = 0;
+    const cycle = setInterval(() => {
+        i = (i + 1) % BOOT_MESSAGES.length;
+        if (text) text.textContent = BOOT_MESSAGES[i];
+    }, bootMs / BOOT_MESSAGES.length);
+
+    setTimeout(() => {
+        clearInterval(cycle);
+        splash.classList.add('boot-out');
+        setTimeout(() => splash.remove(), 450);
+
+        if (returning || !logon) {
+            if (logon) logon.remove();
+            finishBoot();
+            return;
+        }
+        showLogon(logon);
+    }, bootMs);
+}
+
+function showLogon(logon) {
+    logon.classList.remove('hidden');
+    requestAnimationFrame(() => logon.classList.add('logon-in'));
+
+    let entering = false;
+    const enter = () => {
+        if (entering) return;
+        entering = true;
+        document.removeEventListener('keydown', onKey);
+        XPAudio.unlock();
+        logon.querySelector('.logon-right').innerHTML =
+            `<p class="logon-prompt">Loading your personal settings…</p>
+             <div class="logon-spinner"><i></i><i></i><i></i></div>`;
+        setTimeout(() => {
+            logon.classList.add('logon-out');
+            setTimeout(() => logon.remove(), 600);
+            finishBoot();
+        }, 900);
+    };
+
+    // Any key also logs on, like the real welcome screen
+    function onKey(e) {
+        if (e.key === 'Escape') return;
+        enter();
+    }
+
+    logon.querySelectorAll('.logon-user').forEach(btn => btn.addEventListener('click', enter));
+    document.addEventListener('keydown', onKey);
+}
+
+// Runs once the desktop is actually visible.
+function finishBoot() {
+    Store.set('xpHasBooted', true);
+    document.body.classList.add('booted');
+    XPAudio.play('startup');
+    ScreenSaver.reset();
+
+    // The classic first-run balloon, but only the first time
+    if (!Store.get('xpSeenWelcome', false)) {
+        Store.set('xpSeenWelcome', true);
+        setTimeout(() => notify({
+            title: 'Welcome to my desktop',
+            text: 'Double-click the icons, right-click anywhere, and try the Start menu. Click here for a quick tour.',
+            icon: SysIcons.info,
+            timeout: 12000,
+            onClick: () => openHelpCenter()
+        }), 2200);
+    }
+}
+
+function runShutdownSequence(mode) {
+    ScreenSaver.stop();
+    document.querySelectorAll('.popup').forEach(w => w.remove());
+    openWindows = {};
+    document.querySelectorAll('.taskbar-item').forEach(i => i.remove());
+
+    const overlay = document.createElement('div');
+    overlay.className = 'shutdown-screen';
+    overlay.innerHTML = `
+        <div class="shutdown-inner">
+            <div class="boot-brand">
+                <img class="boot-flag" src="assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png" alt="">
+                <div class="boot-wordmark">
+                    <span class="boot-ms">Microsoft&reg;</span>
+                    <span class="boot-win">Windows<span class="boot-xp">xp</span></span>
+                </div>
+            </div>
+            <span class="shutdown-text">${mode === 'restart' ? 'Windows is restarting…'
+                : mode === 'logoff' || mode === 'switch' ? 'Logging off…'
+                : 'Windows is shutting down…'}</span>
+            <div class="boot-progress-bar"><div class="boot-blocks"><i></i><i></i><i></i></div></div>
+        </div>`;
+    document.body.appendChild(overlay);
+
+    setTimeout(() => {
+        if (mode === 'restart' || mode === 'logoff' || mode === 'switch') {
+            // A restart really does restart: reload and boot again
+            Store.del('xpHasBooted');
+            location.reload();
+            return;
+        }
+        overlay.innerHTML = `
+            <div class="shutdown-inner shutdown-off">
+                <span class="shutdown-off-text">It is now safe to turn off your computer.</span>
+                <button class="shutdown-restart">Turn it back on</button>
+            </div>`;
+        overlay.querySelector('.shutdown-restart').addEventListener('click', () => {
+            Store.del('xpHasBooted');
+            location.reload();
+        });
+    }, 2200);
+}
+
+
+/* ===== 18. Screen saver ====================================================
+   Starts after the desktop has been idle for the configured number of
+   minutes, and dies at the first sign of life.
+   ========================================================================= */
+const ScreenSaver = (() => {
+    let canvas = null;
+    let raf = null;
+    let idleTimer = null;
+    let running = false;
+
+    function stop() {
+        if (!running) return;
+        running = false;
+        cancelAnimationFrame(raf);
+        if (canvas) { canvas.remove(); canvas = null; }
+        document.body.classList.remove('saver-on');
+        reset();
+    }
+
+    function start(kind) {
+        if (running) return;
+        kind = kind || Store.get(SAVER_KEY, 'logo');
+        if (kind === 'none') return;
+        running = true;
+        document.body.classList.add('saver-on');
+
+        canvas = document.createElement('canvas');
+        canvas.className = 'screensaver';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+        const W = () => canvas.width;
+        const H = () => canvas.height;
+
+        const onResize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+        window.addEventListener('resize', onResize);
+
+        const scenes = {
+            // The XP logo drifting around and bouncing off the edges
+            logo: (() => {
+                const img = new Image();
+                img.src = 'assets/windows-xp-icon-logo-E8F84DD6F3-seeklogo.com.png';
+                let x = W() / 2, y = H() / 2, vx = 2.2, vy = 1.6, hue = 210;
+                return () => {
+                    ctx.fillStyle = '#000';
+                    ctx.fillRect(0, 0, W(), H());
+                    const w = 160, h = 160 * (img.naturalHeight / (img.naturalWidth || 1) || 1);
+                    x += vx; y += vy;
+                    if (x <= 0 || x + w >= W()) { vx *= -1; hue = (hue + 60) % 360; }
+                    if (y <= 0 || y + h >= H()) { vy *= -1; hue = (hue + 60) % 360; }
+                    x = Math.max(0, Math.min(x, W() - w));
+                    y = Math.max(0, Math.min(y, H() - h));
+                    ctx.save();
+                    ctx.globalAlpha = 0.95;
+                    ctx.filter = `drop-shadow(0 0 24px hsl(${hue} 90% 55%))`;
+                    if (img.complete && img.naturalWidth) ctx.drawImage(img, x, y, w, h);
+                    ctx.restore();
+                };
+            })(),
+
+            // Flying through stars
+            starfield: (() => {
+                const stars = Array.from({ length: 420 }, () => ({
+                    x: Math.random() * 2 - 1, y: Math.random() * 2 - 1, z: Math.random()
+                }));
+                return () => {
+                    ctx.fillStyle = '#000';
+                    ctx.fillRect(0, 0, W(), H());
+                    const cx = W() / 2, cy = H() / 2;
+                    stars.forEach(s => {
+                        s.z -= 0.006;
+                        if (s.z <= 0.01) { s.x = Math.random() * 2 - 1; s.y = Math.random() * 2 - 1; s.z = 1; }
+                        const k = 0.6 / s.z;
+                        const px = cx + s.x * k * cx;
+                        const py = cy + s.y * k * cy;
+                        if (px < 0 || px > W() || py < 0 || py > H()) return;
+                        const size = Math.max(0.4, (1 - s.z) * 2.6);
+                        ctx.fillStyle = `rgba(255,255,255,${Math.min(1, 1 - s.z + 0.15)})`;
+                        ctx.fillRect(px, py, size, size);
+                    });
+                };
+            })(),
+
+            // Scrolling 3D-ish text
+            marquee: (() => {
+                let t = 0;
+                const text = 'Marco Tancredi — XP Portfolio';
+                return () => {
+                    ctx.fillStyle = '#000';
+                    ctx.fillRect(0, 0, W(), H());
+                    t += 0.012;
+                    const cx = W() / 2, cy = H() / 2;
+                    ctx.save();
+                    ctx.translate(cx, cy);
+                    ctx.scale(1, 0.55 + 0.45 * Math.abs(Math.cos(t)));
+                    ctx.rotate(Math.sin(t * 0.7) * 0.16);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.font = 'bold 62px Tahoma, sans-serif';
+                    for (let d = 12; d >= 0; d--) {
+                        const shade = 40 + d * 8;
+                        ctx.fillStyle = d === 0
+                            ? `hsl(${(t * 60) % 360} 85% 62%)`
+                            : `rgb(${shade / 3},${shade / 2},${shade})`;
+                        ctx.fillText(text, d * 0.9, d * 0.9);
+                    }
+                    ctx.restore();
+                };
+            })(),
+
+            // Mystify: two drifting polygons trailing colour
+            mystify: (() => {
+                const makePoly = (hue) => ({
+                    hue,
+                    pts: Array.from({ length: 4 }, () => ({
+                        x: Math.random() * W(), y: Math.random() * H(),
+                        vx: (Math.random() * 2 - 1) * 2.4, vy: (Math.random() * 2 - 1) * 2.4
+                    })),
+                    trail: []
+                });
+                const polys = [makePoly(200), makePoly(320)];
+                return () => {
+                    ctx.fillStyle = 'rgba(0,0,0,0.14)';
+                    ctx.fillRect(0, 0, W(), H());
+                    polys.forEach(p => {
+                        p.pts.forEach(pt => {
+                            pt.x += pt.vx; pt.y += pt.vy;
+                            if (pt.x < 0 || pt.x > W()) pt.vx *= -1;
+                            if (pt.y < 0 || pt.y > H()) pt.vy *= -1;
+                        });
+                        p.trail.push(p.pts.map(pt => ({ x: pt.x, y: pt.y })));
+                        if (p.trail.length > 14) p.trail.shift();
+                        p.trail.forEach((frame, i) => {
+                            ctx.beginPath();
+                            frame.forEach((pt, j) => j ? ctx.lineTo(pt.x, pt.y) : ctx.moveTo(pt.x, pt.y));
+                            ctx.closePath();
+                            ctx.strokeStyle = `hsla(${(p.hue + i * 6) % 360} 90% 60% / ${(i + 1) / p.trail.length})`;
+                            ctx.lineWidth = 1.4;
+                            ctx.stroke();
+                        });
+                    });
+                };
+            })()
+        };
+
+        const draw = scenes[kind] || scenes.logo;
+        const loop = () => {
+            if (!running) return;
+            draw();
+            raf = requestAnimationFrame(loop);
+        };
+        loop();
+
+        const wake = () => { window.removeEventListener('resize', onResize); stop(); };
+        ['mousedown', 'mousemove', 'keydown', 'wheel', 'touchstart'].forEach(evt =>
+            document.addEventListener(evt, wake, { once: true, passive: true }));
+    }
+
+    function reset() {
+        clearTimeout(idleTimer);
+        const kind = Store.get(SAVER_KEY, 'logo');
+        if (kind === 'none' || !document.body.classList.contains('booted')) return;
+        const minutes = Math.max(1, parseInt(Store.get(SAVER_WAIT_KEY, 5), 10) || 5);
+        idleTimer = setTimeout(() => start(kind), minutes * 60000);
+    }
+
+    function init() {
+        // Throttled: without this every mouse move would clear and re-arm the
+        // timer, thousands of times a minute.
+        let lastPoke = 0;
+        const poke = () => {
+            const now = Date.now();
+            if (running || now - lastPoke < 1000) return;
+            lastPoke = now;
+            reset();
+        };
+        ['mousemove', 'mousedown', 'keydown', 'wheel', 'touchstart'].forEach(evt =>
+            document.addEventListener(evt, poke, { passive: true }));
+        reset();
+    }
+
+    return { start, stop, reset, init, get running() { return running; } };
+})();
+
+
+/* ===== 19. Desktop persistence =============================================
+   Where icons sit, what you renamed, what you created and what you threw
+   away all survive a reload — the desktop you leave is the desktop you come
+   back to.
+   ========================================================================= */
+const LAYOUT_KEY = 'xpDesktopLayout';
+const MAX_INLINE_IMAGE = 700 * 1024;   // don't persist enormous pasted images
+
+let layoutSaveTimer = null;
+function saveDesktopLayout() {
+    clearTimeout(layoutSaveTimer);
+    layoutSaveTimer = setTimeout(() => {
+        const icons = [...document.querySelectorAll('.desktop .icon')].map(icon => {
+            const img = icon.querySelector('img');
+            const src = icon.dataset.image || '';
+            const tooBig = src.startsWith('data:') && src.length > MAX_INLINE_IMAGE;
+            return {
+                id: icon.id,
+                builtin: /^icon\d+$/.test(icon.id),
+                label: iconLabel(icon),
+                left: parseInt(icon.style.left, 10) || icon.offsetLeft,
+                top: parseInt(icon.style.top, 10) || icon.offsetTop,
+                cls: [...icon.classList].filter(c => c !== 'icon' && c !== 'selected' && c !== 'dragging').join(' '),
+                iconSrc: img ? img.getAttribute('src') : '',
+                image: tooBig ? '' : src,
+                name: icon.dataset.name || '',
+                opens: icon.dataset.opens || '',
+                mtime: icon.dataset.mtime || ''
+            };
+        // A dynamic image icon whose data URL is too big to store can't be
+        // rebuilt, so it is left out. Built-in icons are always kept: dropping
+        // one would make it vanish from the desktop on the next reload.
+        }).filter(i => i.builtin || !(i.cls.includes('image-file') && !i.image));
+        Store.set(LAYOUT_KEY, { v: 1, icons });
+    }, 300);
+}
+
+function restoreDesktopLayout() {
+    const saved = Store.get(LAYOUT_KEY, null);
+    if (!saved || !Array.isArray(saved.icons)) return;
+    const byId = new Map(saved.icons.map(i => [i.id, i]));
+
+    // Built-in icons: reposition, rename, or remove if they were deleted
+    document.querySelectorAll('.desktop .icon').forEach(icon => {
+        const rec = byId.get(icon.id);
+        if (!rec) {
+            if (/^icon\d+$/.test(icon.id)) icon.remove();   // it was thrown away
+            return;
+        }
+        icon.style.left = rec.left + 'px';
+        icon.style.top = rec.top + 'px';
+        const span = icon.querySelector('span');
+        if (span && rec.label && span.textContent !== rec.label) span.textContent = rec.label;
+        if (rec.mtime) icon.dataset.mtime = rec.mtime;
+        byId.delete(icon.id);
+    });
+
+    // Anything left is something the visitor created last time
+    saved.icons.filter(rec => byId.has(rec.id) && !rec.builtin).forEach(rec => {
+        const icon = createDesktopIcon({
+            iconSrc: rec.iconSrc || 'assets/image-file-icon.png',
+            label: rec.label,
+            className: rec.cls,
+            dataset: rec.image ? { image: rec.image, name: rec.name || rec.label } : undefined,
+            dataOpens: rec.opens || undefined,
+            x: null, y: null
+        });
+        if (icon) {
+            // Put it back exactly where it was, not on the next free slot
+            icon.style.left = rec.left + 'px';
+            icon.style.top = rec.top + 'px';
+            if (rec.mtime) icon.dataset.mtime = rec.mtime;
+        }
+    });
+}
+
+// Anything that changes the desktop schedules a save.
+function watchDesktopChanges() {
+    const desktop = document.querySelector('.desktop');
+    if (!desktop) return;
+    const observer = new MutationObserver(saveDesktopLayout);
+    observer.observe(desktop, { childList: true, subtree: true, attributes: true,
+        attributeFilter: ['style', 'class', 'data-name', 'data-mtime'] });
+}
+
+
+/* ===== 20. Desktop keyboard & drag-and-drop from the real computer ========= */
+
+// Icons deleted with the keyboard can be brought straight back with Ctrl+Z.
+const undoStack = [];
+
+function setupDesktopKeyboard() {
+    document.addEventListener('keydown', (e) => {
+        // Alt+Tab is handled first: it works no matter what has focus
+        if (e.key === 'Tab' && e.altKey) {
+            e.preventDefault();
+            if (!TaskSwitcher.open) { if (!TaskSwitcher.start()) return; }
+            else TaskSwitcher.next(e.shiftKey ? -1 : 1);
+            return;
+        }
+        if (e.key === 'F4' && e.altKey) {
+            e.preventDefault();
+            const active = document.querySelector('.popup.active-window');
+            if (active) closeWindow(active);
+            return;
+        }
+        if (e.ctrlKey && e.shiftKey && e.key === 'Escape') { e.preventDefault(); openTaskManager(); return; }
+        if (e.key === 'Meta' || e.key === 'OS') return;
+
+        const typing = e.target.closest('input, textarea, [contenteditable="true"]');
+        const windowFocused = document.querySelector('.popup.active-window');
+        if (typing || windowFocused) return;
+
+        const selected = getSelectedIcons();
+        switch (e.key) {
+            case 'F2':
+                if (selected.length === 1) { e.preventDefault(); renameIcon(selected[0]); }
+                break;
+            case 'Delete':
+                if (selected.length) {
+                    e.preventDefault();
+                    const removable = selected.filter(isDeletable);
+                    if (!removable.length) { XPAudio.play('error'); return; }
+                    undoStack.push(removable.map(binEntryFor));
+                    moveIconsToBin(removable);
+                    XPAudio.play('recycle');
+                }
+                break;
+            case 'Enter':
+                if (selected.length) { e.preventDefault(); selected.forEach(openIconWindow); }
+                break;
+            case 'a': case 'A':
+                if (e.ctrlKey || e.metaKey) {
+                    e.preventDefault();
+                    document.querySelectorAll('.desktop .icon').forEach(i => i.classList.add('selected'));
+                }
+                break;
+            case 'z': case 'Z':
+                if ((e.ctrlKey || e.metaKey) && undoStack.length) {
+                    e.preventDefault();
+                    undoStack.pop().forEach(entry => {
+                        const idx = recycleBin.findIndex(b => b.label === entry.label);
+                        if (idx !== -1) restoreBinItem(idx);
+                    });
+                }
+                break;
+            case 'F5':
+                e.preventDefault();
+                refreshExplorerWindows();
+                notify({ title: 'Desktop', text: 'Refreshed.', icon: SysIcons.info, timeout: 1800 });
+                break;
+            case 'ArrowUp': case 'ArrowDown': case 'ArrowLeft': case 'ArrowRight': {
+                const icons = [...document.querySelectorAll('.desktop .icon')];
+                if (!icons.length) break;
+                e.preventDefault();
+                const cur = selected[0];
+                const next = nearestIcon(icons, cur, e.key);
+                if (next) { deselectAllIcons(); next.classList.add('selected'); }
+                break;
+            }
+        }
+    });
+
+    // Releasing Alt commits the Alt+Tab selection
+    document.addEventListener('keyup', (e) => {
+        if ((e.key === 'Alt' || !e.altKey) && TaskSwitcher.open) TaskSwitcher.commit();
+    });
+    window.addEventListener('blur', () => TaskSwitcher.cancel());
+}
+
+// Pick the closest icon in a direction, so arrow keys walk the grid sensibly.
+function nearestIcon(icons, from, key) {
+    if (!from) return icons[0];
+    const a = { x: from.offsetLeft, y: from.offsetTop };
+    const axis = (key === 'ArrowLeft' || key === 'ArrowRight') ? 'x' : 'y';
+    const sign = (key === 'ArrowRight' || key === 'ArrowDown') ? 1 : -1;
+    const candidates = icons
+        .filter(i => i !== from)
+        .map(i => ({ el: i, x: i.offsetLeft, y: i.offsetTop }))
+        .filter(i => (i[axis] - a[axis]) * sign > 0)
+        .sort((p, q) => {
+            const dp = Math.abs(p[axis] - a[axis]) * 2 + Math.abs(p[axis === 'x' ? 'y' : 'x'] - a[axis === 'x' ? 'y' : 'x']);
+            const dq = Math.abs(q[axis] - a[axis]) * 2 + Math.abs(q[axis === 'x' ? 'y' : 'x'] - a[axis === 'x' ? 'y' : 'x']);
+            return dp - dq;
+        });
+    return candidates.length ? candidates[0].el : null;
+}
+
+// Drop files from the visitor's own computer onto the desktop.
+function setupFileDrop() {
+    const desktop = document.querySelector('.desktop');
+    if (!desktop) return;
+    let overlay = null;
+
+    const showOverlay = () => {
+        if (overlay) return;
+        overlay = document.createElement('div');
+        overlay.className = 'drop-overlay';
+        overlay.innerHTML = `<div class="drop-overlay-inner">
+            <img src="assets/folder-icon.png" alt="">
+            <span>Drop your files on the desktop</span></div>`;
+        document.body.appendChild(overlay);
+    };
+    const hideOverlay = () => { if (overlay) { overlay.remove(); overlay = null; } };
+
+    let depth = 0;
+    document.addEventListener('dragenter', (e) => {
+        if (![...(e.dataTransfer ? e.dataTransfer.types : [])].includes('Files')) return;
+        depth++;
+        showOverlay();
+    });
+    document.addEventListener('dragleave', () => {
+        depth = Math.max(0, depth - 1);
+        if (!depth) hideOverlay();
+    });
+    document.addEventListener('dragover', (e) => {
+        if ([...(e.dataTransfer ? e.dataTransfer.types : [])].includes('Files')) e.preventDefault();
+    });
+    document.addEventListener('drop', (e) => {
+        const files = e.dataTransfer && [...e.dataTransfer.files];
+        if (!files || !files.length) return;
+        e.preventDefault();
+        depth = 0;
+        hideOverlay();
+        acceptDroppedFiles(files, e.clientX, e.clientY);
+    });
+}
+
+function acceptDroppedFiles(files, x, y) {
+    let added = 0;
+    files.slice(0, 12).forEach((file, i) => {
+        const dropX = (x || 200) + (i % 4) * 90;
+        const dropY = (y || 200) + Math.floor(i / 4) * 90;
+
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const name = uniqueDesktopName(file.name);
+                createDesktopIcon({
+                    iconSrc: 'assets/image-file-icon.png',
+                    label: name,
+                    className: 'image-file',
+                    dataset: { image: reader.result, name },
+                    x: dropX, y: dropY
+                });
+                saveDesktopLayout();
+            };
+            reader.readAsDataURL(file);
+            added++;
+        } else if (file.type.startsWith('text/') || /\.(txt|md|json|js|css|html|log|csv)$/i.test(file.name)) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const name = uniqueDesktopName(file.name);
+                VFS.add(VFS.DOCS, VFS.file(name, {
+                    kind: 'text', icon: 'assets/notepad-icon.png', content: String(reader.result)
+                }));
+                const icon = createDesktopIcon({
+                    iconSrc: 'assets/notepad-icon.png',
+                    label: name,
+                    className: 'text-file',
+                    x: dropX, y: dropY
+                });
+                if (icon) icon._textContent = String(reader.result);
+                refreshExplorerWindows();
+                saveDesktopLayout();
+            };
+            reader.readAsText(file);
+            added++;
+        } else {
+            const name = uniqueDesktopName(file.name);
+            createDesktopIcon({
+                iconSrc: 'assets/image-file-icon.png',
+                label: name,
+                className: 'foreign-file',
+                x: dropX, y: dropY
+            });
+            added++;
+        }
+    });
+    if (added) {
+        notify({
+            title: 'Copying files',
+            text: `${added} item${added === 1 ? '' : 's'} copied to the Desktop.`,
+            icon: 'assets/folder-icon.png',
+            timeout: 4000
+        });
+    }
+}
+
+
+/* ---- the "All Programs" icon ----------------------------------------------
+   Drawn on a canvas — the classic green double-chevron over a list of
+   programs — so it never depends on an asset file. */
+let ALL_PROGRAMS_ICON = '';
+
+function installAllProgramsIcon() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 48;
+    canvas.height = 48;
+    const ctx = canvas.getContext('2d');
+
+    // A small stack of "program" rows
+    const panel = ctx.createLinearGradient(0, 0, 0, 48);
+    panel.addColorStop(0, '#fdfdfd');
+    panel.addColorStop(1, '#d9d6c6');
+    ctx.fillStyle = panel;
+    ctx.fillRect(6, 8, 28, 32);
+    ctx.strokeStyle = '#8d8a7a';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(6.5, 8.5, 27, 31);
+    ctx.fillStyle = '#4a7bc8';
+    [14, 21, 28, 35].forEach(y => ctx.fillRect(10, y - 2, 14, 3));
+
+    // The green chevron badge
+    ctx.beginPath();
+    ctx.arc(35, 33, 12, 0, Math.PI * 2);
+    const orb = ctx.createRadialGradient(31, 29, 2, 35, 33, 13);
+    orb.addColorStop(0, '#b6f08d');
+    orb.addColorStop(1, '#3f8f22');
+    ctx.fillStyle = orb;
+    ctx.fill();
+    ctx.strokeStyle = '#2c6b16';
+    ctx.stroke();
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2.6;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    [-4, 1].forEach(dx => {
+        ctx.beginPath();
+        ctx.moveTo(33 + dx, 28);
+        ctx.lineTo(38 + dx, 33);
+        ctx.lineTo(33 + dx, 38);
+        ctx.stroke();
+    });
+
+    ALL_PROGRAMS_ICON = canvas.toDataURL();
+
+    // Point every reference at the real icon
+    document.querySelectorAll('.allprograms-start-icon').forEach(img => {
+        img.src = ALL_PROGRAMS_ICON;
+    });
+    const accessories = ALL_PROGRAMS.find(e => e.name === 'Accessories');
+    if (accessories) accessories.icon = ALL_PROGRAMS_ICON;
+    const arp = CONTROL_PANEL_ITEMS.find(i => i.name === 'Add or Remove Programs');
+    if (arp) arp.icon = ALL_PROGRAMS_ICON;
+}
+
+
+/* ===== 21. Start menu routes & recent documents ============================ */
+
+const START_ROUTES = {
+    internet: 'internet',
+    email: 'email',
+    minesweeper: 'minesweeper',
+    snake: 'snake',
+    cmd: 'cmd',
+    blog: 'blog',
+    notepad: 'notepad',
+    paint: 'paint',
+    projects: 'projects',
+    mydocuments: 'mydocuments',
+    mypictures: 'mypictures',
+    mymusic: 'mymusic',
+    mycomputer: 'mycomputer',
+    controlpanel: 'controlpanel',
+    help: 'help',
+    search: 'search',
+    run: () => showRunDialog(),
+    myrecent: () => showRecentDocuments(),
+    setaccess: () => openControlPanel('Add or Remove Programs'),
+    connectto: () => notify({
+        title: 'Local Area Connection',
+        text: 'Connected at 100.0 Mbps. No other connections are available.',
+        icon: SysIcons.network
+    }),
+    printers: () => showInfoDialog('Printers and Faxes', 'assets/start-printers.png',
+        'No printers are installed on this computer.<br><br>Add a printer from Control Panel.')
+};
+
+/* ---- My Recent Documents ---- */
+const RECENT_KEY = 'xpRecentDocs';
+
+function rememberRecent(entry) {
+    if (!entry || !entry.name) return;
+    const list = Store.get(RECENT_KEY, []).filter(r => r.path !== entry.path);
+    list.unshift({ name: entry.name, path: entry.path || '', icon: entry.icon || '', at: Date.now() });
+    Store.set(RECENT_KEY, list.slice(0, 15));
+}
+
+function showRecentDocuments() {
+    const list = Store.get(RECENT_KEY, []);
+    const startMenu = document.getElementById('start-menu');
+    const anchor = (startMenu && startMenu.getBoundingClientRect()) || { right: 240, top: 200 };
+    if (!list.length) {
+        return showInfoDialog('My Recent Documents', 'assets/start-myrecent.png',
+            'You have not opened any documents yet.<br><br>Open something from My Documents and it will show up here.');
+    }
+    showContextMenu(Math.min(anchor.right, window.innerWidth - 260), Math.max(40, anchor.top + 40),
+        list.map(r => ({
+            label: r.name,
+            icon: r.icon || 'assets/notepad-icon.png',
+            action: () => {
+                const node = r.path && VFS.get(r.path);
+                if (node) openVfsFile(node, r.path);
+                else showInfoDialog('My Recent Documents', 'assets/error-icon.png',
+                    `<b>${escHtml(r.name)}</b> could not be found. It may have been moved or deleted.`);
+            }
+        })).concat([{ sep: true }, {
+            label: 'Clear List',
+            action: () => { Store.set(RECENT_KEY, []); }
+        }]));
+}
+
+// Paste files copied in Explorer straight onto the desktop.
+function pasteClipboardToDesktop() {
+    if (!clipboard) return;
+    const { x, y } = lastContextMenuPos;
+    clipboard.names.forEach((name, i) => {
+        const node = VFS.get(VFS.join(clipboard.from, name));
+        if (!node) return;
+        if (node.kind === 'image' && node.src) {
+            createDesktopIcon({
+                iconSrc: 'assets/image-file-icon.png',
+                label: uniqueDesktopName(node.name),
+                className: 'image-file',
+                dataset: { image: node.src, name: node.name },
+                x: x + i * 20, y: y + i * 20
+            });
+        } else if (node.type === 'folder') {
+            createDesktopIcon({
+                iconSrc: 'assets/folder-icon.png',
+                label: uniqueDesktopName(node.name),
+                className: 'folder-new',
+                x: x + i * 20, y: y + i * 20
+            });
+        } else {
+            createDesktopIcon({
+                iconSrc: VFS.iconFor(node),
+                label: uniqueDesktopName(node.name),
+                className: 'text-file',
+                x: x + i * 20, y: y + i * 20
+            });
+        }
+    });
+    if (clipboard.mode === 'cut') {
+        clipboard.names.forEach(name => VFS.remove(VFS.join(clipboard.from, name)));
+        clipboard = null;
+        refreshExplorerWindows();
+    }
+    saveDesktopLayout();
+}
+
+
+/* ===== 22. Bringing the desktop up ========================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    // Draw the All Programs icon on a canvas, the same way the Command Prompt
+    // and Blog icons are made.
+    installAllProgramsIcon();
+    // Built here (not in setupStartMenu) so the generated icons already exist
+    buildAllProgramsFlyout();
+
+    // Restore what the visitor left behind
+    applyLunaTheme(Store.get(THEME_KEY, 'blue'));
+    restoreDesktopLayout();
+    watchDesktopChanges();
+
+    // Shell chrome
+    Tooltip.init();
+    setupQuickLaunch();
+    setupTray();
+    setupTaskbarContextMenu();
+    applyTaskbarPrefs();
+
+    // Input
+    setupDesktopKeyboard();
+    setupFileDrop();
+    ScreenSaver.init();
+    Mascot.init();
+
+    // The audio context can only start from a real gesture
+    ['pointerdown', 'keydown'].forEach(evt =>
+        document.addEventListener(evt, () => XPAudio.unlock(), { once: true }));
+
+    // Keep maximized and snapped windows correct when the viewport changes
+    window.addEventListener('resize', () => {
+        document.querySelectorAll('.popup').forEach(win => {
+            if (win._isMaximized && win._isMaximized()) {
+                win.style.left = '0';
+                win.style.top = '0';
+                win.style.width = window.innerWidth + 'px';
+                win.style.height = workAreaHeight() + 'px';
+                win.dispatchEvent(new CustomEvent('windowResized'));
+            } else if (win._snapped) {
+                applySnap(win, win._snapped);
+            }
+        });
+    });
+
+    // A last-resort net: report a broken app instead of failing silently
+    window.addEventListener('error', (e) => {
+        console.error('XP desktop error:', e.error || e.message);
+    });
+});
+
+
+/* ===== 23. Desktop buddy ==================================================
+   A small pixel-art hacker who sits on the desktop typing on his laptop, gets
+   startled when the pointer comes near, and legs it to somewhere quieter.
+
+   The whole point is that he must never get in the way, so: he lives inside
+   .desktop and therefore paints *under* every window; he is pointer-events
+   none, so he can never swallow a click; he only moves every 12-25 seconds and
+   holds still while you are dragging an icon or rubber-band selecting; and he
+   is one right-click away from being gone for good.
+
+   The sprite is drawn from character maps rather than shipped as images, the
+   same way the Command Prompt and All Programs icons are made.
+   ========================================================================= */
+
+const MASCOT_SPRITES = {
+    sit1: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhMMMMMMMMMMhhk...',
+        '...khMMMMMMMMMMMMhk...',
+        '...khMkkMMMMMMkkMhk...',
+        '...khMkkMMMMMMkkMhk...',
+        '...khMrMMMMMMMMrMhk...',
+        '...khMMkMMkkMMkMMhk...',
+        '...khMMMkkkkkkMMMhk...',
+        '...khMMMMMkkMMMMMhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kffkkkkkkkkkkffk...',
+        '...kLSSsSSSSSSSSSLk...',
+        '...kLSSSsSSSSSSSSLk...',
+        '...kLSSsSSSsssSSSLk...',
+        '...kLLLLLLLLLLLLLLk...',
+        '....kkkkkkkkkkkkkk....'
+    ],
+    sit2: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhMMMMMMMMMMhhk...',
+        '...khMMMMMMMMMMMMhk...',
+        '...khMkkMMMMMMkkMhk...',
+        '...khMkkMMMMMMkkMhk...',
+        '...khMrMMMMMMMMrMhk...',
+        '...khMMkMMkkMMkMMhk...',
+        '...khMMMkkkkkkMMMhk...',
+        '...khMMMMMkkMMMMMhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kkkkkkkkkkkkkkkk...',
+        '...kffSSSSSSSSSSffk...',
+        '...kLSSSSSSSSSSSSLk...',
+        '...kLSSSSSSSSSSSSLk...',
+        '...kLLLLLLLLLLLLLLk...',
+        '....kkkkkkkkkkkkkk....'
+    ],
+    bare1: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhffffffffffhhk...',
+        '...khffffffffffffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffTfffffffffhk...',
+        '...khffffffffffffhk...',
+        '...khffffkmmkffffhk...',
+        '...khffffffffffffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kffkkkkkkkkkkffk...',
+        '...kLSSsSSSSSSSSSLk...',
+        '...kLSSSsSSSSSSSSLk...',
+        '...kLSSsSSSsssSSSLk...',
+        '...kLLLLLLLLLLLLLLk...',
+        '....kkkkkkkkkkkkkk....'
+    ],
+    bare2: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhffffffffffhhk...',
+        '...khffffffffffffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffffffffffffhk...',
+        '...khffTfffffffffhk...',
+        '...khffffkmmkffffhk...',
+        '...khffffffffffffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kkkkkkkkkkkkkkkk...',
+        '...kffSSSSSSSSSSffk...',
+        '...kLSSSSSSSSSSSSLk...',
+        '...kLSSSSSSSSSSSSLk...',
+        '...kLLLLLLLLLLLLLLk...',
+        '....kkkkkkkkkkkkkk....'
+    ],
+    run1: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhffffffffffhhk...',
+        '...khfkkfffffkkffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffTffffffTffhk...',
+        '...khffTfkkkkfTffhk...',
+        '...khfffkmmmmkfffhk...',
+        '...khffffkmmkffffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kllllllkhhhhhhk....',
+        '...kLSssSLkhhhhhhk....',
+        '...kLLLLLLkhhhhffk....',
+        '......khhhhhhhhk......',
+        '.....khhk...khhk......',
+        '....kffk.....kffk.....'
+    ],
+    run2: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk....',
+        '...khhhhhhhhhhhhhhk...',
+        '...khhffffffffffhhk...',
+        '...khfkkfffffkkffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffffffffffffhk...',
+        '...khffTfkkkkfTffhk...',
+        '...khffTkmmmmkTffhk...',
+        '...khfffkmmmmkfffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kllllllkhhhhhhk....',
+        '...kLSssSLkhhhhhhk....',
+        '...kLLLLLLkhhhhffk....',
+        '......khhhhhhhhk......',
+        '.......khhkkhhk.......',
+        '......kffk..kffk......'
+    ],
+    panic: [
+        '.......kkkkkkkk.......',
+        '.....kkhhhhhhhhkk.....',
+        '....khhhhhhhhhhhhk..T.',
+        '...khhhhhhhhhhhhhhk..T',
+        '...khhffffffffffhhk...',
+        '...khfkkfffffkkffhk...',
+        '...khfeeeffffeeefhk...',
+        '...khfeppffffppefhk...',
+        '...khffTffffffTffhk...',
+        '...khffTfkkkkfTffhk...',
+        '...khfffkmmmmkfffhk...',
+        '...khffffkmmkffffhk...',
+        '...khhhhhhhhhhhhhhk...',
+        '....khhhhhhhhhhhhk....',
+        '.....khhhhhhhhhhk.....',
+        '...kllllllkhhhhhhk....',
+        '...kLSssSLkhhhhhhk....',
+        '...kLLLLLLkhhhhffk....',
+        '......khhhhhhhhk......',
+        '.....khhk...khhk......',
+        '....kffk.....kffk.....'
+    ],
+};
+
+// The mask on its own, so it can tumble away after it slips off.
+const MASCOT_MASK = [
+    '..kkkkkk..',
+    '.kMMMMMMk.',
+    'kMkkMMkkMk',
+    'kMkkMMkkMk',
+    'kMrMMMMrMk',
+    'kMMkMMkMMk',
+    'kMMkkkkMMk',
+    '.kMMkkMMk.',
+    '..kMMMMk..',
+    '...kkkk...'
+];
+
+const MASCOT_PALETTE = {
+    k: '#08080c',   // outline
+    h: '#26262f',   // hoodie
+    g: '#3d3d4d',   // hoodie fold
+    f: '#f0c49c',   // bare face
+    e: '#ffffff',   // eye white
+    p: '#141428',   // pupil
+    m: '#7a2f34',   // open mouth
+    M: '#f4f1e6',   // mask
+    r: '#d4564a',   // mask cheek
+    T: '#7fd4ff',   // tears
+    l: '#c3cadf',   // laptop shell
+    L: '#828cab',   // laptop shell, shaded
+    S: '#0e2a24',   // screen
+    s: '#5ef2b4'    // screen glow
+};
+
+const MASCOT_KEY = 'xpMascot';
+const MASCOT_SCALE = 3;
+
+const Mascot = (() => {
+    const SPRITE_W = 22;
+    const SPRITE_H = 22;
+    const WIDTH = SPRITE_W * MASCOT_SCALE;
+    const HEIGHT = SPRITE_H * MASCOT_SCALE;
+
+    const FLEE_RADIUS = 95;      // how close the pointer gets before he bolts
+    const WALK_SPEED = 46;       // px per second, strolling
+    const FLEE_SPEED = 210;      // px per second, panicking
+    const IDLE_MIN = 12000;
+    const IDLE_MAX = 25000;
+
+    const cache = {};
+    let el = null;
+    let ctx = null;
+    let raf = null;
+    let enabled = false;
+
+    let x = 0, y = 0;            // top-left within .desktop
+    let targetX = 0, targetY = 0;
+    let facing = 1;              // 1 right, -1 left
+    let state = 'sit';           // sit | walk | flee
+    let frameClock = 0;
+    let frameIndex = 0;
+    let nextWander = 0;
+    let remaskAt = 0;            // he sits bare a moment before putting it back on
+    let settledAt = 0;           // grace period so he is seen before he can bolt
+    let panicUntil = 0;
+    let lastTime = 0;
+    let pointer = { x: -9999, y: -9999 };
+
+    // He can only lose a mask he is currently wearing. That single rule gives
+    // the whole gag: it falls on every genuine scare, but parking the cursor on
+    // him does not rain masks, because a startled buddy never gets it back on.
+    const wearingMask = () => state !== 'flee' && performance.now() >= remaskAt;
+
+    const reducedMotion = () =>
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---- drawing ---- */
+    function sprite(name) {
+        if (cache[name]) return cache[name];
+        const rows = MASCOT_SPRITES[name];
+        const canvas = document.createElement('canvas');
+        canvas.width = SPRITE_W;
+        canvas.height = SPRITE_H;
+        const c = canvas.getContext('2d');
+        rows.forEach((line, ry) => {
+            for (let rx = 0; rx < line.length; rx++) {
+                const colour = MASCOT_PALETTE[line[rx]];
+                if (!colour) continue;
+                c.fillStyle = colour;
+                c.fillRect(rx, ry, 1, 1);
+            }
+        });
+        cache[name] = canvas;
+        return canvas;
+    }
+
+    // Built once from MASCOT_MASK, then reused for every drop.
+    let maskCanvas = null;
+    function maskSprite() {
+        if (maskCanvas) return maskCanvas;
+        maskCanvas = document.createElement('canvas');
+        maskCanvas.width = 10;
+        maskCanvas.height = 10;
+        const c = maskCanvas.getContext('2d');
+        MASCOT_MASK.forEach((line, ry) => {
+            for (let rx = 0; rx < line.length; rx++) {
+                const colour = MASCOT_PALETTE[line[rx]];
+                if (!colour) continue;
+                c.fillStyle = colour;
+                c.fillRect(rx, ry, 1, 1);
+            }
+        });
+        return maskCanvas;
+    }
+
+    // He is startled, the mask slips off, and it tumbles to the floor behind him.
+    function dropMask() {
+        const desktop = document.querySelector('.desktop');
+        if (!desktop) return;
+        const size = 10 * MASCOT_SCALE;
+        const drop = document.createElement('canvas');
+        drop.className = 'desktop-buddy-mask';
+        drop.width = size;
+        drop.height = size;
+        const c = drop.getContext('2d');
+        c.imageSmoothingEnabled = false;
+        c.drawImage(maskSprite(), 0, 0, 10, 10, 0, 0, size, size);
+        desktop.appendChild(drop);
+
+        const startX = x + (WIDTH - size) / 2;
+        const startY = y + 4 * MASCOT_SCALE;
+        const drift = (Math.random() * 2 - 1) * 26;
+        const spin = 140 + Math.random() * 220;
+        const box = desktopBox();
+        const floor = Math.min(startY + 62, box.h - size - 2);
+
+        const anim = drop.animate([
+            { transform: `translate(${startX}px, ${startY}px) rotate(0deg)`, opacity: 1, offset: 0 },
+            { transform: `translate(${startX + drift * 0.4}px, ${startY - 14}px) rotate(${spin * 0.3}deg)`, opacity: 1, offset: 0.3 },
+            { transform: `translate(${startX + drift}px, ${floor}px) rotate(${spin}deg)`, opacity: 1, offset: 0.75 },
+            { transform: `translate(${startX + drift}px, ${floor}px) rotate(${spin}deg)`, opacity: 0, offset: 1 }
+        ], { duration: 1500, easing: 'linear', fill: 'forwards' });
+        anim.onfinish = () => drop.remove();
+        setTimeout(() => drop.remove(), 1800);
+    }
+
+    function currentFrame() {
+        // Masked and hunched over the keyboard while he works; bare-faced and
+        // in tears the moment the mask comes off, and sheepish ever after.
+        if (state === 'sit') {
+            // Just back from a scare: a moment sniffling before the mask goes on
+            if (!wearingMask()) return frameIndex % 2 ? 'bare2' : 'bare1';
+            return frameIndex % 2 ? 'sit2' : 'sit1';
+        }
+        if (state === 'flee' && performance.now() < panicUntil) return 'panic';
+        return frameIndex % 2 ? 'run1' : 'run2';
+    }
+
+    function paint() {
+        const frame = sprite(currentFrame());
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        ctx.save();
+        if (facing < 0) {
+            ctx.translate(WIDTH, 0);
+            ctx.scale(-1, 1);
+        }
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(frame, 0, 0, SPRITE_W, SPRITE_H, 0, 0, WIDTH, HEIGHT);
+        ctx.restore();
+        el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
+    }
+
+    /* ---- where he is allowed to stand ---- */
+    function desktopBox() {
+        const desktop = document.querySelector('.desktop');
+        const r = desktop ? desktop.getBoundingClientRect() : { width: 800, height: 600 };
+        return { w: Math.max(WIDTH + 20, r.width), h: Math.max(HEIGHT + 20, r.height) };
+    }
+
+    // Rectangles he should not sit on top of: open windows and desktop icons.
+    function busyRects() {
+        const desktop = document.querySelector('.desktop');
+        const base = desktop ? desktop.getBoundingClientRect() : { left: 0, top: 0 };
+        const rects = [];
+        document.querySelectorAll('.popup').forEach(w => {
+            if (w.style.display === 'none') return;
+            const r = w.getBoundingClientRect();
+            rects.push({ l: r.left - base.left, t: r.top - base.top, r: r.right - base.left, b: r.bottom - base.top });
+        });
+        document.querySelectorAll('.desktop .icon').forEach(i => {
+            const r = i.getBoundingClientRect();
+            rects.push({ l: r.left - base.left, t: r.top - base.top, r: r.right - base.left, b: r.bottom - base.top });
+        });
+        return rects;
+    }
+
+    function overlapArea(px, py, rects) {
+        let worst = 0;
+        for (const r of rects) {
+            const ox = Math.max(0, Math.min(px + WIDTH, r.r) - Math.max(px, r.l));
+            const oy = Math.max(0, Math.min(py + HEIGHT, r.b) - Math.max(py, r.t));
+            worst += ox * oy;
+        }
+        return worst;
+    }
+
+    // Try a handful of spots and take the emptiest — cheap, and good enough to
+    // keep him out from under windows without any real pathfinding.
+    function pickSpot(awayFrom) {
+        const box = desktopBox();
+        const rects = busyRects();
+        let best = null;
+        for (let i = 0; i < 26; i++) {
+            const px = 8 + Math.random() * Math.max(1, box.w - WIDTH - 16);
+            const py = 8 + Math.random() * Math.max(1, box.h - HEIGHT - 16);
+            let score = -overlapArea(px, py, rects);
+            if (awayFrom) {
+                score += Math.hypot(px + WIDTH / 2 - awayFrom.x, py + HEIGHT / 2 - awayFrom.y) * 4;
+            }
+            if (!best || score > best.score) best = { px, py, score };
+        }
+        return best;
+    }
+
+    /* ---- the loop ---- */
+    function step(now) {
+        if (!enabled) return;
+        raf = requestAnimationFrame(step);
+        const dt = Math.min(0.05, (now - lastTime) / 1000 || 0);
+        lastTime = now;
+
+        // Hold still while the desktop is busy or the screen saver is up
+        const busy = document.hidden || (typeof ScreenSaver !== 'undefined' && ScreenSaver.running) ||
+            (typeof marqueeActive !== 'undefined' && marqueeActive) ||
+            (typeof currentIcon !== 'undefined' && currentIcon);
+        if (busy) { paint(); return; }
+
+        const box = desktopBox();
+        const cx = x + WIDTH / 2;
+        const cy = y + HEIGHT / 2;
+
+        // Startle: the pointer got too close. Ignored for a moment after he
+        // appears, so landing under the cursor cannot rob you of ever seeing
+        // him sat there in the mask.
+        if (pointer.x > -9000 && now > settledAt) {
+            const d = Math.hypot(pointer.x - cx, pointer.y - cy);
+            if (d < FLEE_RADIUS && state !== 'flee') {
+                const spot = pickSpot(pointer);
+                targetX = spot.px;
+                targetY = spot.py;
+                if (wearingMask()) dropMask();
+                state = 'flee';
+                panicUntil = now + 260;
+                nextWander = now + IDLE_MIN + Math.random() * (IDLE_MAX - IDLE_MIN);
+            }
+        }
+
+        if (state === 'sit') {
+            if (!reducedMotion() && now > nextWander) {
+                const spot = pickSpot(null);
+                targetX = spot.px;
+                targetY = spot.py;
+                state = 'walk';
+            }
+        } else {
+            const speed = state === 'flee' ? FLEE_SPEED : WALK_SPEED;
+            const dx = targetX - x;
+            const dy = targetY - y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 3) {
+                x = targetX;
+                y = targetY;
+                if (state === 'flee') remaskAt = now + 1600;   // compose yourself
+                state = 'sit';
+                nextWander = now + IDLE_MIN + Math.random() * (IDLE_MAX - IDLE_MIN);
+            } else {
+                const move = Math.min(dist, speed * dt);
+                x += (dx / dist) * move;
+                y += (dy / dist) * move;
+                if (Math.abs(dx) > 2) facing = dx < 0 ? -1 : 1;
+            }
+        }
+
+        x = Math.max(0, Math.min(x, box.w - WIDTH));
+        y = Math.max(0, Math.min(y, box.h - HEIGHT));
+
+        // Feet shuffle while moving, gentle typing while sat down
+        frameClock += dt * 1000;
+        const period = state === 'sit' ? 420 : (state === 'flee' ? 110 : 190);
+        if (frameClock > period) { frameClock = 0; frameIndex++; }
+
+        paint();
+    }
+
+    function onPointerMove(e) {
+        const desktop = document.querySelector('.desktop');
+        if (!desktop) return;
+        const r = desktop.getBoundingClientRect();
+        pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+
+    /* ---- public ---- */
+    function show() {
+        if (el) return;
+        const desktop = document.querySelector('.desktop');
+        if (!desktop) return;
+        el = document.createElement('canvas');
+        el.className = 'desktop-buddy';
+        el.width = WIDTH;
+        el.height = HEIGHT;
+        el.setAttribute('aria-hidden', 'true');
+        ctx = el.getContext('2d');
+        desktop.appendChild(el);
+
+        const box = desktopBox();
+        const spot = pickSpot(null);
+        x = spot ? spot.px : box.w - WIDTH - 40;
+        y = spot ? spot.py : box.h - HEIGHT - 40;
+        targetX = x;
+        targetY = y;
+        state = 'sit';
+        remaskAt = 0;
+        lastTime = performance.now();
+        settledAt = lastTime + 1800;
+        nextWander = lastTime + IDLE_MIN;
+
+        document.addEventListener('pointermove', onPointerMove, { passive: true });
+        enabled = true;
+        raf = requestAnimationFrame(step);
+    }
+
+    function hide() {
+        enabled = false;
+        if (raf) cancelAnimationFrame(raf);
+        raf = null;
+        document.removeEventListener('pointermove', onPointerMove);
+        document.querySelectorAll('.desktop-buddy-mask').forEach(n => n.remove());
+        if (el) { el.remove(); el = null; ctx = null; }
+    }
+
+    return {
+        get on() { return Store.get(MASCOT_KEY, true) !== false; },
+        init() { if (this.on) show(); },
+        set(next) {
+            Store.set(MASCOT_KEY, !!next);
+            if (next) show(); else hide();
+        },
+        toggle() { this.set(!this.on); return this.on; }
+    };
+})();
